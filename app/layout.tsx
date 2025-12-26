@@ -59,7 +59,7 @@ export default async function RootLayout({
           <Providers cookies={cookies}>
             <V0Provider isV0={isV0}>
               <SidebarProvider>
-                <main className="min-h-screen">{children}</main>
+                <main className="min-h-screen bg-background">{children}</main>
               </SidebarProvider>
             </V0Provider>
           </Providers>

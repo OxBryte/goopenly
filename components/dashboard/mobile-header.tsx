@@ -13,7 +13,7 @@ export function MobileHeader() {
 
   return (
     <motion.header
-      className="lg:hidden sticky top-0 z-50 w-full border-b border-white/10 bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
+      className="lg:hidden sticky top-0 z-50 w-full border-b border-border bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60"
       initial={{ y: -100 }}
       animate={{ y: 0 }}
       transition={{ duration: 0.3 }}
@@ -24,7 +24,7 @@ export function MobileHeader() {
           variant="ghost"
           size="icon"
           onClick={() => setOpenMobile(!openMobile)}
-          className="hover:bg-white/10"
+          className="hover:bg-muted"
           aria-label="Toggle menu"
         >
           <motion.div
@@ -33,9 +33,9 @@ export function MobileHeader() {
             transition={{ duration: 0.3 }}
           >
             {openMobile ? (
-              <X className="h-6 w-6 text-white" />
+              <X className="h-6 w-6 text-foreground" />
             ) : (
-              <Menu className="h-6 w-6 text-white" />
+              <Menu className="h-6 w-6 text-foreground" />
             )}
           </motion.div>
         </Button>
@@ -45,14 +45,14 @@ export function MobileHeader() {
           <div className="flex size-8 items-center justify-center rounded-lg bg-primary/10">
             <MonkeyIcon className="size-7" />
           </div>
-          <span className="text-lg font-display text-white">Stablestack</span>
+          <span className="text-lg font-display text-foreground">Stablestack</span>
         </div>
 
         {/* Right: User Button */}
         <UserButton
           appearance={{
             elements: {
-              avatarBox: "w-9 h-9 ring-2 ring-white/10",
+              avatarBox: "w-9 h-9 ring-2 ring-border",
             },
           }}
         />

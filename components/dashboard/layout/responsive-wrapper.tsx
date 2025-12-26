@@ -29,7 +29,7 @@ export function ResponsiveLayoutWrapper({
         </div>
 
         {/* Main Content */}
-        <main className="flex-1 w-full">
+        <main className="flex-1 w-full bg-background">
           <div className="container mx-auto px-4 sm:px-6 lg:px-8 py-6 lg:py-8 max-w-7xl">
             {children}
           </div>
