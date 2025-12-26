@@ -48,26 +48,26 @@ export function TransactionReceiptModal({
   const getStatusIcon = (status: string) => {
     switch (status) {
       case "completed":
-        return <CheckCircle className="w-5 h-5 text-green-400" />;
+        return <CheckCircle className="w-5 h-5 text-green-600" />;
       case "pending":
-        return <Clock className="w-5 h-5 text-yellow-400" />;
+        return <Clock className="w-5 h-5 text-yellow-600" />;
       case "failed":
-        return <XCircle className="w-5 h-5 text-red-400" />;
+        return <XCircle className="w-5 h-5 text-red-600" />;
       default:
-        return <Clock className="w-5 h-5 text-gray-400" />;
+        return <Clock className="w-5 h-5 text-muted-foreground" />;
     }
   };
 
   const getStatusColor = (status: string) => {
     switch (status) {
       case "completed":
-        return "bg-green-500/20 text-green-400 border-green-500/30";
+        return "bg-green-500/10 text-green-600 border-green-500/30";
       case "pending":
-        return "bg-yellow-500/20 text-yellow-400 border-yellow-500/30";
+        return "bg-yellow-500/10 text-yellow-600 border-yellow-500/30";
       case "failed":
-        return "bg-red-500/20 text-red-400 border-red-500/30";
+        return "bg-red-500/10 text-red-600 border-red-500/30";
       default:
-        return "bg-gray-500/20 text-gray-400 border-gray-500/30";
+        return "bg-muted text-muted-foreground border-border";
     }
   };
 
@@ -106,9 +106,9 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="max-w-md mx-auto bg-slate-900/95 backdrop-blur-lg border border-white/20 text-white">
+      <DialogContent className="max-w-md mx-auto bg-background backdrop-blur-lg border border-border text-foreground">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-white flex items-center gap-2">
+          <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2">
             <CreditCard className="w-5 h-5" />
             Transaction Receipt
           </DialogTitle>
@@ -116,12 +116,12 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
 
         <div className="space-y-6">
           {/* Transaction Status */}
-          <div className="flex items-center justify-between p-4 bg-white/5 rounded-lg border border-white/10">
+          <div className="flex items-center justify-between p-4 bg-muted/50 rounded-lg border border-border">
             <div className="flex items-center gap-3">
               {getStatusIcon(transaction.status)}
               <div>
-                <p className="font-semibold text-white">Payment {transaction.status}</p>
-                <p className="text-sm text-gray-400">{transaction.date}</p>
+                <p className="font-semibold text-foreground">Payment {transaction.status}</p>
+                <p className="text-sm text-muted-foreground">{transaction.date}</p>
               </div>
             </div>
             <Badge className={getStatusColor(transaction.status)}>
@@ -132,69 +132,69 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
           {/* Transaction Details */}
           <div className="space-y-4">
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Hash className="w-4 h-4" />
                 <span className="text-sm">Transaction ID</span>
               </div>
               <div className="flex items-center gap-2">
-                <code className="text-sm font-mono text-white bg-white/10 px-2 py-1 rounded">
+                <code className="text-sm font-mono text-foreground bg-muted px-2 py-1 rounded">
                   {transaction.id}
                 </code>
                 <Button
                   size="sm"
                   variant="ghost"
                   onClick={handleCopyTransactionId}
-                  className="text-gray-400 hover:text-white"
+                  className="text-muted-foreground hover:text-foreground"
                 >
                   <Copy className="w-4 h-4" />
                 </Button>
               </div>
             </div>
 
-            <Separator className="bg-white/10" />
+            <Separator className="bg-border" />
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <User className="w-4 h-4" />
                 <span className="text-sm">Customer</span>
               </div>
-              <span className="text-white font-medium">{transaction.customer}</span>
+              <span className="text-foreground font-medium">{transaction.customer}</span>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <DollarSign className="w-4 h-4" />
                 <span className="text-sm">Amount</span>
               </div>
-              <span className="text-white font-bold text-lg">
+              <span className="text-foreground font-bold text-lg">
                 ${transaction.amount.toFixed(2)}
               </span>
             </div>
 
             <div className="flex items-center justify-between">
-              <div className="flex items-center gap-2 text-gray-400">
+              <div className="flex items-center gap-2 text-muted-foreground">
                 <Calendar className="w-4 h-4" />
                 <span className="text-sm">Product</span>
               </div>
-              <span className="text-white font-medium">{transaction.product}</span>
+              <span className="text-foreground font-medium">{transaction.product}</span>
             </div>
 
             {transaction.paymentMethod && (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <CreditCard className="w-4 h-4" />
                   <span className="text-sm">Payment Method</span>
                 </div>
-                <span className="text-white font-medium">{transaction.paymentMethod}</span>
+                <span className="text-foreground font-medium">{transaction.paymentMethod}</span>
               </div>
             )}
 
             {transaction.transactionFee && (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <span className="text-sm">Transaction Fee</span>
                 </div>
-                <span className="text-white font-medium">
+                <span className="text-foreground font-medium">
                   ${transaction.transactionFee.toFixed(2)}
                 </span>
               </div>
@@ -202,10 +202,10 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
 
             {transaction.netAmount && (
               <div className="flex items-center justify-between">
-                <div className="flex items-center gap-2 text-gray-400">
+                <div className="flex items-center gap-2 text-muted-foreground">
                   <span className="text-sm">Net Amount</span>
                 </div>
-                <span className="text-white font-medium">
+                <span className="text-foreground font-medium">
                   ${transaction.netAmount.toFixed(2)}
                 </span>
               </div>
@@ -216,7 +216,7 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
           <div className="flex gap-3 pt-4">
             <Button
               onClick={handleDownloadReceipt}
-              className="flex-1 bg-blue-600 hover:bg-blue-700 text-white"
+              className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
             >
               <Download className="w-4 h-4 mr-2" />
               Download Receipt
@@ -224,7 +224,7 @@ ${transaction.netAmount ? `Net Amount: $${transaction.netAmount.toFixed(2)}` : "
             <Button
               onClick={onClose}
               variant="outline"
-              className="flex-1 border-white/20 text-white hover:bg-white/10"
+              className="flex-1 border-border text-foreground hover:bg-muted"
             >
               Close
             </Button>
