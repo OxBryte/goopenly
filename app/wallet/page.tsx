@@ -141,18 +141,18 @@ export default function WalletPage() {
                     <DollarSign className="w-6 h-6 text-blue-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400">USDC Balance</p>
-                    <Badge className="mt-1 bg-blue-500/10 text-blue-400 border-blue-500/20 text-xs">
+                    <p className="text-sm text-muted-foreground">USDC Balance</p>
+                    <Badge className="mt-1 bg-blue-500/10 text-blue-600 border-blue-500/20 text-xs">
                       Stablecoin
                     </Badge>
                   </div>
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">
+                <p className="text-3xl font-bold text-foreground">
                   ${parseFloat(totalUSDC).toFixed(2)}
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   {totalUSDC} USDC on {selectedChain}
                 </p>
               </div>
@@ -166,18 +166,18 @@ export default function WalletPage() {
                     <TrendingUp className="w-6 h-6 text-purple-400" />
                   </div>
                   <div>
-                    <p className="text-sm text-gray-400">ETH Balance</p>
-                    <Badge className="mt-1 bg-purple-500/10 text-purple-400 border-purple-500/20 text-xs">
+                    <p className="text-sm text-muted-foreground">ETH Balance</p>
+                    <Badge className="mt-1 bg-purple-500/10 text-purple-600 border-purple-500/20 text-xs">
                       Crypto
                     </Badge>
                   </div>
                 </div>
               </div>
               <div className="space-y-1">
-                <p className="text-3xl font-bold text-white">
+                <p className="text-3xl font-bold text-foreground">
                   {parseFloat(totalETH).toFixed(6)} ETH
                 </p>
-                <p className="text-xs text-gray-400">
+                <p className="text-xs text-muted-foreground">
                   ≈ ${parseFloat(totalETH).toFixed(2)} USD
                 </p>
               </div>
@@ -197,7 +197,7 @@ export default function WalletPage() {
             <Button
               size="lg"
               variant="outline"
-              className="border-white/10 hover:bg-white/5"
+              className="border-border hover:bg-muted"
               onClick={() => alert("Deposit feature coming soon!")}
             >
               <Download className="w-4 h-4 mr-2" />
@@ -206,33 +206,33 @@ export default function WalletPage() {
           </div>
 
           {/* Wallet Info */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-6 space-y-4">
-            <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+          <div className="bg-card border border-border rounded-lg p-6 space-y-4">
+            <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
               <WalletIcon className="w-5 h-5" />
               Wallet Information
             </h3>
             <div className="space-y-3 text-sm">
               <div className="flex justify-between">
-                <span className="text-gray-400">Chain</span>
-                <span className="text-white font-medium uppercase">
+                <span className="text-muted-foreground">Chain</span>
+                <span className="text-foreground font-medium uppercase">
                   {balance.chain}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">User ID</span>
-                <span className="text-white font-mono text-xs">
+                <span className="text-muted-foreground">User ID</span>
+                <span className="text-foreground font-mono text-xs">
                   {balance.userId}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Last Updated</span>
-                <span className="text-white">
+                <span className="text-muted-foreground">Last Updated</span>
+                <span className="text-foreground">
                   {new Date(balance.timestamp).toLocaleString()}
                 </span>
               </div>
               <div className="flex justify-between">
-                <span className="text-gray-400">Total Assets</span>
-                <span className="text-white font-medium">
+                <span className="text-muted-foreground">Total Assets</span>
+                <span className="text-foreground font-medium">
                   {balance.balances.length}
                 </span>
               </div>
@@ -240,9 +240,9 @@ export default function WalletPage() {
           </div>
 
           {/* Transaction History */}
-          <div className="bg-white/5 border border-white/10 rounded-lg p-6">
+          <div className="bg-card border border-border rounded-lg p-6">
             <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-white flex items-center gap-2">
+              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
                 <HistoryIcon className="w-5 h-5" />
                 Recent Transactions
               </h3>
@@ -255,14 +255,14 @@ export default function WalletPage() {
 
             {loadingTransactions ? (
               <div className="text-center py-8">
-                <div className="w-8 h-8 border-4 border-gray-600 border-t-blue-500 rounded-full animate-spin mx-auto mb-3"></div>
-                <p className="text-gray-400 text-sm">Loading transactions...</p>
+                <div className="w-8 h-8 border-4 border-muted border-t-primary rounded-full animate-spin mx-auto mb-3"></div>
+                <p className="text-muted-foreground text-sm">Loading transactions...</p>
               </div>
             ) : transactions.length === 0 ? (
               <div className="text-center py-8">
-                <HistoryIcon className="w-12 h-12 text-gray-600 mx-auto mb-3" />
-                <p className="text-gray-400 text-sm">No transactions yet</p>
-                <p className="text-gray-500 text-xs mt-1">
+                <HistoryIcon className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+                <p className="text-muted-foreground text-sm">No transactions yet</p>
+                <p className="text-muted-foreground/70 text-xs mt-1">
                   Your transaction history will appear here
                 </p>
               </div>
@@ -270,20 +270,20 @@ export default function WalletPage() {
               <div className="overflow-x-auto">
                 <table className="w-full">
                   <thead>
-                    <tr className="border-b border-white/10">
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                    <tr className="border-b border-border">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Status
                       </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Amount
                       </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Asset
                       </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Date
                       </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-gray-400 uppercase tracking-wider">
+                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
                         Transaction Hash
                       </th>
                     </tr>
@@ -309,7 +309,7 @@ export default function WalletPage() {
                       return (
                         <tr
                           key={tx.id}
-                          className={`border-b border-white/5 hover:bg-white/5 transition-colors ${
+                          className={`border-b border-border hover:bg-muted/50 transition-colors ${
                             index === transactions.length - 1 ? "border-0" : ""
                           }`}
                         >
@@ -322,31 +322,31 @@ export default function WalletPage() {
                             </Badge>
                           </td>
                           <td className="py-4 px-4">
-                            <span className="text-white font-medium">
+                            <span className="text-foreground font-medium">
                               {tx.amount || "0"}
                             </span>
                           </td>
                           <td className="py-4 px-4">
-                            <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20">
+                            <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">
                               {tx.token || "N/A"}
                             </Badge>
                           </td>
                           <td className="py-4 px-4">
-                            <span className="text-gray-400 text-sm">
+                            <span className="text-muted-foreground text-sm">
                               {formatDate(tx.timestamp)}
                             </span>
                           </td>
                           <td className="py-4 px-4">
                             {tx.txHash ? (
                               <div className="flex items-center gap-2">
-                                <span className="text-gray-400 font-mono text-xs">
+                                <span className="text-muted-foreground font-mono text-xs">
                                   {tx.txHash.slice(0, 10)}...
                                   {tx.txHash.slice(-8)}
                                 </span>
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  className="h-6 w-6 p-0 hover:bg-white/10"
+                                  className="h-6 w-6 p-0 hover:bg-muted"
                                   onClick={() =>
                                     window.open(
                                       `https://basescan.org/tx/${tx.txHash}`,
