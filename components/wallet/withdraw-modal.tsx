@@ -263,7 +263,7 @@ export function WithdrawModal({
                   variant="outline"
                   onClick={handleClose}
                   disabled={loading}
-                  className="flex-1 border-white/10 hover:bg-white/5"
+                  className="flex-1 border-border hover:bg-muted"
                 >
                   Cancel
                 </Button>
