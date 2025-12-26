@@ -108,7 +108,7 @@ export default function DashboardPage() {
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
           <div className="w-12 h-12 border-4 border-[#003e91]/40 border-t-[#003e91] rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-white">Loading dashboard...</p>
+          <p className="text-foreground">Loading dashboard...</p>
         </div>
       </div>
     );
@@ -118,8 +118,8 @@ export default function DashboardPage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
-          <h1 className="text-2xl font-bold text-white mb-4">Access Denied</h1>
-          <p className="text-gray-300 mb-6">
+          <h1 className="text-2xl font-bold text-foreground mb-4">Access Denied</h1>
+          <p className="text-muted-foreground mb-6">
             You need to be signed in to access the dashboard.
           </p>
           <Button onClick={() => router.push("/")}>Go to Login</Button>
@@ -133,7 +133,7 @@ export default function DashboardPage() {
       <div className="w-full space-y-6 mx-auto">
         {/* Header */}
         <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
-          <h1 className="text-lg sm:text-xl font-bold text-white">
+          <h1 className="text-lg sm:text-xl font-bold text-foreground">
             Welcome back, {user.firstName || user.username}!
           </h1>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
@@ -145,7 +145,7 @@ export default function DashboardPage() {
             </Button>
             <Button
               variant="outline"
-              className="border-white/20 text-white hover:bg-white/10 w-full sm:w-auto whitespace-nowrap"
+              className="border-border text-foreground hover:bg-muted w-full sm:w-auto whitespace-nowrap"
               onClick={() => setIsProductLinkModalOpen(true)}
             >
               Create Product Link
@@ -174,8 +174,8 @@ export default function DashboardPage() {
             </div>
           </div>
           {/* Total Revenue Card */}
-          <div className="bg-white/10 border-white/20 p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+          <div className="bg-card border border-border p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
               $
               {parseFloat(earnings?.succeeded?.amount || "0").toLocaleString(
                 undefined,
@@ -191,8 +191,8 @@ export default function DashboardPage() {
           </div>
 
           {/* Active Links Card */}
-          <div className="bg-white/10 border-white/20 p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
-            <div className="text-xl sm:text-2xl md:text-3xl font-bold">
+          <div className="bg-card border border-border p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
+            <div className="text-xl sm:text-2xl md:text-3xl font-bold text-foreground">
               {activeLinks}
             </div>
             <div className="text-muted-foreground text-xs sm:text-sm">
@@ -200,7 +200,7 @@ export default function DashboardPage() {
             </div>
           </div>
           {/* Total Links Card */}
-          <div className="bg-white/10 border-white/20 p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
+          <div className="bg-card border border-border p-3 sm:p-4 rounded-md flex flex-col gap-2 sm:gap-4 h-28 sm:h-32 justify-center">
             <div className="text-xl sm:text-2xl md:text-3xl font-bold">
               {totalLinks}
             </div>
@@ -212,10 +212,10 @@ export default function DashboardPage() {
 
         {/* Sales Activity Heatmap */}
         <div>
-          <h2 className="text-base sm:text-lg font-semibold text-white mb-3 sm:mb-4 px-1">
+          <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 px-1">
             Sales Activity Heatmap (Last 6 Months)
           </h2>
-          <div className="bg-white/5 border border-white/10 rounded-lg p-3 sm:p-4 md:p-6">
+          <div className="bg-card border border-border rounded-lg p-3 sm:p-4 md:p-6">
             <div className="overflow-x-auto">
               <div className="inline-block min-w-full">
                 {/* Month labels - showing last 6 months */}
@@ -303,7 +303,7 @@ export default function DashboardPage() {
                               title={`${dateStr}: ${salesValue} sales`}
                             >
                               {/* Tooltip on hover */}
-                              <div className="invisible group-hover:visible absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-card border border-white/10 text-foreground text-xs rounded-lg shadow-xl whitespace-nowrap">
+                              <div className="invisible group-hover:visible absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-card border border-border text-foreground text-xs rounded-lg shadow-xl whitespace-nowrap">
                                 <div className="font-semibold">
                                   {salesValue} sales
                                 </div>
@@ -342,17 +342,17 @@ export default function DashboardPage() {
           {/* Latest Transactions */}
           <div className="bg-card border border-border rounded-xl shadow-2xl overflow-hidden">
             {/* Header */}
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 bg-white/5">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-border bg-muted/50">
               <div className="flex items-center justify-between gap-2">
                 <div className="flex items-center gap-2 sm:gap-3 flex-1 min-w-0">
                   <div className="w-8 h-8 sm:w-10 sm:h-10 bg-blue-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-blue-400" />
+                    <CreditCard className="w-4 h-4 sm:w-5 sm:h-5 text-blue-600" />
                   </div>
                   <div className="min-w-0 flex-1">
-                    <h3 className="text-base sm:text-lg font-semibold text-white truncate">
+                    <h3 className="text-base sm:text-lg font-semibold text-foreground truncate">
                       Latest Transactions
                     </h3>
-                    <p className="text-xs text-gray-400 hidden sm:block">
+                    <p className="text-xs text-muted-foreground hidden sm:block">
                       Recent payment activity
                     </p>
                   </div>
@@ -376,7 +376,7 @@ export default function DashboardPage() {
                     <div
                       key={index}
                       onClick={() => handleTransactionClick(transaction)}
-                      className="group flex items-center justify-between p-3 sm:p-4 rounded-lg bg-white/5 border border-white/10 hover:bg-white/10 hover:border-white/20 transition-all cursor-pointer"
+                      className="group flex items-center justify-between p-3 sm:p-4 rounded-lg bg-muted/50 border border-border hover:bg-muted hover:border-primary/20 transition-all cursor-pointer"
                     >
                       <div className="flex items-center gap-2 sm:gap-4 flex-1 min-w-0">
                         {/* Status Indicator Dot */}
@@ -394,34 +394,34 @@ export default function DashboardPage() {
 
                         <div className="flex-1 min-w-0">
                           <div className="flex items-center gap-2 mb-1">
-                            <p className="text-white font-semibold text-xs sm:text-sm truncate">
+                            <p className="text-foreground font-semibold text-xs sm:text-sm truncate">
                               {transaction.customer}
                             </p>
                             <span
                               className={`text-[10px] sm:text-xs font-medium capitalize ${
                                 transaction.status === "completed"
-                                  ? "text-green-400"
+                                  ? "text-green-600"
                                   : transaction.status === "pending"
-                                  ? "text-yellow-400"
-                                  : "text-red-400"
+                                  ? "text-yellow-600"
+                                  : "text-red-600"
                               }`}
                             >
                               • {transaction.status}
                             </span>
                           </div>
-                          <p className="text-gray-400 text-[10px] sm:text-xs mb-0.5 truncate">
+                          <p className="text-muted-foreground text-[10px] sm:text-xs mb-0.5 truncate">
                             {transaction.product}
                           </p>
-                          <p className="text-gray-500 text-[10px] sm:text-xs truncate">
+                          <p className="text-muted-foreground/70 text-[10px] sm:text-xs truncate">
                             {transaction.date}
                           </p>
                         </div>
                       </div>
                       <div className="text-right flex-shrink-0 ml-3">
-                        <p className="text-white font-bold text-sm sm:text-base whitespace-nowrap">
+                        <p className="text-foreground font-bold text-sm sm:text-base whitespace-nowrap">
                           ${transaction.amount.toFixed(2)}
                         </p>
-                        <p className="text-gray-500 text-[10px] sm:text-xs">
+                        <p className="text-muted-foreground/70 text-[10px] sm:text-xs">
                           {transaction.id}
                         </p>
                       </div>
@@ -468,13 +468,13 @@ export default function DashboardPage() {
           {/* Product Performance Analytics */}
           <div className="bg-card border border-border rounded-xl shadow-2xl overflow-hidden">
             {/* Header */}
-            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-white/10 bg-white/5">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-border bg-muted/50">
               <div className="flex items-center gap-2 sm:gap-3">
                 <div className="w-8 h-8 sm:w-10 sm:h-10 bg-purple-500/20 rounded-lg flex items-center justify-center flex-shrink-0">
-                  <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-purple-400" />
+                  <BarChart3 className="w-4 h-4 sm:w-5 sm:h-5 text-purple-600" />
                 </div>
                 <div className="min-w-0 flex-1">
-                  <h3 className="text-base sm:text-lg font-semibold text-white truncate">
+                  <h3 className="text-base sm:text-lg font-semibold text-foreground truncate">
                     Product Performance
                   </h3>
                   <p className="text-xs text-gray-400 hidden sm:block">
