@@ -365,7 +365,8 @@ export default function WalletPage() {
                       );
                     })}
                   </tbody>
-                </table>
+                  </table>
+                </div>
               </div>
             )}
           </div>
