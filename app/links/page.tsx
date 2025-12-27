@@ -378,22 +378,27 @@ export default function LinksPage() {
                             copyToClipboard(item.paymentLink, item.id)
                           }
                           className={cn(
-                            "transition-all rounded-md flex items-center w-full justify-center px-5 py-2.5 text-sm cursor-pointer",
+                            "transition-all rounded-md flex items-center w-full justify-center px-4 sm:px-5 py-2.5 sm:py-3 text-sm cursor-pointer min-h-[44px]",
                             copySuccess === item.id
                               ? "bg-green-500 hover:bg-green-600 text-white"
                               : "bg-primary hover:bg-primary/90 text-white"
                           )}
                         >
-                          <Copy className="w-3.5 h-3.5 mr-1.5" />
-                          {copySuccess === item.id ? "Copied!" : "Copy Link"}
+                          <Copy className="w-3.5 h-3.5 sm:w-4 sm:h-4 mr-1.5" />
+                          <span className="hidden sm:inline">
+                            {copySuccess === item.id ? "Copied!" : "Copy Link"}
+                          </span>
+                          <span className="sm:hidden">
+                            {copySuccess === item.id ? "Copied!" : "Copy"}
+                          </span>
                         </button>
                         <button
                           onClick={() =>
                             window.open(item.paymentLink, "_blank")
                           }
-                          className="transition-all rounded-md flex items-center w-fit justify-center px-3 py-2.5 border border-border hover:border-primary/60 text-sm cursor-pointer"
+                          className="transition-all rounded-md flex items-center justify-center px-3 sm:px-4 py-2.5 sm:py-3 border border-border hover:border-primary/60 text-sm cursor-pointer min-h-[44px] min-w-[44px]"
                         >
-                          <ExternalLink className="w-3.5 h-3.5" />
+                          <ExternalLink className="w-4 h-4" />
                         </button>
                       </div>
                     </div>

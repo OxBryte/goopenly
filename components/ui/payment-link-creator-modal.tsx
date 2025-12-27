@@ -196,11 +196,11 @@ export function PaymentLinkCreatorModal({
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-2 ring-primary/20">
           <DollarSign className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-xl font-bold text-foreground mb-2">Payment Amount</h3>
-        <p className="text-muted-foreground">How much do you want to charge?</p>
+        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">Payment Amount</h3>
+        <p className="text-sm sm:text-base text-muted-foreground">How much do you want to charge?</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-2">
           <Label htmlFor="amount" className="text-foreground font-medium">
             Amount *
@@ -255,11 +255,11 @@ export function PaymentLinkCreatorModal({
         <div className="w-16 h-16 bg-success/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-2 ring-success/20">
           <CreditCard className="w-8 h-8 text-success" />
         </div>
-        <h3 className="text-xl font-bold text-foreground mb-2">Payment Details</h3>
-        <p className="text-muted-foreground">What is this payment for?</p>
+        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">Payment Details</h3>
+        <p className="text-sm sm:text-base text-muted-foreground">What is this payment for?</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-2">
           <Label htmlFor="title" className="text-foreground font-medium">
             Payment Title *
@@ -308,13 +308,13 @@ export function PaymentLinkCreatorModal({
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-2 ring-primary/20">
           <Link className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-xl font-bold text-foreground mb-2">Description</h3>
-        <p className="text-muted-foreground">
+        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">Description</h3>
+        <p className="text-sm sm:text-base text-muted-foreground">
           Add more details about this payment (optional)
         </p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-2">
           <Label htmlFor="description" className="text-foreground font-medium">
             Description
@@ -338,11 +338,11 @@ export function PaymentLinkCreatorModal({
         <div className="w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center mx-auto mb-4 ring-2 ring-primary/20">
           <Check className="w-8 h-8 text-primary" />
         </div>
-        <h3 className="text-xl font-bold text-foreground mb-2">Payment Settings</h3>
-        <p className="text-muted-foreground">Configure your payment link</p>
+        <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">Payment Settings</h3>
+        <p className="text-sm sm:text-base text-muted-foreground">Configure your payment link</p>
       </div>
 
-      <div className="space-y-4">
+      <div className="space-y-3 sm:space-y-4">
         <div className="space-y-2">
           <Label htmlFor="expiresIn" className="text-foreground font-medium">
             Expires In
@@ -429,26 +429,26 @@ export function PaymentLinkCreatorModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent className="max-w-2xl mx-auto bg-background backdrop-blur-lg border border-border text-foreground max-h-[90vh] overflow-y-auto">
+      <DialogContent className="max-w-2xl w-full mx-2 sm:mx-auto bg-background backdrop-blur-lg border border-border text-foreground max-h-[90vh] overflow-y-auto">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-foreground flex items-center gap-2">
-            <CreditCard className="w-5 h-5" />
+          <DialogTitle className="text-lg sm:text-xl font-bold text-foreground flex items-center gap-2">
+            <CreditCard className="w-4 h-4 sm:w-5 sm:h-5" />
             Create Payment Link
           </DialogTitle>
 
           {/* Progress Indicator */}
           {!createdLink && (
-            <div className="flex items-center justify-center space-x-2 mt-4">
+            <div className="flex items-center justify-center space-x-1 sm:space-x-2 mt-3 sm:mt-4">
               {Array.from({ length: totalSteps }, (_, i) => (
                 <div
                   key={i}
-                  className={`w-8 h-8 rounded-full flex items-center justify-center text-sm font-medium transition-all ${
+                  className={`w-7 h-7 sm:w-8 sm:h-8 rounded-full flex items-center justify-center text-xs sm:text-sm font-medium transition-all ${
                     i + 1 <= currentStep
                       ? "bg-primary text-primary-foreground ring-2 ring-primary/30"
                       : "bg-muted text-muted-foreground"
                   }`}
                 >
-                  {i + 1 < currentStep ? <Check className="w-4 h-4" /> : i + 1}
+                  {i + 1 < currentStep ? <Check className="w-3 h-3 sm:w-4 sm:h-4" /> : i + 1}
                 </div>
               ))}
             </div>
@@ -456,7 +456,7 @@ export function PaymentLinkCreatorModal({
         </DialogHeader>
 
         {!createdLink ? (
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {/* Error Message */}
             {createError && (
               <div className="p-3 bg-red-500/10 border border-red-500/20 rounded-lg">
@@ -467,13 +467,13 @@ export function PaymentLinkCreatorModal({
             {renderStepContent()}
 
             {/* Navigation Buttons */}
-            <div className="flex justify-between pt-6 border-t border-border">
+            <div className="flex flex-col sm:flex-row justify-between gap-3 sm:gap-0 pt-4 sm:pt-6 border-t border-border">
               <Button
                 type="button"
                 onClick={prevStep}
                 disabled={currentStep === 1}
                 variant="outline"
-                className="border-border text-foreground hover:bg-muted disabled:opacity-50"
+                className="border-border text-foreground hover:bg-muted disabled:opacity-50 w-full sm:w-auto min-h-[44px]"
               >
                 <ArrowLeft className="w-4 h-4 mr-2" />
                 Previous
@@ -483,7 +483,7 @@ export function PaymentLinkCreatorModal({
                 <Button
                   onClick={handleSubmit}
                   disabled={isCreatingLink}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground w-full sm:w-auto min-h-[44px]"
                 >
                   {isCreatingLink ? (
                     <>
@@ -501,7 +501,7 @@ export function PaymentLinkCreatorModal({
                 <Button
                   onClick={nextStep}
                   disabled={!canProceed()}
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground disabled:opacity-50 w-full sm:w-auto min-h-[44px]"
                 >
                   Next
                   <ArrowRight className="w-4 h-4 ml-2" />
@@ -514,60 +514,61 @@ export function PaymentLinkCreatorModal({
           <div className="space-y-6">
             <div className="text-center">
               <CheckCircle className="w-16 h-16 text-green-400 mx-auto mb-4" />
-              <h3 className="text-xl font-bold text-foreground mb-2">
+              <h3 className="text-lg sm:text-xl font-bold text-foreground mb-2">
                 Payment Link Created!
               </h3>
-              <p className="text-muted-foreground">
+              <p className="text-sm sm:text-base text-muted-foreground">
                 Your payment link is ready to share
               </p>
             </div>
 
-            <div className="bg-muted/50 rounded-lg p-4 border border-border">
-              <Label className="text-foreground font-medium mb-2 block">
+            <div className="bg-muted/50 rounded-lg p-3 sm:p-4 border border-border">
+              <Label className="text-foreground font-medium mb-2 block text-sm sm:text-base">
                 Payment Link
               </Label>
-              <div className="flex gap-2">
+              <div className="flex flex-col sm:flex-row gap-2">
                 <Input
                   value={createdLink}
                   readOnly
-                  className="bg-background border-border text-foreground font-mono text-sm"
+                  className="bg-background border-border text-foreground font-mono text-xs sm:text-sm"
                 />
                 <Button
                   onClick={handleCopyLink}
                   size="sm"
-                  className="bg-primary hover:bg-primary/90 text-primary-foreground"
+                  className="bg-primary hover:bg-primary/90 text-primary-foreground min-h-[44px] sm:min-h-0"
                 >
-                  <Copy className="w-4 h-4" />
+                  <Copy className="w-4 h-4 mr-2 sm:mr-0" />
+                  <span className="sm:hidden">Copy Link</span>
                 </Button>
               </div>
             </div>
 
-            <div className="grid grid-cols-2 gap-4 text-sm">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4 text-sm">
               <div>
-                <p className="text-muted-foreground">Amount</p>
-                <p className="text-foreground font-semibold">
+                <p className="text-muted-foreground text-xs sm:text-sm">Amount</p>
+                <p className="text-foreground font-semibold text-sm sm:text-base">
                   {formData.currency} {formData.amount}
                 </p>
               </div>
               <div>
-                <p className="text-muted-foreground">Purpose</p>
-                <p className="text-foreground font-semibold">
+                <p className="text-muted-foreground text-xs sm:text-sm">Purpose</p>
+                <p className="text-foreground font-semibold text-sm sm:text-base">
                   {formData.purpose || "General"}
                 </p>
               </div>
             </div>
 
-            <div className="flex gap-3">
+            <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
               <Button
                 onClick={handleClose}
-                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="flex-1 bg-primary hover:bg-primary/90 text-primary-foreground min-h-[44px]"
               >
                 Done
               </Button>
               <Button
                 onClick={() => setCreatedLink(null)}
                 variant="outline"
-                className="flex-1 border-border text-foreground hover:bg-muted"
+                className="flex-1 border-border text-foreground hover:bg-muted min-h-[44px]"
               >
                 Create Another
               </Button>

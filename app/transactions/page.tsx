@@ -252,7 +252,7 @@ export default function PaymentsPage() {
       {!loading && !error && filteredTransactions.length > 0 && (
         <>
           {viewMode === "cards" ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
               {filteredTransactions.map((transaction) => {
                 const statusConfig = getStatusConfig(transaction.status);
 
@@ -346,30 +346,31 @@ export default function PaymentsPage() {
           ) : (
             <Card>
               <CardContent className="p-0">
-                <div className="overflow-x-auto">
-                  <table className="w-full">
-                    <thead className="border-b border-border">
-                      <tr className="text-left">
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Customer
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Product
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Amount
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Status
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Date
-                        </th>
-                        <th className="px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
-                          Actions
-                        </th>
-                      </tr>
-                    </thead>
+                <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                  <div className="inline-block min-w-full align-middle">
+                    <table className="w-full min-w-[640px]">
+                      <thead className="border-b border-border">
+                        <tr className="text-left">
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Customer
+                          </th>
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider hidden sm:table-cell">
+                            Product
+                          </th>
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Amount
+                          </th>
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Status
+                          </th>
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider hidden md:table-cell">
+                            Date
+                          </th>
+                          <th className="px-3 sm:px-4 py-3 text-xs font-medium text-muted-foreground uppercase tracking-wider">
+                            Actions
+                          </th>
+                        </tr>
+                      </thead>
                     <tbody className="divide-y divide-border">
                       {filteredTransactions.map((transaction) => {
                         const statusConfig = getStatusConfig(
@@ -382,32 +383,32 @@ export default function PaymentsPage() {
                             className="hover:bg-muted/50 transition-colors cursor-pointer"
                             onClick={() => handleTransactionClick(transaction)}
                           >
-                            <td className="px-4 py-4">
-                              <div className="flex items-center gap-3">
-                                <div className="w-8 h-8 bg-primary/10 rounded-full flex items-center justify-center">
-                                  <User className="w-4 h-4 text-primary" />
+                            <td className="px-3 sm:px-4 py-3 sm:py-4">
+                              <div className="flex items-center gap-2 sm:gap-3">
+                                <div className="w-7 h-7 sm:w-8 sm:h-8 bg-primary/10 rounded-full flex items-center justify-center flex-shrink-0">
+                                  <User className="w-3.5 h-3.5 sm:w-4 sm:h-4 text-primary" />
                                 </div>
-                                <div>
-                                  <p className="font-medium text-sm">
+                                <div className="min-w-0">
+                                  <p className="font-medium text-xs sm:text-sm truncate">
                                     {transaction.customerName || "Anonymous"}
                                   </p>
-                                  <p className="text-xs text-muted-foreground">
+                                  <p className="text-xs text-muted-foreground truncate">
                                     {transaction.customerEmail || "No email"}
                                   </p>
                                 </div>
                               </div>
                             </td>
-                            <td className="px-4 py-4">
-                              <div className="flex items-center gap-2">
-                                <Package className="w-4 h-4 text-muted-foreground" />
-                                <span className="text-sm">
+                            <td className="px-3 sm:px-4 py-3 sm:py-4 hidden sm:table-cell">
+                              <div className="flex items-center gap-2 min-w-0">
+                                <Package className="w-4 h-4 text-muted-foreground flex-shrink-0" />
+                                <span className="text-xs sm:text-sm truncate">
                                   {transaction.slug || "N/A"}
                                 </span>
                               </div>
                             </td>
-                            <td className="px-4 py-4">
+                            <td className="px-3 sm:px-4 py-3 sm:py-4">
                               <div className="text-right">
-                                <p className="font-semibold text-primary">
+                                <p className="font-semibold text-primary text-sm sm:text-base">
                                   ${transaction.amount || "0.00"}
                                 </p>
                                 <p className="text-xs text-muted-foreground">
@@ -415,21 +416,21 @@ export default function PaymentsPage() {
                                 </p>
                               </div>
                             </td>
-                            <td className="px-4 py-4">
-                              <Badge className={statusConfig.color}>
+                            <td className="px-3 sm:px-4 py-3 sm:py-4">
+                              <Badge className={statusConfig.color + " text-xs"}>
                                 {statusConfig.icon}
-                                <span className="ml-1">
+                                <span className="ml-1 hidden sm:inline">
                                   {statusConfig.label}
                                 </span>
                               </Badge>
                             </td>
-                            <td className="px-4 py-4">
-                              <div className="text-sm text-muted-foreground">
+                            <td className="px-3 sm:px-4 py-3 sm:py-4 hidden md:table-cell">
+                              <div className="text-xs sm:text-sm text-muted-foreground">
                                 {formatDate(transaction.createdAt)}
                               </div>
                             </td>
-                            <td className="px-4 py-4">
-                              <div className="flex items-center gap-2">
+                            <td className="px-3 sm:px-4 py-3 sm:py-4">
+                              <div className="flex items-center gap-1 sm:gap-2">
                                 <Button
                                   variant="ghost"
                                   size="sm"
@@ -437,7 +438,7 @@ export default function PaymentsPage() {
                                     e.stopPropagation();
                                     handleTransactionClick(transaction);
                                   }}
-                                  className="h-8 w-8 p-0"
+                                  className="h-8 w-8 sm:h-9 sm:w-9 p-0 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
                                 >
                                   <Eye className="w-4 h-4" />
                                 </Button>
@@ -450,7 +451,7 @@ export default function PaymentsPage() {
                                       transaction.paymentIntentId || ""
                                     );
                                   }}
-                                  className="h-8 w-8 p-0"
+                                  className="h-8 w-8 sm:h-9 sm:w-9 p-0 min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0"
                                 >
                                   <Copy className="w-4 h-4" />
                                 </Button>
@@ -505,7 +506,7 @@ export default function PaymentsPage() {
 
       {/* Transaction Detail Modal */}
       {selectedTransaction && (
-        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
+        <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-2 sm:p-4 z-50">
           <Card className="w-full max-w-2xl max-h-[90vh] overflow-y-auto">
             <CardHeader className="border-b">
               <div className="flex items-center justify-between">
@@ -522,11 +523,11 @@ export default function PaymentsPage() {
                 </Button>
               </div>
             </CardHeader>
-            <CardContent className="p-6 space-y-6">
+            <CardContent className="p-4 sm:p-6 space-y-4 sm:space-y-6">
               {/* Customer Info */}
-              <div className="space-y-4">
-                <h3 className="font-semibold text-lg">Customer Information</h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="font-semibold text-base sm:text-lg">Customer Information</h3>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
                       Name
@@ -547,11 +548,11 @@ export default function PaymentsPage() {
               </div>
 
               {/* Transaction Info */}
-              <div className="space-y-4">
-                <h3 className="font-semibold text-lg">
+              <div className="space-y-3 sm:space-y-4">
+                <h3 className="font-semibold text-base sm:text-lg">
                   Transaction Information
                 </h3>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
                   <div>
                     <label className="text-sm font-medium text-muted-foreground">
                       Amount

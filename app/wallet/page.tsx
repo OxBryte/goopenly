@@ -240,54 +240,55 @@ export default function WalletPage() {
           </div>
 
           {/* Transaction History */}
-          <div className="bg-card border border-border rounded-lg p-6">
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-lg font-semibold text-foreground flex items-center gap-2">
-                <HistoryIcon className="w-5 h-5" />
+          <div className="bg-card border border-border rounded-lg p-4 sm:p-6">
+            <div className="flex items-center justify-between mb-3 sm:mb-4">
+              <h3 className="text-base sm:text-lg font-semibold text-foreground flex items-center gap-2">
+                <HistoryIcon className="w-4 h-4 sm:w-5 sm:h-5" />
                 Recent Transactions
               </h3>
               {transactionCount > 0 && (
-                <Badge className="bg-blue-500/10 text-blue-400 border-blue-500/20">
+                <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20 text-xs">
                   {transactionCount}
                 </Badge>
               )}
             </div>
 
             {loadingTransactions ? (
-              <div className="text-center py-8">
+              <div className="text-center py-6 sm:py-8">
                 <div className="w-8 h-8 border-4 border-muted border-t-primary rounded-full animate-spin mx-auto mb-3"></div>
                 <p className="text-muted-foreground text-sm">Loading transactions...</p>
               </div>
             ) : transactions.length === 0 ? (
-              <div className="text-center py-8">
-                <HistoryIcon className="w-12 h-12 text-muted-foreground mx-auto mb-3" />
+              <div className="text-center py-6 sm:py-8">
+                <HistoryIcon className="w-10 h-10 sm:w-12 sm:h-12 text-muted-foreground mx-auto mb-3" />
                 <p className="text-muted-foreground text-sm">No transactions yet</p>
                 <p className="text-muted-foreground/70 text-xs mt-1">
                   Your transaction history will appear here
                 </p>
               </div>
             ) : (
-              <div className="overflow-x-auto">
-                <table className="w-full">
-                  <thead>
-                    <tr className="border-b border-border">
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Status
-                      </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Amount
-                      </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Asset
-                      </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Date
-                      </th>
-                      <th className="text-left py-3 px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
-                        Transaction Hash
-                      </th>
-                    </tr>
-                  </thead>
+              <div className="overflow-x-auto -mx-4 sm:mx-0 px-4 sm:px-0">
+                <div className="inline-block min-w-full align-middle">
+                  <table className="w-full min-w-[600px]">
+                    <thead>
+                      <tr className="border-b border-border">
+                        <th className="text-left py-3 px-3 sm:px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Status
+                        </th>
+                        <th className="text-left py-3 px-3 sm:px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Amount
+                        </th>
+                        <th className="text-left py-3 px-3 sm:px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden sm:table-cell">
+                          Asset
+                        </th>
+                        <th className="text-left py-3 px-3 sm:px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider hidden md:table-cell">
+                          Date
+                        </th>
+                        <th className="text-left py-3 px-3 sm:px-4 text-xs font-semibold text-muted-foreground uppercase tracking-wider">
+                          Hash
+                        </th>
+                      </tr>
+                    </thead>
                   <tbody>
                     {transactions.map((tx, index) => {
                       const statusIcon =
@@ -313,40 +314,39 @@ export default function WalletPage() {
                             index === transactions.length - 1 ? "border-0" : ""
                           }`}
                         >
-                          <td className="py-4 px-4">
-                            <Badge className={statusColor}>
+                          <td className="py-3 sm:py-4 px-3 sm:px-4">
+                            <Badge className={statusColor + " text-xs"}>
                               {statusIcon}
-                              <span className="ml-1 capitalize text-xs">
+                              <span className="ml-1 capitalize hidden sm:inline">
                                 {tx.status || "unknown"}
                               </span>
                             </Badge>
                           </td>
-                          <td className="py-4 px-4">
-                            <span className="text-foreground font-medium">
+                          <td className="py-3 sm:py-4 px-3 sm:px-4">
+                            <span className="text-foreground font-medium text-sm sm:text-base">
                               {tx.amount || "0"}
                             </span>
                           </td>
-                          <td className="py-4 px-4">
-                            <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20">
+                          <td className="py-3 sm:py-4 px-3 sm:px-4 hidden sm:table-cell">
+                            <Badge className="bg-blue-500/10 text-blue-600 border-blue-500/20 text-xs">
                               {tx.token || "N/A"}
                             </Badge>
                           </td>
-                          <td className="py-4 px-4">
-                            <span className="text-muted-foreground text-sm">
+                          <td className="py-3 sm:py-4 px-3 sm:px-4 hidden md:table-cell">
+                            <span className="text-muted-foreground text-xs sm:text-sm">
                               {formatDate(tx.timestamp)}
                             </span>
                           </td>
-                          <td className="py-4 px-4">
+                          <td className="py-3 sm:py-4 px-3 sm:px-4">
                             {tx.txHash ? (
-                              <div className="flex items-center gap-2">
-                                <span className="text-muted-foreground font-mono text-xs">
-                                  {tx.txHash.slice(0, 10)}...
-                                  {tx.txHash.slice(-8)}
+                              <div className="flex items-center gap-1 sm:gap-2">
+                                <span className="text-muted-foreground font-mono text-xs truncate max-w-[80px] sm:max-w-none">
+                                  {tx.txHash.slice(0, 6)}...{tx.txHash.slice(-4)}
                                 </span>
                                 <Button
                                   size="sm"
                                   variant="ghost"
-                                  className="h-6 w-6 p-0 hover:bg-muted"
+                                  className="h-8 w-8 sm:h-6 sm:w-6 p-0 hover:bg-muted min-h-[44px] min-w-[44px] sm:min-h-0 sm:min-w-0 flex-shrink-0"
                                   onClick={() =>
                                     window.open(
                                       `https://basescan.org/tx/${tx.txHash}`,
@@ -354,11 +354,11 @@ export default function WalletPage() {
                                     )
                                   }
                                 >
-                                  <ExternalLink className="w-3 h-3" />
+                                  <ExternalLink className="w-3.5 h-3.5 sm:w-3 sm:h-3" />
                                 </Button>
                               </div>
                             ) : (
-                              <span className="text-gray-500 text-xs">N/A</span>
+                              <span className="text-muted-foreground text-xs">N/A</span>
                             )}
                           </td>
                         </tr>
