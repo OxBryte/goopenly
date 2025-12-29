@@ -210,130 +210,203 @@ export default function DashboardPage() {
           </div>
         </div>
 
-        {/* Sales Activity Heatmap */}
+        {/* Sales Trend Chart */}
         <div>
           <h2 className="text-base sm:text-lg font-semibold text-foreground mb-3 sm:mb-4 px-1">
-            Sales Activity Heatmap (Last 6 Months)
+            Sales Trend (Last 6 Months)
           </h2>
           <div className="bg-card border border-border rounded-lg p-3 sm:p-4 md:p-6">
-            <div className="overflow-x-auto">
-              <div className="inline-block min-w-full">
-                {/* Month labels - showing last 6 months */}
-                <div className="flex mb-3 ml-16">
-                  {(() => {
-                    const months = [];
-                    const today = new Date();
-                    for (let i = 5; i >= 0; i--) {
-                      const date = new Date(today);
-                      date.setMonth(date.getMonth() - i);
-                      months.push(
-                        date.toLocaleDateString("en-US", { month: "short" })
-                      );
+            {(() => {
+              // Prepare chart data from heatmap data
+              const prepareChartData = () => {
+                if (!heatmapData || !heatmapData.weeks || heatmapData.weeks.length === 0) {
+                  // Generate demo data for last 6 months (monthly aggregation)
+                  const months = [];
+                  const today = new Date();
+                  for (let i = 5; i >= 0; i--) {
+                    const date = new Date(today);
+                    date.setMonth(date.getMonth() - i);
+                    const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
+                    const monthEnd = new Date(date.getFullYear(), date.getMonth() + 1, 0);
+                    
+                    // Generate random sales for demo
+                    const sales = Math.floor(Math.random() * 50) + 10;
+                    months.push({
+                      month: monthStart.toLocaleDateString("en-US", { month: "short", year: "numeric" }),
+                      sales: sales,
+                      date: monthStart,
+                    });
+                  }
+                  return months;
+                }
+
+                // Aggregate heatmap data by month
+                const monthlyData: { [key: string]: { sales: number; date: Date } } = {};
+                
+                heatmapData.weeks.forEach((week) => {
+                  week.days.forEach((day) => {
+                    const date = new Date(day.date);
+                    const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
+                    
+                    if (!monthlyData[monthKey]) {
+                      monthlyData[monthKey] = {
+                        sales: 0,
+                        date: new Date(date.getFullYear(), date.getMonth(), 1),
+                      };
                     }
-                    return months.map((month, i) => (
-                      <div
-                        key={i}
-                        className="text-xs text-muted-foreground font-medium"
-                        style={{
-                          width: "calc(100% / 6)",
-                          textAlign: "left",
-                          paddingLeft: "4px",
-                        }}
-                      >
-                        {month}
-                      </div>
-                    ));
-                  })()}
-                </div>
+                    monthlyData[monthKey].sales += day.count;
+                  });
+                });
 
-                {/* Heatmap grid */}
-                <div className="flex gap-2">
-                  {/* Day labels */}
-                  <div className="flex flex-col justify-around text-xs text-muted-foreground pr-3">
-                    <div>Mon</div>
-                    <div>Wed</div>
-                    <div>Fri</div>
+                // Convert to array and sort by date
+                return Object.values(monthlyData)
+                  .sort((a, b) => a.date.getTime() - b.date.getTime())
+                  .map((item) => ({
+                    month: item.date.toLocaleDateString("en-US", { month: "short", year: "numeric" }),
+                    sales: item.sales,
+                    date: item.date,
+                  }));
+              };
+
+              const chartData = prepareChartData();
+              
+              const chartOptions = {
+                chart: {
+                  type: "area" as const,
+                  height: 300,
+                  toolbar: {
+                    show: false,
+                  },
+                  zoom: {
+                    enabled: false,
+                  },
+                  fontFamily: "var(--font-mono)",
+                },
+                dataLabels: {
+                  enabled: false,
+                },
+                stroke: {
+                  curve: "smooth" as const,
+                  width: 3,
+                  colors: ["#003e91"],
+                },
+                fill: {
+                  type: "gradient",
+                  gradient: {
+                    shadeIntensity: 1,
+                    opacityFrom: 0.7,
+                    opacityTo: 0.2,
+                    stops: [0, 100],
+                    colorStops: [
+                      {
+                        offset: 0,
+                        color: "#003e91",
+                        opacity: 0.7,
+                      },
+                      {
+                        offset: 100,
+                        color: "#003e91",
+                        opacity: 0.2,
+                      },
+                    ],
+                  },
+                },
+                colors: ["#003e91"],
+                xaxis: {
+                  categories: chartData.map((d) => d.month),
+                  labels: {
+                    style: {
+                      colors: "var(--muted-foreground)",
+                      fontSize: "12px",
+                      fontFamily: "var(--font-mono)",
+                    },
+                  },
+                  axisBorder: {
+                    show: false,
+                  },
+                  axisTicks: {
+                    show: false,
+                  },
+                },
+                yaxis: {
+                  labels: {
+                    style: {
+                      colors: "var(--muted-foreground)",
+                      fontSize: "12px",
+                      fontFamily: "var(--font-mono)",
+                    },
+                    formatter: (val: number) => Math.floor(val).toString(),
+                  },
+                },
+                grid: {
+                  borderColor: "var(--border)",
+                  strokeDashArray: 4,
+                  xaxis: {
+                    lines: {
+                      show: false,
+                    },
+                  },
+                  yaxis: {
+                    lines: {
+                      show: true,
+                    },
+                  },
+                  padding: {
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                  },
+                },
+                tooltip: {
+                  theme: "light",
+                  style: {
+                    fontFamily: "var(--font-mono)",
+                  },
+                  y: {
+                    formatter: (val: number) => `${val} sales`,
+                  },
+                },
+                markers: {
+                  size: 4,
+                  colors: ["#003e91"],
+                  strokeColors: "#ffffff",
+                  strokeWidth: 2,
+                  hover: {
+                    size: 6,
+                  },
+                },
+              };
+
+              const chartSeries = [
+                {
+                  name: "Sales",
+                  data: chartData.map((d) => d.sales),
+                },
+              ];
+
+              return (
+                <div className="w-full">
+                  <Chart
+                    options={chartOptions}
+                    series={chartSeries}
+                    type="area"
+                    height={300}
+                  />
+                  <div className="flex items-center justify-between mt-4 pt-4 border-t border-border">
+                    <div className="flex items-center gap-2">
+                      <div className="w-3 h-3 rounded-full bg-primary"></div>
+                      <span className="text-xs sm:text-sm text-muted-foreground">
+                        Total Sales: {chartData.reduce((sum, d) => sum + d.sales, 0)}
+                      </span>
+                    </div>
+                    <div className="text-xs text-muted-foreground">
+                      Avg: {Math.round(chartData.reduce((sum, d) => sum + d.sales, 0) / chartData.length)} sales/month
+                    </div>
                   </div>
-
-                  {/* Grid of weeks - 26 weeks for 6 months */}
-                  <div className="flex gap-2">
-                    {Array.from({ length: 26 }).map((_, weekIndex) => (
-                      <div key={weekIndex} className="flex flex-col gap-2">
-                        {Array.from({ length: 7 }).map((_, dayIndex) => {
-                          // Calculate date for this cell
-                          const today = new Date();
-                          const daysAgo = (25 - weekIndex) * 7 + (6 - dayIndex);
-                          const date = new Date(today);
-                          date.setDate(date.getDate() - daysAgo);
-
-                          // Get sales value from API or demo data
-                          const salesValue = getSalesForDate(date);
-
-                          // Determine color intensity (brand blue theme)
-                          let bgColor = "";
-                          let borderColor = "";
-                          if (salesValue === 0) {
-                            bgColor = "bg-muted/40";
-                            borderColor = "border-muted/50";
-                          } else if (salesValue < 15) {
-                            bgColor = "bg-primary/20";
-                            borderColor = "border-primary/30";
-                          } else if (salesValue < 30) {
-                            bgColor = "bg-primary/40";
-                            borderColor = "border-primary/50";
-                          } else if (salesValue < 45) {
-                            bgColor = "bg-primary/60";
-                            borderColor = "border-primary/70";
-                          } else {
-                            bgColor = "bg-primary";
-                            borderColor = "border-primary";
-                          }
-
-                          // Format date for display
-                          const dateStr = date.toLocaleDateString("en-US", {
-                            month: "short",
-                            day: "numeric",
-                            year: "numeric",
-                          });
-
-                          return (
-                            <div
-                              key={dayIndex}
-                              className={`w-3.5 h-3.5 rounded ${bgColor} border ${borderColor} hover:ring-2 hover:ring-primary hover:ring-offset-1 hover:ring-offset-background transition-all cursor-pointer group relative hover:scale-110`}
-                              title={`${dateStr}: ${salesValue} sales`}
-                            >
-                              {/* Tooltip on hover */}
-                              <div className="invisible group-hover:visible absolute z-50 bottom-full left-1/2 -translate-x-1/2 mb-2 px-3 py-2 bg-card border border-border text-foreground text-xs rounded-lg shadow-xl whitespace-nowrap">
-                                <div className="font-semibold">
-                                  {salesValue} sales
-                                </div>
-                                <div className="text-muted-foreground">
-                                  {dateStr}
-                                </div>
-                                <div className="absolute top-full left-1/2 -translate-x-1/2 -mt-px">
-                                  <div className="border-4 border-transparent border-t-card" />
-                                </div>
-                              </div>
-                            </div>
-                          );
-                        })}
-                      </div>
-                    ))}
-                  </div>
                 </div>
-
-                {/* Legend */}
-                <div className="flex gap-2 mt-4 items-center justify-end">
-                  <span className="text-xs text-muted-foreground">Less</span>
-                  <div className="w-3.5 h-3.5 rounded bg-muted/40 border border-muted/50" />
-                  <div className="w-3.5 h-3.5 rounded bg-primary/20 border border-primary/30" />
-                  <div className="w-3.5 h-3.5 rounded bg-primary/40 border border-primary/50" />
-                  <div className="w-3.5 h-3.5 rounded bg-primary/60 border border-primary/70" />
-                  <div className="w-3.5 h-3.5 rounded bg-primary border border-primary" />
-                  <span className="text-xs text-muted-foreground">More</span>
-                </div>
-              </div>
-            </div>
+              );
+            })()}
           </div>
         </div>
 
