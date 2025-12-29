@@ -36,15 +36,19 @@ A professional payment platform that bridges traditional finance and cryptocurre
 
 - **Payment Tracking**: Monitor all incoming payments and transactions
 - **Revenue Analytics**: Track earnings, conversion rates, and performance
+- **Sales Trend Charts**: Beautiful area charts showing sales trends over time
+- **Interactive Visualizations**: ApexCharts with smooth gradients and tooltips
 - **Reconciliation**: Automatic matching of card payments to stablecoin receipts
 - **Real-time Dashboard**: Live updates on payment status and balances
 
 ### 🎨 **User Experience**
 
 - **Professional Design**: Clean, minimal interface with brand identity
-- **Fully Responsive**: Mobile-first, works on all devices (375px+)
+- **Light & Dark Theme**: Light main content with dark sidebar for optimal contrast
+- **Fully Responsive**: Mobile-first, works perfectly on all devices (375px+)
 - **Smooth Animations**: Optimized 60fps Framer Motion interactions
-- **Perfect Dark Mode**: Custom theme with #111111 background
+- **Beautiful Charts**: Interactive ApexCharts visualizations for sales analytics
+- **Touch-Optimized**: 44px+ touch targets for mobile accessibility
 - **Accessible**: WCAG 2.1 AA/AAA compliant
 - **Modern Components**: Tailwind CSS + Radix UI + shadcn/ui
 
@@ -57,6 +61,8 @@ A professional payment platform that bridges traditional finance and cryptocurre
 - **TypeScript** - Type-safe development
 - **Tailwind CSS 4.1.9** - Utility-first styling
 - **Framer Motion** - Smooth animations
+- **ApexCharts** - Interactive chart visualizations
+- **Recharts** - Additional chart components
 - **Radix UI** - Accessible component primitives
 
 ### **Payment Processing**
@@ -412,11 +418,14 @@ The platform features a professional brand identity with:
 
 ### **Design Features**
 
+- **Light & Dark Theme**: Light main content (#ffffff) with dark sidebar (#111111)
 - **Clean Minimal Sidebar**: 280px width with left indicator bars for active pages
 - **Card-Based UI**: Consistent Card components across all pages
 - **Modern Typography**: System fonts with proper hierarchy
-- **Accessible Contrast**: WCAG AAA compliant (16.7:1 in light, 14.8:1 in dark)
+- **Accessible Contrast**: WCAG AAA compliant with optimal readability
 - **Responsive Grids**: 1→2→3→4 column layouts adapting to screen size
+- **Mobile-First**: Hamburger menu, touch-optimized buttons, responsive tables
+- **Beautiful Charts**: Area charts with gradients for sales analytics
 
 ### **Customization**
 
