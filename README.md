@@ -490,24 +490,31 @@ All design tokens are in `app/globals.css`:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ✨ What's New (v2.0)
+## ✨ What's New (v2.1)
 
-### **Complete Redesign**
+### **UI & Design Improvements**
 
-- ✅ Professional brand colors (#003e91 blue, #111111 dark)
-- ✅ Fully responsive mobile-first design
-- ✅ Clean minimal sidebar with edge-to-edge layout
-- ✅ Modern card-based UI across all pages
-- ✅ Optimized code (20+ unused imports removed)
-- ✅ 6-month sales heatmap with brand colors
+- ✅ **Light & Dark Theme**: Light main content with dark sidebar for optimal contrast
+- ✅ **Beautiful Charts**: Replaced heatmap with interactive ApexCharts area chart
+- ✅ **Professional Brand Colors**: #003e91 blue with #111111 dark sidebar
+- ✅ **Modern Modals**: All modals updated with light theme and proper responsiveness
+- ✅ **Enhanced Typography**: Improved text colors and contrast throughout
 
-### **Mobile Experience**
+### **Responsive Design**
 
-- ✅ Hamburger menu with smooth animations
-- ✅ Touch-optimized interface (44px+ targets)
-- ✅ Responsive grids (1→2→3→4 columns)
-- ✅ Works perfectly on phones and tablets
-- ✅ No horizontal scroll, clean layouts
+- ✅ **Fully Responsive**: Mobile-first design works on all devices (375px+)
+- ✅ **Touch-Optimized**: All buttons meet 44px minimum for mobile accessibility
+- ✅ **Responsive Tables**: Tables hide less critical columns on mobile, proper scrolling
+- ✅ **Mobile Navigation**: Hamburger menu with smooth animations
+- ✅ **Responsive Grids**: 1→2→3→4 column layouts adapting to screen size
+- ✅ **No Horizontal Scroll**: Proper overflow handling across all pages
+
+### **Charts & Analytics**
+
+- ✅ **Sales Trend Chart**: Beautiful area chart showing 6-month sales trends
+- ✅ **Interactive Visualizations**: Smooth gradients, tooltips, and hover effects
+- ✅ **Monthly Aggregation**: Clean data presentation with summary statistics
+- ✅ **ApexCharts Integration**: Professional chart library for analytics
 
 ### **Code Quality**
 
@@ -516,6 +523,7 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Consistent design system
 - ✅ Reusable components
 - ✅ 12+ documentation pages
+- ✅ Optimized responsive patterns
 
 ---
 
@@ -582,4 +590,4 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 _Openly - Where traditional payments meet crypto_
 
-**Version 2.0** - Optimized, Responsive, Production-Ready
+**Version 2.1** - Light Theme, Beautiful Charts, Fully Responsive
