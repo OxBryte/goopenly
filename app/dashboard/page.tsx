@@ -74,29 +74,6 @@ export default function DashboardPage() {
         })
       : [];
 
-  // Helper function to get sales value for a specific date from heatmap data
-  const getSalesForDate = (date: Date): number => {
-    if (!heatmapData || !heatmapData.weeks || heatmapData.weeks.length === 0) {
-      // Fallback to demo data if API data not available
-      const seed = Math.floor(Math.random() * 365);
-      return Math.floor(
-        Math.sin(seed * 0.5) * 30 +
-          Math.cos(seed * 0.3) * 20 +
-          Math.random() * 25 +
-          10
-      );
-    }
-
-    const dateStr = date.toISOString().split("T")[0];
-    // Search through weeks and days
-    for (const week of heatmapData.weeks) {
-      const dayData = week.days.find((d) => d.date === dateStr);
-      if (dayData) {
-        return dayData.count;
-      }
-    }
-    return 0;
-  };
 
   const handleTransactionClick = (transaction: any) => {
     setSelectedTransaction(transaction);
