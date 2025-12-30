@@ -44,3 +44,5 @@ export default function DashboardPageLayout({
 // Export the new layout components
 export { ResponsiveLayoutWrapper } from "./responsive-wrapper";
 export { MainLayout } from "./main-layout";
+export { Navbar } from "../navbar";
+export { TabsNav } from "../tabs-nav";
