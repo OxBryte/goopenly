@@ -3,8 +3,6 @@ import "./globals.css";
 import { Metadata } from "next";
 import { V0Provider } from "../lib/v0-context";
 import localFont from "next/font/local";
-import { SidebarProvider } from "../components/ui/sidebar";
-import { DashboardSidebar } from "../components/dashboard/sidebar";
 import { Providers } from "../components/providers";
 import { headers } from "next/headers";
 import React from "react";
@@ -58,9 +56,7 @@ export default async function RootLayout({
         >
           <Providers cookies={cookies}>
             <V0Provider isV0={isV0}>
-              <SidebarProvider>
-                <main className="min-h-screen bg-background">{children}</main>
-              </SidebarProvider>
+              {children}
             </V0Provider>
           </Providers>
         </body>
