@@ -14,7 +14,6 @@ const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function DashboardPage() {
   const { user, isLoaded } = useUser();
-  const router = useRouter();
 
   // Fetch real data from API
   const { earnings } = useEarnings();
