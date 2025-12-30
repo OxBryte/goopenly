@@ -50,7 +50,6 @@ export default function DashboardPage() {
           <p className="text-muted-foreground mb-6">
             You need to be signed in to access the dashboard.
           </p>
-          <Button onClick={() => router.push("/")}>Go to Login</Button>
         </div>
       </div>
     );
