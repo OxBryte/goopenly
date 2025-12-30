@@ -4,23 +4,13 @@ import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { cn } from "@/lib/utils";
-import { Package, CreditCard, BarChart3, Wallet } from "lucide-react";
+import { BarChart3, Wallet, CreditCard } from "lucide-react";
 
 const navItems = [
   {
     title: "Dashboard",
     url: "/dashboard",
     icon: BarChart3,
-  },
-  {
-    title: "Links",
-    url: "/links",
-    icon: Package,
-  },
-  {
-    title: "Transactions",
-    url: "/transactions",
-    icon: CreditCard,
   },
   {
     title: "Wallet",
@@ -31,6 +21,11 @@ const navItems = [
     title: "Analytics",
     url: "/analytics",
     icon: BarChart3,
+  },
+  {
+    title: "Subscription",
+    url: "/subscription",
+    icon: CreditCard,
   },
 ];
 
