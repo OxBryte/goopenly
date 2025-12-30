@@ -11,8 +11,6 @@ import {
   DollarSign,
 } from "lucide-react";
 import dynamic from "next/dynamic";
-import { ProductLinkModal } from "@/components/payment/product-link-modal";
-import { PaymentLinkCreatorModal } from "@/components/ui/payment-link-creator-modal";
 import MonkeyIcon from "@/components/icons/monkey";
 import {
   useEarnings,
@@ -43,7 +41,6 @@ export default function DashboardPage() {
     (productStats?.total ?? 0) + (paymentLinkStats?.total ?? 0);
   const activeLinks =
     (productStats?.active ?? 0) + (paymentLinkStats?.active ?? 0);
-  const [isPaymentLinkModalOpen, setIsPaymentLinkModalOpen] = useState(false);
 
   if (!isLoaded) {
     return (
@@ -74,25 +71,10 @@ export default function DashboardPage() {
     <>
       <div className="w-full space-y-6 mx-auto">
         {/* Header */}
-        <div className="w-full flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 sm:gap-4">
+        <div className="w-full">
           <h1 className="text-lg sm:text-xl font-bold text-foreground">
             Welcome back, {user.firstName || user.username}!
           </h1>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 w-full sm:w-auto">
-            <Button
-              className="bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto whitespace-nowrap font-semibold"
-              onClick={() => setIsPaymentLinkModalOpen(true)}
-            >
-              Create Payment Link
-            </Button>
-            <Button
-              variant="outline"
-              className="border-border text-foreground hover:bg-muted w-full sm:w-auto whitespace-nowrap"
-              onClick={() => setIsProductLinkModalOpen(true)}
-            >
-              Create Product Link
-            </Button>
-          </div>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
           {/* Wallet Balance Card - Credit Card Design */}
