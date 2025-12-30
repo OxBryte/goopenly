@@ -1,12 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import DashboardPageLayout from "@/components/dashboard/layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Sparkles, Zap, Crown, ArrowRight } from "lucide-react";
+import { Check, Sparkles, Zap, Crown, ArrowRight, TrendingUp } from "lucide-react";
 import { BarChart3 } from "lucide-react";
+import { motion } from "framer-motion";
 
 interface Plan {
   id: string;
