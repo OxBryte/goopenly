@@ -36,6 +36,6 @@ export default function DashboardPageLayout({
   );
 }
 
-// Export the new responsive components
+// Export the new layout components
 export { ResponsiveLayoutWrapper } from "./responsive-wrapper";
-export { MobileHeader } from "../mobile-header";
+export { MainLayout } from "./main-layout";
