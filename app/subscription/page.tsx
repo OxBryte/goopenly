@@ -5,7 +5,14 @@ import DashboardPageLayout from "@/components/dashboard/layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Check, Sparkles, Zap, Crown, ArrowRight, TrendingUp } from "lucide-react";
+import {
+  Check,
+  Sparkles,
+  Zap,
+  Crown,
+  ArrowRight,
+  TrendingUp,
+} from "lucide-react";
 import { BarChart3 } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -142,7 +149,8 @@ export default function SubscriptionPage() {
               Choose Your Plan
             </h2>
             <p className="text-lg text-muted-foreground mt-2">
-              Start free, upgrade as you grow. All plans include our core features.
+              Start free, upgrade as you grow. All plans include our core
+              features.
             </p>
           </motion.div>
 
@@ -181,9 +189,7 @@ export default function SubscriptionPage() {
                 initial={{ opacity: 0, y: 30 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ delay: index * 0.1, duration: 0.5 }}
-                className={`relative ${
-                  isPopular ? "md:-mt-4 md:mb-4" : ""
-                }`}
+                className={`relative ${isPopular ? "md:-mt-4 md:mb-4" : ""}`}
               >
                 {isPopular && (
                   <motion.div
@@ -230,11 +236,12 @@ export default function SubscriptionPage() {
                         <span className="text-4xl font-bold text-foreground">
                           {plan.price}
                         </span>
-                        {plan.period !== "forever" && plan.period !== "pricing" && (
-                          <span className="text-muted-foreground">
-                            /{plan.period}
-                          </span>
-                        )}
+                        {plan.period !== "forever" &&
+                          plan.period !== "pricing" && (
+                            <span className="text-muted-foreground">
+                              /{plan.period}
+                            </span>
+                          )}
                       </div>
                     </div>
 
@@ -330,7 +337,9 @@ export default function SubscriptionPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-sm text-foreground">Payment Links</td>
+                    <td className="p-4 text-sm text-foreground">
+                      Payment Links
+                    </td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
                       1
                     </td>
@@ -378,7 +387,9 @@ export default function SubscriptionPage() {
                     </td>
                   </tr>
                   <tr>
-                    <td className="p-4 text-sm text-foreground">Custom Branding</td>
+                    <td className="p-4 text-sm text-foreground">
+                      Custom Branding
+                    </td>
                     <td className="p-4 text-center text-sm text-muted-foreground">
                       —
                     </td>
@@ -439,4 +450,3 @@ export default function SubscriptionPage() {
     </DashboardPageLayout>
   );
 }
-
