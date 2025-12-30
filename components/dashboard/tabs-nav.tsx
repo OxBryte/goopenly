@@ -38,7 +38,7 @@ export function TabsNav() {
   const pathname = usePathname();
 
   return (
-    <div className="w-full border-b border-border bg-background sticky z-40">
+    <div className="w-full border-b border-border bg-background sticky top-[46px] z-40">
       <div className="mx-auto max-w-[1270px] px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
           {navItems.map((item) => {
