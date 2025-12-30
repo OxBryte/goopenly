@@ -42,7 +42,9 @@ async function request<T>(
     console.warn("⚠️ No token provided for API request");
   }
 
-  const url = `${API_BASE_URL}${endpoint}`;
+  // Use local API routes if no external API URL is configured
+  const baseUrl = API_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+  const url = `${baseUrl}${endpoint}`;
   console.log("🌐 API Request:", fetchOptions.method || "GET", url);
 
   try {
