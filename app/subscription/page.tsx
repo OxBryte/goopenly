@@ -82,6 +82,28 @@ const plans: Plan[] = [
 export default function SubscriptionPage() {
   const [selectedPlan, setSelectedPlan] = useState<string | null>(null);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [savings] = useState(() => Math.random() * 500 + 100);
+  const [animatedValue, setAnimatedValue] = useState(0);
+
+  // Animate savings counter on mount
+  useEffect(() => {
+    const duration = 2000;
+    const steps = 60;
+    const increment = savings / steps;
+    let current = 0;
+
+    const timer = setInterval(() => {
+      current += increment;
+      if (current >= savings) {
+        setAnimatedValue(savings);
+        clearInterval(timer);
+      } else {
+        setAnimatedValue(current);
+      }
+    }, duration / steps);
+
+    return () => clearInterval(timer);
+  }, [savings]);
 
   const handleSelectPlan = async (planId: string) => {
     if (planId === "free") {
@@ -109,14 +131,42 @@ export default function SubscriptionPage() {
       }}
     >
       <div className="space-y-12">
-        {/* Hero Section */}
-        <div className="text-center space-y-4 max-w-2xl mx-auto">
-          <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
-            Choose Your Plan
-          </h2>
-          <p className="text-lg text-muted-foreground">
-            Start free, upgrade as you grow. All plans include our core features.
-          </p>
+        {/* Hero Section with Unique Savings Counter */}
+        <div className="text-center space-y-6 max-w-2xl mx-auto">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-3xl lg:text-4xl font-bold text-foreground">
+              Choose Your Plan
+            </h2>
+            <p className="text-lg text-muted-foreground mt-2">
+              Start free, upgrade as you grow. All plans include our core features.
+            </p>
+          </motion.div>
+
+          {/* Unique Savings Counter */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.9 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ delay: 0.3, duration: 0.5 }}
+            className="inline-flex items-center gap-3 px-6 py-3 bg-gradient-to-r from-primary/10 to-primary/5 rounded-full border border-primary/20"
+          >
+            <TrendingUp className="h-5 w-5 text-primary" />
+            <div className="text-left">
+              <p className="text-xs text-muted-foreground">Total Savings</p>
+              <p className="text-2xl font-bold text-primary">
+                ${animatedValue.toFixed(2)}
+              </p>
+            </div>
+            <div className="text-left ml-4 pl-4 border-l border-primary/20">
+              <p className="text-xs text-muted-foreground">This Month</p>
+              <p className="text-sm font-semibold text-foreground">
+                vs Traditional Processors
+              </p>
+            </div>
+          </motion.div>
         </div>
 
         {/* Pricing Cards with Unique Animations */}
