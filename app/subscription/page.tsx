@@ -5,13 +5,7 @@ import DashboardPageLayout from "@/components/dashboard/layout";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import {
-  Check,
-  Sparkles,
-  Zap,
-  Crown,
-  ArrowRight,
-} from "lucide-react";
+import { Check, Sparkles, Zap, Crown, ArrowRight } from "lucide-react";
 import { BarChart3 } from "lucide-react";
 
 interface Plan {
@@ -113,7 +107,8 @@ export default function SubscriptionPage() {
             Choose Your Plan
           </h2>
           <p className="text-lg text-muted-foreground">
-            Start free, upgrade as you grow. All plans include our core features.
+            Start free, upgrade as you grow. All plans include our core
+            features.
           </p>
         </div>
 
@@ -360,7 +355,10 @@ export default function SubscriptionPage() {
                   "Yes, we offer a 30-day money-back guarantee on all paid plans.",
               },
             ].map((faq, index) => (
-              <Card key={index} className="p-5 border hover:border-primary/30 transition-colors">
+              <Card
+                key={index}
+                className="p-5 border hover:border-primary/30 transition-colors"
+              >
                 <h4 className="font-medium text-foreground mb-2">
                   {faq.question}
                 </h4>
