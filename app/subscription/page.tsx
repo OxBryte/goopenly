@@ -231,7 +231,7 @@ export default function SubscriptionPage() {
                     </Button>
                   </div>
                 </Card>
-              </div>
+              </motion.div>
             );
           })}
         </div>
