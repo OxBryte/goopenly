@@ -67,21 +67,15 @@ export default function PaymentLinkPage() {
   }, [productLink, loading]);
 
   const handleProceedToPayment = async () => {
-    console.log("🚀 Proceed to Payment clicked");
-    console.log("🔗 Product Link:", productLink);
-    console.log("💳 Payment Link URL:", productLink?.paymentLink);
-
     if (!productLink?.paymentLink) {
-      console.error("❌ No payment link available");
+      console.error("No payment link available");
       return;
     }
 
     setProcessingPayment(true);
-    console.log("⏳ Creating payment intent...");
 
     try {
       const intent = await createIntent(productLink.paymentLink);
-      console.log("✅ Payment intent created:", intent);
 
       if (intent) {
         console.log("💳 Client Secret:", intent.clientSecret);
