@@ -9,7 +9,7 @@ import { User } from "@/lib/models/User";
  */
 export async function getAuthUser() {
   const { userId } = await auth();
-  
+
   if (!userId) {
     return null;
   }
@@ -26,10 +26,7 @@ export async function requireAuth(request: NextRequest) {
   const { userId } = await auth();
 
   if (!userId) {
-    return NextResponse.json(
-      { error: "Unauthorized" },
-      { status: 401 }
-    );
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   // Get user from database
@@ -53,4 +50,3 @@ export async function getAuthToken() {
   const { getToken } = await auth();
   return await getToken();
 }
-
