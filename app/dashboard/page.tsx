@@ -13,12 +13,10 @@ import {
 } from "lucide-react";
 import dynamic from "next/dynamic";
 import { ProductLinkModal } from "@/components/payment/product-link-modal";
-import { TransactionReceiptModal } from "@/components/ui/transaction-receipt-modal";
 import { PaymentLinkCreatorModal } from "@/components/ui/payment-link-creator-modal";
 import {
   useEarnings,
   useSalesHeatmap,
-  useTransactions,
 } from "@/lib/hooks/payment";
 import { useProductStats, usePaymentLinkStats } from "@/lib/hooks/product";
 import { useWalletBalance } from "@/lib/hooks/wallet/use-wallet-balance";
@@ -33,7 +31,6 @@ export default function DashboardPage() {
   // Fetch real data from API
   const { earnings } = useEarnings();
   const { heatmapData } = useSalesHeatmap();
-  const { transactions: apiTransactions } = useTransactions({ limit: 5 });
   const { stats: productStats } = useProductStats();
   const { stats: paymentLinkStats } = usePaymentLinkStats();
   const { balance, loading: balanceLoading } = useWalletBalance({
@@ -47,38 +44,6 @@ export default function DashboardPage() {
   const activeLinks =
     (productStats?.active ?? 0) + (paymentLinkStats?.active ?? 0);
   const [isPaymentLinkModalOpen, setIsPaymentLinkModalOpen] = useState(false);
-  const [isReceiptModalOpen, setIsReceiptModalOpen] = useState(false);
-  const [selectedTransaction, setSelectedTransaction] = useState<any>(null);
-
-  // Use API transactions or fallback to demo data
-  const displayTransactions =
-    apiTransactions && apiTransactions.length > 0
-      ? apiTransactions.map((tx) => {
-          return {
-            id: tx.id || "unknown",
-            customer: tx.customerName || tx.customerEmail || "Anonymous",
-            amount: tx.amount ? parseFloat(tx.amount) : 0,
-            status:
-              tx.status === "SUCCEEDED"
-                ? ("completed" as const)
-                : tx.status === "PROCESSING"
-                ? ("pending" as const)
-                : ("failed" as const),
-            date: tx.createdAt
-              ? new Date(tx.createdAt).toLocaleDateString()
-              : "N/A",
-            product: tx.slug || tx.productId || "N/A",
-            email: tx.customerEmail || "",
-            paymentIntentId: tx.paymentIntentId || "",
-          };
-        })
-      : [];
-
-
-  const handleTransactionClick = (transaction: any) => {
-    setSelectedTransaction(transaction);
-    setIsReceiptModalOpen(true);
-  };
 
   if (!isLoaded) {
     return (
