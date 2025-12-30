@@ -54,7 +54,7 @@ export function TabsNav() {
                   "hover:text-foreground border-b-2 border-transparent -mb-px",
                   "min-w-fit whitespace-nowrap",
                   isActive
-                    ? "text-foreground border-b-2 border-primary font-semibold bg-primary/20"
+                    ? "text-foreground border-b-2 border-primary font-semibold bg-secondary/20"
                     : "text-muted-foreground hover:text-foreground/80"
                 )}
               >
