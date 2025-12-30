@@ -56,11 +56,8 @@ export default function PaymentLinkPage() {
   // Log product link details when loaded
   useEffect(() => {
     if (productLink && !loading) {
-      console.log("📄 Payment Link Page Loaded");
-      console.log("🆔 Unique Name:", uniqueName);
-      console.log("🔖 Slug:", slug);
-      console.log("🔗 Product Link Details:", productLink);
-      console.log("📅 Expiration Info:", {
+      // Payment link page loaded
+      // Expiration info:
         expiresAt: productLink.expiresAt,
         isExpired,
         isActive,
