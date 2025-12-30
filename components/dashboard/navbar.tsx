@@ -1,9 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import MonkeyIcon from "@/components/icons/monkey";
-import { Wallet } from "lucide-react";
+import { WalletConnectButton } from "@/components/wallet/wallet-connect-button";
 import { cn } from "@/lib/utils";
 
 interface NavbarProps {
@@ -32,15 +31,8 @@ export function Navbar({ className }: NavbarProps) {
           </span>
         </Link>
 
-        {/* Right: Wallet Icon */}
-        <Button
-          variant="ghost"
-          size="icon"
-          className="h-8 w-8 hover:bg-muted"
-          aria-label="Wallet"
-        >
-          <Wallet className="h-5 w-5" />
-        </Button>
+        {/* Right: Wallet Connect Button */}
+        <WalletConnectButton />
       </div>
     </nav>
   );
