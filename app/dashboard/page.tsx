@@ -13,6 +13,7 @@ import {
 import dynamic from "next/dynamic";
 import { ProductLinkModal } from "@/components/payment/product-link-modal";
 import { PaymentLinkCreatorModal } from "@/components/ui/payment-link-creator-modal";
+import MonkeyIcon from "@/components/icons/monkey";
 import {
   useEarnings,
   useSalesHeatmap,
