@@ -21,7 +21,10 @@ export function Navbar({ className }: NavbarProps) {
     >
       <div className="mx-auto max-w-[1270px] h-full px-4 sm:px-6 lg:px-8 flex items-center justify-between">
         {/* Left: Logo */}
-        <Link href="/dashboard" className="flex items-center gap-2 hover:opacity-80 transition-opacity">
+        <Link
+          href="/dashboard"
+          className="flex items-center gap-2 hover:opacity-80 transition-opacity"
+        >
           <div className="flex items-center justify-center">
             <MonkeyIcon className="size-6" />
           </div>
@@ -43,4 +46,3 @@ export function Navbar({ className }: NavbarProps) {
     </nav>
   );
 }
-
