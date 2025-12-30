@@ -1,13 +1,23 @@
 /**
  * Base API Client
  * Handles authentication and common request logic
- * Uses local Next.js API routes instead of external API
+ * Uses local Next.js API routes by default, or external API if configured
  */
 
-// Use local API routes by default, fallback to external API if configured
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
-  (typeof window !== 'undefined' ? window.location.origin : '') || 
-  '';
+// Use external API if configured, otherwise use local API routes
+const getApiBaseUrl = () => {
+  if (process.env.NEXT_PUBLIC_API_URL) {
+    return process.env.NEXT_PUBLIC_API_URL;
+  }
+  
+  // Use local API routes
+  if (typeof window !== 'undefined') {
+    return window.location.origin;
+  }
+  
+  // Server-side: use localhost or environment variable
+  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
+};
 
 interface RequestOptions extends RequestInit {
   token?: string;
@@ -42,8 +52,7 @@ async function request<T>(
     console.warn("⚠️ No token provided for API request");
   }
 
-  // Use local API routes if no external API URL is configured
-  const baseUrl = API_BASE_URL || (typeof window !== 'undefined' ? window.location.origin : '');
+  const baseUrl = getApiBaseUrl();
   const url = `${baseUrl}${endpoint}`;
   console.log("🌐 API Request:", fetchOptions.method || "GET", url);
 
