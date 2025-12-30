@@ -23,11 +23,18 @@ export async function GET(request: NextRequest) {
     }
 
     // Get balance from Blockradar
-    const balance = await getWalletBalance(dbUser.blockradarWalletId);
+    const balanceResult = await getWalletBalance(dbUser.blockradarWalletId);
+
+    if (!balanceResult.success) {
+      return NextResponse.json(
+        { error: balanceResult.error || "Failed to fetch balance" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
-      data: balance,
+      data: balanceResult.balance,
     });
   } catch (error) {
     console.error("Error fetching wallet balance:", error);

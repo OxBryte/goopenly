@@ -1,9 +1,13 @@
 /**
  * Base API Client
  * Handles authentication and common request logic
+ * Uses local Next.js API routes instead of external API
  */
 
-const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
+// Use local API routes by default, fallback to external API if configured
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || 
+  (typeof window !== 'undefined' ? window.location.origin : '') || 
+  '';
 
 interface RequestOptions extends RequestInit {
   token?: string;
