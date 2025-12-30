@@ -378,24 +378,6 @@ export default function DashboardPage() {
         </div>
 
       </div>
-
-      {/* Product Link Modal */}
-      <ProductLinkModal
-        isOpen={isProductLinkModalOpen}
-        onClose={() => setIsProductLinkModalOpen(false)}
-        onSuccess={(product: any) => {
-          setIsProductLinkModalOpen(false);
-        }}
-      />
-
-      {/* Payment Link Creator Modal */}
-      <PaymentLinkCreatorModal
-        isOpen={isPaymentLinkModalOpen}
-        onClose={() => setIsPaymentLinkModalOpen(false)}
-        onSuccess={(paymentLink) => {
-          setIsPaymentLinkModalOpen(false);
-        }}
-      />
     </>
   );
 }
