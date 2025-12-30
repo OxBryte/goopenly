@@ -9,7 +9,7 @@ export default function DashboardLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ResponsiveLayoutWrapper showUniqueNameModal={true}>
+    <ResponsiveLayoutWrapper showUniqueNameModal={false}>
       {children}
     </ResponsiveLayoutWrapper>
   );
