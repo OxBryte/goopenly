@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Wallet } from "lucide-react";
 import {
@@ -59,15 +59,15 @@ export function WalletConnectButton() {
     setIsOpen(false);
   };
 
-  // Check if wallet is already connected
-  useState(() => {
+  // Check if wallet is already connected on mount
+  useEffect(() => {
     if (typeof window !== "undefined") {
       const savedAddress = localStorage.getItem("walletAddress");
       if (savedAddress) {
         setConnectedAddress(savedAddress);
       }
     }
-  });
+  }, []);
 
   return (
     <>
