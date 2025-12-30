@@ -119,36 +119,47 @@ export default function SubscriptionPage() {
           </p>
         </div>
 
-        {/* Pricing Cards */}
+        {/* Pricing Cards with Unique Animations */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-          {plans.map((plan) => {
+          {plans.map((plan, index) => {
             const Icon = plan.icon;
             const isPopular = plan.popular;
 
             return (
-              <div
+              <motion.div
                 key={plan.id}
+                initial={{ opacity: 0, y: 30 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: index * 0.1, duration: 0.5 }}
                 className={`relative ${
                   isPopular ? "md:-mt-4 md:mb-4" : ""
                 }`}
               >
                 {isPopular && (
-                  <div className="absolute -top-4 left-1/2 -translate-x-1/2 z-10">
-                    <Badge className="bg-primary text-primary-foreground px-4 py-1">
+                  <motion.div
+                    initial={{ opacity: 0, scale: 0.8 }}
+                    animate={{ opacity: 1, scale: 1 }}
+                    transition={{ delay: 0.3, type: "spring" }}
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 z-10"
+                  >
+                    <Badge className="bg-primary text-primary-foreground px-4 py-1 shadow-lg">
                       Most Popular
                     </Badge>
-                  </div>
+                  </motion.div>
                 )}
 
                 <Card
-                  className={`h-full flex flex-col border-2 transition-all hover:shadow-lg ${
+                  className={`h-full flex flex-col border-2 transition-all hover:shadow-lg hover:scale-[1.02] ${
                     isPopular
                       ? "border-primary shadow-md"
                       : "border-border hover:border-primary/30"
                   }`}
                 >
-                  <div
+                  <motion.div
                     className={`h-2 bg-gradient-to-r ${plan.gradient} rounded-t-lg`}
+                    initial={{ width: 0 }}
+                    animate={{ width: "100%" }}
+                    transition={{ delay: index * 0.1 + 0.2, duration: 0.6 }}
                   />
 
                   <div className="p-6 flex-1 flex flex-col">
