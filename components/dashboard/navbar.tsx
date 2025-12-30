@@ -32,14 +32,14 @@ export function Navbar({ className }: NavbarProps) {
           </span>
         </Link>
 
-        {/* Right: Connect Wallet */}
+        {/* Right: Wallet Icon */}
         <Button
-          variant="outline"
-          size="sm"
-          className="h-8 px-3 gap-2 border-border hover:bg-muted"
+          variant="ghost"
+          size="icon"
+          className="h-8 w-8 hover:bg-muted"
+          aria-label="Wallet"
         >
-          <Wallet className="h-4 w-4" />
-          <span className="text-sm font-medium">Connect Wallet</span>
+          <Wallet className="h-5 w-5" />
         </Button>
       </div>
     </nav>
