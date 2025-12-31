@@ -204,10 +204,6 @@ Openly/
 6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
-## 🤖 Auto-Commit (Optional)
-
-Enable automatic git commits during development:
-
 ### Quick Start
 
 ```bash
