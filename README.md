@@ -222,21 +222,6 @@ npm run auto-commit:interval
 - ✅ Optional auto-push to remote
 - ✅ Graceful shutdown handling
 
-### Configuration
-
-Edit `.autocommitrc.json` to customize:
-
-```json
-{
-  "debounceTime": 5000,
-  "intervalMinutes": 5,
-  "autoPush": false,
-  "branch": "main"
-}
-```
-
-For detailed instructions, see the auto-commit scripts in `/scripts/`.
-
 ## 🔌 API Integration
 
 ### Backend API
