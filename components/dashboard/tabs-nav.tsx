@@ -36,9 +36,10 @@ export function TabsNav() {
       <div className="mx-auto max-w-[1270px] px-4 sm:px-6 lg:px-8 py-2">
         <div className="flex items-center gap-1 overflow-x-auto scrollbar-hide">
           {navItems.map((item) => {
-            const isActive = pathname === item.url || 
+            const isActive =
+              pathname === item.url ||
               (item.url !== "/dashboard" && pathname?.startsWith(item.url));
-            
+
             return (
               <Link
                 key={item.url}
@@ -62,4 +63,3 @@ export function TabsNav() {
     </div>
   );
 }
-
