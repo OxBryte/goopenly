@@ -406,27 +406,6 @@ All design tokens are in `app/globals.css`:
 }
 ```
 
-## 🚀 Deployment
-
-### Vercel (Recommended)
-
-1. **Connect your repository** to Vercel
-2. **Set environment variables** in Vercel dashboard
-3. **Deploy** automatically on push
-
-### Manual Deployment
-
-1. **Build the application**
-
-   ```bash
-   npm run build
-   ```
-
-2. **Start production server**
-   ```bash
-   npm start
-   ```
-
 ## 🔒 Security
 
 - **Stripe Security**: PCI-compliant payment processing
