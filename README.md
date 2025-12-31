@@ -267,19 +267,6 @@ function Dashboard() {
 }
 ```
 
-### Documentation
-
-**Complete guides available:**
-
-- [📋 Product Requirements](./docs/PRD.md) - Comprehensive PRD
-- [🔌 API Integration](./docs/API_INTEGRATION.md) - API usage guide
-- [⚡ Quick Start](./docs/QUICK_START.md) - Get started in 5 minutes
-- [💳 Payment Flow](./docs/PAYMENT_FLOW_EXAMPLE.md) - Implementation examples
-- [🎨 Color Scheme](./docs/COLOR_SCHEME.md) - Brand colors and design tokens
-- [📱 Responsive Design](./docs/RESPONSIVE_DESIGN.md) - Mobile-first patterns
-- [🚀 Optimization Report](./docs/OPTIMIZATION_REPORT.md) - Code audit results
-- [📁 Folder Structure](./docs/FOLDER_STRUCTURE.md) - Architecture overview
-
 ## 🔧 Configuration
 
 ### Stripe Setup
