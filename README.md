@@ -486,33 +486,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 📚 Documentation Index
-
-**Getting Started:**
-
-- [Quick Start Guide](./docs/QUICK_START.md)
-- [Payment Flow Example](./docs/PAYMENT_FLOW_EXAMPLE.md)
-
-**Design & UX:**
-
-- [Color Scheme](./docs/COLOR_SCHEME.md)
-- [Responsive Design](./docs/RESPONSIVE_DESIGN.md)
-- [Sidebar Design](./docs/SIDEBAR_REDESIGN.md)
-- [Products Page](./docs/PRODUCTS_REDESIGN.md)
-
-**Technical:**
-
-- [API Integration](./docs/API_INTEGRATION.md)
-- [Folder Structure](./docs/FOLDER_STRUCTURE.md)
-- [Optimization Report](./docs/OPTIMIZATION_REPORT.md)
-
-**Product:**
-
-- [Product Requirements](./docs/PRD.md)
-- [All Improvements](./docs/ALL_IMPROVEMENTS.md)
-
----
-
 **Built with ❤️ for the payment community**
 
 _Openly - Where traditional payments meet crypto_
