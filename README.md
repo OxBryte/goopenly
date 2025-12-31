@@ -406,12 +406,6 @@ All design tokens are in `app/globals.css`:
 }
 ```
 
-### **Documentation**
-
-- [Color Scheme Guide](./docs/COLOR_SCHEME.md) - Complete color system
-- [Responsive Design](./docs/RESPONSIVE_DESIGN.md) - Mobile-first implementation
-- [UI Components](./docs/PRODUCTS_REDESIGN.md) - Component patterns
-
 ## 🚀 Deployment
 
 ### Vercel (Recommended)
