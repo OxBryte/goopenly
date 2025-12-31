@@ -473,15 +473,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
-## 🆘 Support
-
-- **Documentation**: 12+ guides in `/docs` directory
-- **Quick Start**: [docs/QUICK_START.md](./docs/QUICK_START.md)
-- **Issues**: Create an issue on GitHub
-- **Discussions**: Use GitHub Discussions for questions
-
----
-
 ## 🙏 Acknowledgments
 
 - **Stripe** - Payment processing infrastructure
