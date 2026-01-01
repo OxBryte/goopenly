@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
     oneYearAgo.setDate(oneYearAgo.getDate() - 365);
 
     const payments = await Payment.find({
-      sellerId: dbUser.clerkId || dbUser.walletAddress,
+      sellerId: dbUser._id.toString(),
       status: "completed",
       createdAt: { $gte: oneYearAgo },
     });

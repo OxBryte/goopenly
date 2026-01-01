@@ -33,6 +33,7 @@ export async function PUT(
     }
 
     const userId = dbUser._id.toString();
+    // Support both new (_id) and legacy (clerkId, walletAddress) sellerId formats
     if (product.sellerId !== userId && product.sellerId !== dbUser.walletAddress && product.sellerId !== dbUser.clerkId) {
       return NextResponse.json(
         { error: "Unauthorized" },

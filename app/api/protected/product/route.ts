@@ -37,7 +37,7 @@ export async function POST(request: NextRequest) {
     const priceUSDC = Product.convertUSDToUSDC(validatedData.priceUSD);
 
     const product = await Product.create({
-      sellerId: dbUser.clerkId || dbUser.walletAddress,
+      sellerId: dbUser._id.toString(),
       name: validatedData.name,
       description: validatedData.description,
       priceUSD: validatedData.priceUSD,
@@ -99,7 +99,7 @@ export async function GET(request: NextRequest) {
     const isActive = searchParams.get("isActive");
 
     const query: any = {
-      sellerId: dbUser.clerkId || dbUser.walletAddress,
+      sellerId: dbUser._id.toString(),
     };
 
     if (isActive !== null) {

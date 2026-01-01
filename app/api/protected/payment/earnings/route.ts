@@ -22,7 +22,7 @@ export async function GET(request: NextRequest) {
 
     // Get earnings by status
     const payments = await Payment.find({
-      sellerId: dbUser.clerkId || dbUser.walletAddress,
+      sellerId: dbUser._id.toString(),
       status: status as any,
     });
 

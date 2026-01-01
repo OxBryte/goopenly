@@ -23,7 +23,7 @@ export async function GET(request: NextRequest) {
     const status = searchParams.get("status");
 
     const query: any = {
-      sellerId: dbUser.clerkId || dbUser.walletAddress,
+      sellerId: dbUser._id.toString(),
     };
 
     if (status) {

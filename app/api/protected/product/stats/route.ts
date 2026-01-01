@@ -18,7 +18,7 @@ export async function GET(request: NextRequest) {
     const { dbUser } = authResult;
     await connectDB();
 
-    const sellerId = dbUser.clerkId || dbUser.walletAddress;
+    const sellerId = dbUser._id.toString();
 
     // Get product stats
     const totalProducts = await Product.countDocuments({ sellerId });
