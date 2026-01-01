@@ -157,7 +157,6 @@ interface PaymentLinksResponse {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 async function fetchPaymentLinks(
-  token: string | null,
   { page = 1, limit = 20 }: { page?: number; limit?: number } = {}
 ): Promise<PaymentLinksResponse> {
   let url = `${API_BASE_URL}/protected/payment-link?page=${page}&limit=${limit}`;
