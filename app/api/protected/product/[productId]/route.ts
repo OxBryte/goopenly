@@ -33,7 +33,7 @@ export async function PUT(
     }
 
     const userId = dbUser._id.toString();
-    if (product.sellerId !== userId && product.sellerId !== dbUser.walletAddress) {
+    if (product.sellerId !== userId && product.sellerId !== dbUser.walletAddress && product.sellerId !== dbUser.clerkId) {
       return NextResponse.json(
         { error: "Unauthorized" },
         { status: 403 }
