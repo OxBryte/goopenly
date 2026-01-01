@@ -6,7 +6,6 @@ import localFont from "next/font/local";
 import { Providers } from "../components/providers";
 import { headers } from "next/headers";
 import React from "react";
-import { ClerkProvider } from "@clerk/nextjs";
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -40,27 +39,25 @@ export default async function RootLayout({
   const cookies = headersObj.get("cookie");
 
   return (
-    <ClerkProvider>
-      <html lang="en" className="dark">
-        <head>
-          <link
-            rel="preload"
-            href="/fonts/Rebels-Fett.woff2"
-            as="font"
-            type="font/woff2"
-            crossOrigin="anonymous"
-          />
-        </head>
-        <body
-          className={`${rebelGrotesk.variable} ${robotoMono.variable} antialiased`}
-        >
-          <Providers cookies={cookies}>
-            <V0Provider isV0={isV0}>
-              {children}
-            </V0Provider>
-          </Providers>
-        </body>
-      </html>
-    </ClerkProvider>
+    <html lang="en" className="dark">
+      <head>
+        <link
+          rel="preload"
+          href="/fonts/Rebels-Fett.woff2"
+          as="font"
+          type="font/woff2"
+          crossOrigin="anonymous"
+        />
+      </head>
+      <body
+        className={`${rebelGrotesk.variable} ${robotoMono.variable} antialiased`}
+      >
+        <Providers cookies={cookies}>
+          <V0Provider isV0={isV0}>
+            {children}
+          </V0Provider>
+        </Providers>
+      </body>
+    </html>
   );
 }

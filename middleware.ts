@@ -1,32 +1,66 @@
-import { clerkMiddleware, createRouteMatcher } from "@clerk/nextjs/server";
+import { NextResponse } from "next/server";
+import type { NextRequest } from "next/server";
+import { getToken } from "next-auth/jwt";
 
-const isPublicRoute = createRouteMatcher([
+const publicRoutes = [
   "/",
-  "/sign-in(.*)",
-  "/sign-up(.*)",
-  "/api/webhooks(.*)",
-  "/callback(.*)",
-  "/sso-callback(.*)",
-  "/pay/(.*)",
-  "/demo(.*)",
-  "/test-wallet(.*)",
-]);
+  "/sign-in",
+  "/sign-up",
+  "/api/webhooks",
+  "/api/auth",
+  "/callback",
+  "/sso-callback",
+  "/pay",
+  "/demo",
+  "/test-wallet",
+];
 
-const isProtectedRoute = createRouteMatcher([
-  "/dashboard(.*)",
-  "/products(.*)",
-  "/payments(.*)",
-  "/payment-links(.*)",
-  "/analytics(.*)",
-  "/wallet(.*)",
-]);
+const protectedRoutes = [
+  "/dashboard",
+  "/products",
+  "/payments",
+  "/payment-links",
+  "/analytics",
+  "/wallet",
+  "/subscription",
+  "/links",
+  "/transactions",
+];
 
-export default clerkMiddleware(async (auth, req) => {
-  // Only protect routes that are explicitly marked as protected
-  if (isProtectedRoute(req)) {
-    await auth.protect();
+export async function middleware(request: NextRequest) {
+  const { pathname } = request.nextUrl;
+
+  // Check if route is public
+  const isPublicRoute = publicRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  // Check if route is protected
+  const isProtectedRoute = protectedRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  // Allow public routes
+  if (isPublicRoute) {
+    return NextResponse.next();
   }
-});
+
+  // Protect routes
+  if (isProtectedRoute) {
+    const token = await getToken({
+      req: request,
+      secret: process.env.NEXTAUTH_SECRET,
+    });
+
+    if (!token) {
+      const signInUrl = new URL("/", request.url);
+      signInUrl.searchParams.set("callbackUrl", pathname);
+      return NextResponse.redirect(signInUrl);
+    }
+  }
+
+  return NextResponse.next();
+}
 
 export const config = {
   matcher: [
