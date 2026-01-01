@@ -1,25 +1,24 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { Loader2, CheckCircle } from "lucide-react";
 
 export default function CallbackPage() {
-  const { userId, isLoaded: authLoaded } = useAuth();
-  const { user, isLoaded: userLoaded } = useUser();
+  const { data: session, status: sessionStatus } = useSession();
   const router = useRouter();
   const [status, setStatus] = useState<"loading" | "success">("loading");
 
   useEffect(() => {
     const handleCallback = async () => {
-      // Wait for auth to load
-      if (!authLoaded || !userLoaded) {
+      // Wait for session to load
+      if (sessionStatus === "loading") {
         return;
       }
 
       // Check if user is authenticated
-      if (!userId || !user) {
+      if (sessionStatus === "unauthenticated" || !session?.user) {
         router.push("/");
         return;
       }
@@ -33,7 +32,7 @@ export default function CallbackPage() {
     };
 
     handleCallback();
-  }, [authLoaded, userLoaded, userId, user, router]);
+  }, [sessionStatus, session, router]);
 
   return (
     <div className="min-h-screen bg-background flex items-center justify-center p-4">
