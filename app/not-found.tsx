@@ -2,17 +2,17 @@
 
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useUser } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 import DashboardPageLayout from "@/components/dashboard/layout";
 import CuteRobotIcon from "@/components/icons/cute-robot";
 import { Button } from "@/components/ui/button";
 
 export default function NotFound() {
   const router = useRouter();
-  const { user, isLoaded } = useUser();
+  const { data: session, status } = useSession();
 
   const handleGoBack = () => {
-    if (isLoaded && user) {
+    if (status === "authenticated" && session?.user) {
       router.push("/dashboard");
     } else {
       router.push("/");
@@ -51,7 +51,7 @@ export default function NotFound() {
             onClick={handleGoBack}
             className="mt-4 bg-primary hover:bg-primary/90 text-white"
           >
-            {isLoaded && user ? "Go to Dashboard" : "Go to Home"}
+            {status === "authenticated" && session?.user ? "Go to Dashboard" : "Go to Home"}
           </Button>
         </div>
       </div>
