@@ -200,7 +200,6 @@ async function fetchPaymentLinks(
 }
 
 export function usePaymentLinks(opts?: { page?: number; limit?: number; autoFetch?: boolean }) {
-  const { getToken } = useAuth();
   const [paymentLinks, setPaymentLinks] = useState<PaymentLink[]>([]);
   const [pagination, setPagination] = useState<PaymentLinksResponse["pagination"]>(undefined);
   const [loading, setLoading] = useState(false);
@@ -214,11 +213,7 @@ export function usePaymentLinks(opts?: { page?: number; limit?: number; autoFetc
     setError(null);
 
     try {
-      const token = await getToken();
-      if (!token) {
-        throw new Error("Authentication required");
-      }
-      const result = await fetchPaymentLinks(token, { page: pageNum, limit });
+      const result = await fetchPaymentLinks(undefined, { page: pageNum, limit });
       setPaymentLinks(result.data);
       setPagination(result.pagination);
       setCurrentPage(pageNum);
