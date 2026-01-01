@@ -10,10 +10,7 @@ import {
   DialogHeader,
   DialogTitle,
 } from "@/components/ui/dialog";
-import { useUser } from "@clerk/nextjs";
-
 export function WalletConnectButton() {
-  const { user } = useUser();
   const [isOpen, setIsOpen] = useState(false);
   const [isConnecting, setIsConnecting] = useState(false);
   const [connectedAddress, setConnectedAddress] = useState<string | null>(null);
