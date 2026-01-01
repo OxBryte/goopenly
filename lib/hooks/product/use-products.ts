@@ -4,7 +4,6 @@
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
 import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface Product {
@@ -62,7 +61,6 @@ export function useProducts(
   options: UseProductsOptions = {}
 ): UseProductsReturn {
   const { page = 1, limit = 15, status, autoFetch = true } = options;
-  const { getToken } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(page);
@@ -74,11 +72,6 @@ export function useProducts(
     setError(null);
 
     try {
-      const token = await getToken();
-      if (!token) {
-        throw new Error("Authentication required");
-      }
-
       // Build query params
       const params = new URLSearchParams({
         page: pageNum.toString(),
