@@ -29,7 +29,7 @@ export async function GET(
     // Find product by slug and seller
     const product = await Product.findOne({
       paymentLink: slug.toLowerCase(),
-      sellerId: user.clerkId || user.walletAddress,
+      sellerId: user._id.toString(),
       isActive: true,
     });
 
