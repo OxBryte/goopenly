@@ -1,9 +1,10 @@
 import mongoose, { Schema, Document, Model } from 'mongoose';
 
 export interface IUser extends Document {
-  walletAddress: string;
+  walletAddress?: string;
   clerkId?: string;
-  email?: string;
+  email: string;
+  password: string;
   firstName?: string;
   lastName?: string;
   username?: string;
@@ -19,6 +20,7 @@ export interface IUser extends Document {
 
 interface UserModel extends Model<IUser> {
   findByWalletAddress(walletAddress: string): Promise<IUser | null>;
+  findByEmail(email: string): Promise<IUser | null>;
   findOrCreate(walletAddress: string, email?: string): Promise<IUser>;
   updateOnboardingStatus(walletAddress: string, status: boolean): Promise<IUser | null>;
   updateProfile(walletAddress: string, updates: Partial<IUser>): Promise<IUser | null>;
@@ -28,10 +30,9 @@ const UserSchema: Schema<IUser> = new Schema(
   {
     walletAddress: {
       type: String,
-      required: true,
-      unique: true,
       lowercase: true,
       trim: true,
+      sparse: true,
       index: true,
     },
     clerkId: {
@@ -40,19 +41,18 @@ const UserSchema: Schema<IUser> = new Schema(
       sparse: true,
       trim: true,
     },
-    // Legacy field for backward compatibility - removed unique constraint to avoid conflicts
-    walletAddress: {
-      type: String,
-      lowercase: true,
-      trim: true,
-      default: null,
-    },
     email: {
       type: String,
+      required: true,
       unique: true,
-      sparse: true, // Allows null values to not violate unique constraint
       lowercase: true,
       trim: true,
+      index: true,
+    },
+    password: {
+      type: String,
+      required: true,
+      select: false, // Don't return password by default
     },
     firstName: {
       type: String,
@@ -98,16 +98,12 @@ const UserSchema: Schema<IUser> = new Schema(
   { timestamps: true }
 );
 
-// Pre-save hook to handle legacy address field
-UserSchema.pre('save', function(next) {
-  if (this.isModified('walletAddress') && !this.address) {
-    this.address = this.walletAddress;
-  }
-  next();
-});
-
 UserSchema.statics.findByWalletAddress = async function (walletAddress: string) {
   return this.findOne({ walletAddress });
+};
+
+UserSchema.statics.findByEmail = async function (email: string) {
+  return this.findOne({ email: email.toLowerCase() });
 };
 
 UserSchema.statics.findOrCreate = async function (walletAddress: string, email?: string) {
