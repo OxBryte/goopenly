@@ -83,8 +83,7 @@ export function useProducts(
       }
 
       const response = await apiClient.get<ProductsResponse>(
-        `/protected/product?${params.toString()}`,
-        token
+        `/protected/product?${params.toString()}`
       );
       setProducts(response.data);
       setPagination(response.pagination);
