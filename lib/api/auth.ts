@@ -1,21 +1,28 @@
-import { auth, currentUser } from "@clerk/nextjs/server";
+import { getServerSession } from "next-auth";
 import { NextRequest, NextResponse } from "next/server";
-import connectDB from "@/lib/database";
+import { connectDB } from "@/lib/database";
 import { User } from "@/lib/models/User";
+import { authOptions } from "@/lib/auth";
 
 /**
- * Get authenticated user from Clerk
+ * Get authenticated user from NextAuth session
  * Returns user ID and user object
  */
 export async function getAuthUser() {
-  const { userId } = await auth();
+  const session = await getServerSession(authOptions);
 
-  if (!userId) {
+  if (!session?.user?.id) {
     return null;
   }
 
-  const user = await currentUser();
-  return { userId, user };
+  await connectDB();
+  const dbUser = await User.findById(session.user.id);
+
+  if (!dbUser) {
+    return null;
+  }
+
+  return { userId: session.user.id, user: dbUser };
 }
 
 /**
@@ -23,15 +30,15 @@ export async function getAuthUser() {
  * Returns 401 if user is not authenticated
  */
 export async function requireAuth(request: NextRequest) {
-  const { userId } = await auth();
+  const session = await getServerSession(authOptions);
 
-  if (!userId) {
+  if (!session?.user?.id) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
   // Get user from database
   await connectDB();
-  const dbUser = await User.findOne({ clerkId: userId });
+  const dbUser = await User.findById(session.user.id);
 
   if (!dbUser) {
     return NextResponse.json(
@@ -40,13 +47,12 @@ export async function requireAuth(request: NextRequest) {
     );
   }
 
-  return { userId, dbUser };
+  return { userId: session.user.id, dbUser };
 }
 
 /**
- * Get user's Clerk token for external API calls
+ * Get current session
  */
-export async function getAuthToken() {
-  const { getToken } = await auth();
-  return await getToken();
+export async function getSession() {
+  return await getServerSession(authOptions);
 }
