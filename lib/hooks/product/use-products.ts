@@ -161,9 +161,7 @@ async function fetchPaymentLinks(
 ): Promise<PaymentLinksResponse> {
   let url = `${API_BASE_URL}/protected/payment-link?page=${page}&limit=${limit}`;
   const res = await fetch(url, {
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
+    credentials: 'include', // Include cookies for NextAuth session
   });
   if (!res.ok) {
     let errData: any = {};
@@ -212,7 +210,7 @@ export function usePaymentLinks(opts?: { page?: number; limit?: number; autoFetc
     setError(null);
 
     try {
-      const result = await fetchPaymentLinks(undefined, { page: pageNum, limit });
+      const result = await fetchPaymentLinks({ page: pageNum, limit });
       setPaymentLinks(result.data);
       setPagination(result.pagination);
       setCurrentPage(pageNum);
