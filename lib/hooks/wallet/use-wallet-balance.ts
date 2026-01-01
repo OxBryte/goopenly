@@ -51,8 +51,7 @@ export function useWalletBalance(
 
     try {
       const response = await apiClient.get<WalletBalanceResponse>(
-        `/protected/wallet/balance?chain=${chain}`,
-        token
+        `/protected/wallet/balance?chain=${chain}`
       );
       setBalance(response.data);
     } catch (err) {
