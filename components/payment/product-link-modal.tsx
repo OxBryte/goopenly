@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
-import { useUser } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 import { useCreateProduct } from "@/lib/hooks/product";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -45,7 +45,7 @@ export function ProductLinkModal({
   onClose,
   onSuccess,
 }: ProductLinkModalProps) {
-  const { user } = useUser();
+  const { data: session } = useSession();
   const {
     createProduct,
     loading: creatingProduct,
@@ -120,7 +120,7 @@ export function ProductLinkModal({
     setErrorMessage(null);
 
     try {
-      if (!user?.id) {
+      if (!session?.user?.id) {
         throw new Error("You must be logged in to create a product");
       }
 

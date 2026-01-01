@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { useUser } from "@clerk/nextjs"
+import { useSession } from "next-auth/react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,7 +17,7 @@ interface ProductFormProps {
 }
 
 export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
-  const { user } = useUser()
+  const { data: session } = useSession()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -42,7 +42,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
     
-    if (!user?.id) {
+    if (!session?.user?.id) {
       setError('You must be logged in to create a product')
       return
     }
@@ -57,7 +57,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          sellerId: user.id,
+          sellerId: session.user.id,
           name: formData.name,
           description: formData.description,
           priceUSD: parseFloat(formData.priceUSD),

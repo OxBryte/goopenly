@@ -1,6 +1,6 @@
 "use client";
 
-import { useUser } from "@clerk/nextjs";
+import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import MonkeyIcon from "@/components/icons/monkey";
 import {
@@ -13,7 +13,7 @@ import { useWalletBalance } from "@/lib/hooks/wallet/use-wallet-balance";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function DashboardPage() {
-  const { user, isLoaded } = useUser();
+  const { data: session, status } = useSession();
 
   // Fetch real data from API
   const { earnings } = useEarnings();
@@ -31,7 +31,7 @@ export default function DashboardPage() {
   const activeLinks =
     (productStats?.active ?? 0) + (paymentLinkStats?.active ?? 0);
 
-  if (!isLoaded) {
+  if (status === "loading") {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
@@ -42,7 +42,7 @@ export default function DashboardPage() {
     );
   }
 
-  if (!user) {
+  if (status === "unauthenticated" || !session?.user) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center">
