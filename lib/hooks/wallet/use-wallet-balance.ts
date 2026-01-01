@@ -4,7 +4,6 @@
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
 import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface BalanceItem {
@@ -42,7 +41,6 @@ export function useWalletBalance(
   options: UseWalletBalanceOptions = {}
 ): UseWalletBalanceReturn {
   const { chain = "base-sepolia", autoFetch = true } = options;
-  const { getToken } = useAuth();
   const [balance, setBalance] = useState<WalletBalanceData | null>(null);
   const [loading, setLoading] = useState(autoFetch);
   const [error, setError] = useState<string | null>(null);
@@ -52,11 +50,6 @@ export function useWalletBalance(
     setError(null);
 
     try {
-      const token = await getToken();
-      if (!token) {
-        throw new Error("Authentication required");
-      }
-
       const response = await apiClient.get<WalletBalanceResponse>(
         `/protected/wallet/balance?chain=${chain}`,
         token
