@@ -24,6 +24,9 @@ A professional payment platform that bridges traditional finance and cryptocurre
 
 - **Blockradar Integration**: Secure stablecoin wallet infrastructure
 - **Automatic Conversion**: Card payments automatically converted to stablecoins
+- **Bulk Withdrawals**: Withdraw stablecoins across multiple chains/tokens (up to 10)
+- **Bulk Balance Checks**: Check balances across multiple chains/tokens (up to 15)
+- **Bulk Transaction History**: Query transaction history across multiple chains (up to 8)
 - **Multi-token Support**: USDC, USDT, and other major stablecoins - Base blockchain
 - **Real-time Balances**: Track your stablecoin holdings
 

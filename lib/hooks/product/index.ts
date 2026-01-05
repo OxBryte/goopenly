@@ -8,6 +8,7 @@ export { useCreateProduct } from "./use-create-product";
 export { useUpdateProduct } from "./use-update-product";
 export { useProductStats } from "./use-product-stats";
 export { useProductAnalytics } from "./use-product-analytics";
+export { useBulkProductOperations } from "./use-bulk-product-operations";
 export { usePublicProduct } from "./use-public-product";
 export { usePublicProducts } from "./use-public-products";
 export { usePublicProductLink } from "./use-public-product-link";
