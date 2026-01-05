@@ -7,6 +7,7 @@ export { useEarnings } from "./use-earnings";
 export { useSalesHeatmap } from "./use-sales-heatmap";
 export { useTransactions } from "./use-transactions";
 export { usePaymentIntent } from "./use-payment-intent";
+export { useBulkPaymentOperations } from "./use-bulk-payment-operations";
 
 // Export types
 export type {
