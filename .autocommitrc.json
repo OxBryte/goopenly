@@ -2,7 +2,7 @@
   "enabled": true,
   "mode": "watch",
   "debounceTime": 5000,
-  "intervalMinutes": 5,
+  "intervalMinutes": 0.1,
   "messagePrefix": "🤖 Auto-commit:",
   "autoPush": false,
   "branch": "main",
