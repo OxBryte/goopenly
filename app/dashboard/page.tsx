@@ -16,10 +16,7 @@ export default function DashboardPage() {
   const displayBalance = balanceLoading
     ? "0.00"
     : balance?.balances && balance.balances.length > 0
-    ? parseFloat(balance.balances[0]?.convertedBalance || "0").toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })
+    ? "0.00"
     : "0.00";
 
   return (
