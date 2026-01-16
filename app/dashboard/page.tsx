@@ -34,9 +34,9 @@ interface Category {
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [categories, setCategories] = useState<Category[]>([
-    { id: "1", name: "Spending", balance: 500.0, color: "#3b82f6" },
-    { id: "2", name: "Feeding", balance: 300.0, color: "#10b981" },
-    { id: "3", name: "Gadgets", balance: 750.0, color: "#f59e0b" },
+    { id: "1", name: "Spending", balance: 500.0, color: "#93c5fd" },
+    { id: "2", name: "Feeding", balance: 300.0, color: "#86efac" },
+    { id: "3", name: "Gadgets", balance: 750.0, color: "#fcd34d" },
   ]);
 
   // Dialog states
@@ -55,14 +55,14 @@ export default function DashboardPage() {
   const displayBalance = totalBalance.toFixed(2);
 
   const categoryColors = [
-    "#3b82f6", // Blue
-    "#10b981", // Green
-    "#f59e0b", // Amber
-    "#ef4444", // Red
-    "#8b5cf6", // Purple
-    "#ec4899", // Pink
-    "#06b6d4", // Cyan
-    "#84cc16", // Lime
+    "#93c5fd", // Light Blue
+    "#86efac", // Light Green
+    "#fcd34d", // Light Amber
+    "#fca5a5", // Light Red
+    "#c4b5fd", // Light Purple
+    "#f9a8d4", // Light Pink
+    "#67e8f9", // Light Cyan
+    "#bef264", // Light Lime
   ];
 
   const handleCreateCategory = () => {
