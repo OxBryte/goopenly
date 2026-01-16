@@ -37,6 +37,9 @@ export default function DashboardPage() {
     { id: "1", name: "Spending", balance: 500.0, color: "#93c5fd" },
     { id: "2", name: "Feeding", balance: 300.0, color: "#86efac" },
     { id: "3", name: "Gadgets", balance: 750.0, color: "#fcd34d" },
+    { id: "4", name: "Travel", balance: 1000.0, color: "#fca5a5" },
+    { id: "5", name: "Entertainment", balance: 1500.0, color: "#c4b5fd" },
+    { id: "6", name: "Other", balance: 2000.0, color: "#f9a8d4" },
   ]);
 
   // Dialog states
@@ -218,7 +221,9 @@ export default function DashboardPage() {
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-semibold text-foreground">{category.name}</h3>
+                  <h3 className="font-semibold text-foreground">
+                    {category.name}
+                  </h3>
                 </div>
                 <div className="text-2xl font-bold text-foreground mb-1">
                   ${category.balance.toFixed(2)}
