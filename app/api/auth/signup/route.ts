@@ -59,12 +59,17 @@ export async function POST(request: NextRequest) {
     // Hash PIN (treating it as a password)
     const hashedPin = await bcrypt.hash(validatedData.pin, 12);
 
+    // Generate placeholder email if not provided (for username/PIN accounts)
+    const email = validatedData.email 
+      ? validatedData.email.toLowerCase() 
+      : `${validatedData.username.trim()}@openly.local`.toLowerCase();
+
     // Create user
     const user = await User.create({
       username: validatedData.username.trim(),
       password: hashedPin,
       walletAddress: validatedData.walletAddress.toLowerCase(),
-      email: validatedData.email?.toLowerCase(),
+      email: email,
       isOnboardingComplete: false,
     });
 
