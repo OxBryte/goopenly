@@ -1,11 +1,10 @@
 /**
  * Wallet Withdraw Hook
  * Handles single and batch asset withdrawals
+ * Dummy implementation - returns mock data
  */
 
 import { useState } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface SingleWithdrawData {
   chain: "base" | "base-sepolia";
