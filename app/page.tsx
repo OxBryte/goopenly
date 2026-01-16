@@ -1,12 +1,10 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
-import { signIn } from "next-auth/react";
+import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { useSession } from "next-auth/react";
 import { Wallet, Lock, User, CheckCircle2 } from "lucide-react";
 
 export default function LoginPage() {
@@ -17,17 +15,7 @@ export default function LoginPage() {
   const [walletAddress, setWalletAddress] = useState<string | null>(null);
   const [isConnectingWallet, setIsConnectingWallet] = useState(false);
   const [step, setStep] = useState<"wallet" | "credentials">("wallet");
-  const { data: session, status } = useSession();
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/dashboard";
-
-  // Redirect authenticated users to dashboard
-  useEffect(() => {
-    if (status === "authenticated" && session) {
-      router.push(callbackUrl);
-    }
-  }, [status, session, router, callbackUrl]);
 
   // Check if wallet is already connected on mount
   useEffect(() => {
@@ -39,21 +27,6 @@ export default function LoginPage() {
       }
     }
   }, []);
-
-  // Show loading state while checking auth
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#003e91]/40 border-t-[#003e91] rounded-full animate-spin mx-auto"></div>
-        </div>
-      </div>
-    );
-  }
-
-  if (status === "authenticated") {
-    return null;
-  }
 
   const handleConnectWallet = async () => {
     setIsConnectingWallet(true);
@@ -96,44 +69,17 @@ export default function LoginPage() {
     setIsLoading(true);
     setError("");
 
-    // Validate wallet is connected
+    // Dummy validation - just check wallet is connected
     if (!walletAddress) {
       setError("Please connect your wallet first");
       setIsLoading(false);
       return;
     }
 
-    // Validate inputs
-    if (!username.trim()) {
-      setError("Username is required");
-      setIsLoading(false);
-      return;
-    }
-
-    if (!pin || pin.length < 4) {
-      setError("PIN must be at least 4 digits");
-      setIsLoading(false);
-      return;
-    }
-
-    try {
-      const result = await signIn("credentials", {
-        username,
-        pin,
-        walletAddress,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError(result.error);
-      } else if (result?.ok) {
-        router.push(callbackUrl);
-      }
-    } catch (err: any) {
-      setError(err.message || "Failed to sign in");
-    } finally {
-      setIsLoading(false);
-    }
+    // Simulate a brief loading state
+    setTimeout(() => {
+      router.push("/dashboard");
+    }, 500);
   };
 
   const formatWalletAddress = (address: string) => {
