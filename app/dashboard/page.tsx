@@ -11,7 +11,7 @@ export default function DashboardPage() {
 
   return (
     <div className="w-full mx-auto">
-      <div className="bg-muted/30 rounded-3xl p-6">
+     
         {/* Account Balance Section */}
         <div className="bg-card border border-border rounded-2xl p-6 mb-4">
           <div className="flex items-start justify-between mb-4">
@@ -63,7 +63,6 @@ export default function DashboardPage() {
             </Button>
           </div>
         </div>
-      </div>
     </div>
   );
 }
