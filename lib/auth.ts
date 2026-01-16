@@ -9,37 +9,53 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "Credentials",
       credentials: {
-        email: { label: "Email", type: "email" },
-        password: { label: "Password", type: "password" },
+        username: { label: "Username", type: "text" },
+        pin: { label: "PIN", type: "password" },
+        walletAddress: { label: "Wallet Address", type: "text" },
       },
       async authorize(credentials) {
-        if (!credentials?.email || !credentials?.password) {
-          throw new Error("Email and password are required");
+        if (!credentials?.username || !credentials?.pin) {
+          throw new Error("Username and PIN are required");
+        }
+
+        if (!credentials?.walletAddress) {
+          throw new Error("Wallet connection is required");
         }
 
         await connectDB();
 
-        const user = await User.findOne({ email: credentials.email.toLowerCase() }).select("+password");
+        // Find user by username
+        const user = await User.findOne({ username: credentials.username.trim() }).select("+password");
 
         if (!user || !user.password) {
-          throw new Error("Invalid email or password");
+          throw new Error("Invalid username or PIN");
         }
 
-        const isPasswordValid = await bcrypt.compare(
-          credentials.password,
+        // Verify PIN (stored as hashed password)
+        const isPinValid = await bcrypt.compare(
+          credentials.pin,
           user.password
         );
 
-        if (!isPasswordValid) {
-          throw new Error("Invalid email or password");
+        if (!isPinValid) {
+          throw new Error("Invalid username or PIN");
+        }
+
+        // Verify wallet address matches (if user has wallet address)
+        if (user.walletAddress && user.walletAddress.toLowerCase() !== credentials.walletAddress.toLowerCase()) {
+          throw new Error("Wallet address does not match account");
+        }
+
+        // Update wallet address if not set
+        if (!user.walletAddress && credentials.walletAddress) {
+          user.walletAddress = credentials.walletAddress.toLowerCase();
+          await user.save();
         }
 
         return {
           id: user._id.toString(),
           email: user.email,
-          name: user.firstName && user.lastName 
-            ? `${user.firstName} ${user.lastName}` 
-            : user.username || user.email,
+          name: user.username || user.email,
           image: user.avatar,
         };
       },
