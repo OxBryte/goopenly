@@ -1,21 +1,13 @@
 "use client";
 
 import { useState } from "react";
-import { useWalletBalance } from "@/lib/hooks/wallet/use-wallet-balance";
 import { ArrowUpRight, Eye, EyeOff, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
 export default function DashboardPage() {
-  const { balance, loading: balanceLoading } = useWalletBalance({
-    chain: "base-sepolia",
-    autoFetch: true,
-  });
-
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
 
-  const displayBalance = balanceLoading
-    ? "0.00"
-    : "0.00";
+  const displayBalance = "0.00";
 
   return (
     <div className="w-full max-w-2xl mx-auto">
