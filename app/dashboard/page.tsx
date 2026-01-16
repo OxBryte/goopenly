@@ -2,7 +2,14 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowUpRight, Eye, EyeOff, MoreVertical, Plus, TrendingDown } from "lucide-react";
+import {
+  ArrowUpRight,
+  Eye,
+  EyeOff,
+  MoreVertical,
+  Plus,
+  TrendingDown,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -27,16 +34,16 @@ interface Category {
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [categories, setCategories] = useState<Category[]>([
-    { id: "1", name: "Spending", balance: 500.00, color: "#003e91" },
-    { id: "2", name: "Feeding", balance: 300.00, color: "#0052cc" },
-    { id: "3", name: "Gadgets", balance: 750.00, color: "#0066ff" },
+    { id: "1", name: "Spending", balance: 500.0, color: "#003e91" },
+    { id: "2", name: "Feeding", balance: 300.0, color: "#0052cc" },
+    { id: "3", name: "Gadgets", balance: 750.0, color: "#0066ff" },
   ]);
 
   // Dialog states
   const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
   const [depositOpen, setDepositOpen] = useState(false);
   const [withdrawOpen, setWithdrawOpen] = useState(false);
-  
+
   // Form states
   const [newCategoryName, setNewCategoryName] = useState("");
   const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
@@ -47,52 +54,69 @@ export default function DashboardPage() {
   const totalBalance = categories.reduce((sum, cat) => sum + cat.balance, 0);
   const displayBalance = totalBalance.toFixed(2);
 
-  const categoryColors = ["#003e91", "#0052cc", "#0066ff", "#3385ff", "#66a3ff", "#99c2ff"];
+  const categoryColors = [
+    "#003e91",
+    "#0052cc",
+    "#0066ff",
+    "#3385ff",
+    "#66a3ff",
+    "#99c2ff",
+  ];
 
   const handleCreateCategory = () => {
     if (!newCategoryName.trim()) return;
-    
+
     const newCategory: Category = {
       id: Date.now().toString(),
       name: newCategoryName.trim(),
       balance: 0,
       color: categoryColors[categories.length % categoryColors.length],
     };
-    
+
     setCategories([...categories, newCategory]);
     setNewCategoryName("");
     setCreateCategoryOpen(false);
   };
 
   const handleDeposit = () => {
-    if (!selectedCategoryId || !depositAmount || parseFloat(depositAmount) <= 0) return;
-    
-    setCategories(categories.map(cat =>
-      cat.id === selectedCategoryId
-        ? { ...cat, balance: cat.balance + parseFloat(depositAmount) }
-        : cat
-    ));
-    
+    if (!selectedCategoryId || !depositAmount || parseFloat(depositAmount) <= 0)
+      return;
+
+    setCategories(
+      categories.map((cat) =>
+        cat.id === selectedCategoryId
+          ? { ...cat, balance: cat.balance + parseFloat(depositAmount) }
+          : cat
+      )
+    );
+
     setDepositAmount("");
     setSelectedCategoryId("");
     setDepositOpen(false);
   };
 
   const handleWithdraw = () => {
-    if (!selectedCategoryId || !withdrawAmount || parseFloat(withdrawAmount) <= 0) return;
-    
-    const category = categories.find(cat => cat.id === selectedCategoryId);
+    if (
+      !selectedCategoryId ||
+      !withdrawAmount ||
+      parseFloat(withdrawAmount) <= 0
+    )
+      return;
+
+    const category = categories.find((cat) => cat.id === selectedCategoryId);
     if (!category || category.balance < parseFloat(withdrawAmount)) {
       alert("Insufficient balance in this category");
       return;
     }
-    
-    setCategories(categories.map(cat =>
-      cat.id === selectedCategoryId
-        ? { ...cat, balance: cat.balance - parseFloat(withdrawAmount) }
-        : cat
-    ));
-    
+
+    setCategories(
+      categories.map((cat) =>
+        cat.id === selectedCategoryId
+          ? { ...cat, balance: cat.balance - parseFloat(withdrawAmount) }
+          : cat
+      )
+    );
+
     setWithdrawAmount("");
     setSelectedCategoryId("");
     setWithdrawOpen(false);
@@ -128,30 +152,88 @@ export default function DashboardPage() {
 
         {/* Action Buttons */}
         <div className="flex items-center gap-3">
-          {/* Send Button */}
-          <Button className="w-fit bg-foreground text-background hover:bg-foreground/90 h-11 rounded-full">
+          {/* Deposit Button */}
+          <Button
+            onClick={() => setDepositOpen(true)}
+            className="w-fit bg-foreground text-background hover:bg-foreground/90 h-11 rounded-full"
+          >
             <ArrowUpRight className="w-4 h-4 mr-2" />
-            Send
+            Deposit
           </Button>
 
           {/* Withdraw Button */}
           <Button
+            onClick={() => setWithdrawOpen(true)}
             variant="outline"
             className="w-fit border-border h-11 rounded-full"
           >
+            <TrendingDown className="w-4 h-4 mr-2" />
             Withdraw
           </Button>
 
-          {/* More Options Button */}
+          {/* Create Category Button */}
           <Button
+            onClick={() => setCreateCategoryOpen(true)}
             variant="outline"
             size="icon"
             className="h-11 w-11 rounded-full border-border"
-            aria-label="More options"
+            aria-label="Create category"
           >
-            <MoreVertical className="w-5 h-5" />
+            <Plus className="w-5 h-5" />
           </Button>
         </div>
+      </div>
+
+      {/* Categories Section */}
+      <div className="bg-card border border-border rounded-2xl p-6 mt-4">
+        <div className="flex items-center justify-between mb-4">
+          <h2 className="text-lg font-semibold text-foreground">Categories</h2>
+          <span className="text-sm text-muted-foreground">
+            {categories.length}{" "}
+            {categories.length === 1 ? "category" : "categories"}
+          </span>
+        </div>
+
+        {categories.length === 0 ? (
+          <div className="text-center py-12">
+            <p className="text-muted-foreground mb-4">No categories yet</p>
+            <Button
+              onClick={() => setCreateCategoryOpen(true)}
+              variant="outline"
+            >
+              <Plus className="w-4 h-4 mr-2" />
+              Create Your First Category
+            </Button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {categories.map((category) => (
+              <div
+                key={category.id}
+                className="border border-border rounded-xl p-4 hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-start justify-between mb-3">
+                  <div className="flex items-center gap-2">
+                    <div
+                      className="w-3 h-3 rounded-full"
+                      style={{ backgroundColor: category.color }}
+                    />
+                    <h3 className="font-semibold text-foreground">
+                      {category.name}
+                    </h3>
+                  </div>
+                </div>
+                <div className="text-2xl font-bold text-foreground mb-1">
+                  ${category.balance.toFixed(2)}
+                </div>
+                <div className="text-xs text-muted-foreground">
+                  {((category.balance / totalBalance) * 100).toFixed(1)}% of
+                  total
+                </div>
+              </div>
+            ))}
+          </div>
+        )}
       </div>
 
       {/* Analytics Charts */}
