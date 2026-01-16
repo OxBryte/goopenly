@@ -172,7 +172,10 @@ export default function DashboardPage() {
               tooltip: {
                 y: {
                   formatter: (val: number, opts: any) => {
-                    const total = opts.w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0);
+                    const total = opts.w.globals.seriesTotals.reduce(
+                      (a: number, b: number) => a + b,
+                      0
+                    );
                     const percentage = ((val / total) * 100).toFixed(1);
                     return `$${val.toLocaleString()} (${percentage}%)`;
                   },
