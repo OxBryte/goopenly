@@ -34,9 +34,9 @@ interface Category {
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
   const [categories, setCategories] = useState<Category[]>([
-    { id: "1", name: "Spending", balance: 500.0, color: "#003e91" },
-    { id: "2", name: "Feeding", balance: 300.0, color: "#0052cc" },
-    { id: "3", name: "Gadgets", balance: 750.0, color: "#0066ff" },
+    { id: "1", name: "Spending", balance: 500.0, color: "#3b82f6" },
+    { id: "2", name: "Feeding", balance: 300.0, color: "#10b981" },
+    { id: "3", name: "Gadgets", balance: 750.0, color: "#f59e0b" },
   ]);
 
   // Dialog states
@@ -55,12 +55,14 @@ export default function DashboardPage() {
   const displayBalance = totalBalance.toFixed(2);
 
   const categoryColors = [
-    "#003e91",
-    "#0052cc",
-    "#0066ff",
-    "#3385ff",
-    "#66a3ff",
-    "#99c2ff",
+    "#3b82f6", // Blue
+    "#10b981", // Green
+    "#f59e0b", // Amber
+    "#ef4444", // Red
+    "#8b5cf6", // Purple
+    "#ec4899", // Pink
+    "#06b6d4", // Cyan
+    "#84cc16", // Lime
   ];
 
   const handleCreateCategory = () => {
@@ -206,27 +208,25 @@ export default function DashboardPage() {
             </Button>
           </div>
         ) : (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
             {categories.map((category) => (
               <div
                 key={category.id}
-                className="border border-border rounded-xl p-4 hover:shadow-md transition-shadow"
+                className="rounded-xl p-4 hover:shadow-lg transition-all hover:scale-105"
+                style={{ 
+                  backgroundColor: category.color,
+                  opacity: 0.9
+                }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <div className="flex items-center gap-2">
-                    <div
-                      className="w-3 h-3 rounded-full"
-                      style={{ backgroundColor: category.color }}
-                    />
-                    <h3 className="font-semibold text-foreground">
-                      {category.name}
-                    </h3>
-                  </div>
+                  <h3 className="font-semibold text-white">
+                    {category.name}
+                  </h3>
                 </div>
-                <div className="text-2xl font-bold text-foreground mb-1">
+                <div className="text-2xl font-bold text-white mb-1">
                   ${category.balance.toFixed(2)}
                 </div>
-                <div className="text-xs text-muted-foreground">
+                <div className="text-xs text-white/80">
                   {((category.balance / totalBalance) * 100).toFixed(1)}% of
                   total
                 </div>
