@@ -370,7 +370,8 @@ export default function DashboardPage() {
           <DialogHeader>
             <DialogTitle>Create New Category</DialogTitle>
             <DialogDescription>
-              Create a new category to organize your funds (e.g., Spending, Feeding, Gadgets).
+              Create a new category to organize your funds (e.g., Spending,
+              Feeding, Gadgets).
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4 py-4">
@@ -390,10 +391,16 @@ export default function DashboardPage() {
             </div>
           </div>
           <DialogFooter>
-            <Button variant="outline" onClick={() => setCreateCategoryOpen(false)}>
+            <Button
+              variant="outline"
+              onClick={() => setCreateCategoryOpen(false)}
+            >
               Cancel
             </Button>
-            <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim()}>
+            <Button
+              onClick={handleCreateCategory}
+              disabled={!newCategoryName.trim()}
+            >
               Create Category
             </Button>
           </DialogFooter>
@@ -445,7 +452,11 @@ export default function DashboardPage() {
             </Button>
             <Button
               onClick={handleDeposit}
-              disabled={!selectedCategoryId || !depositAmount || parseFloat(depositAmount) <= 0}
+              disabled={
+                !selectedCategoryId ||
+                !depositAmount ||
+                parseFloat(depositAmount) <= 0
+              }
             >
               Deposit
             </Button>
@@ -495,7 +506,9 @@ export default function DashboardPage() {
               {selectedCategoryId && (
                 <p className="text-xs text-muted-foreground">
                   Available: $
-                  {categories.find((c) => c.id === selectedCategoryId)?.balance.toFixed(2) || "0.00"}
+                  {categories
+                    .find((c) => c.id === selectedCategoryId)
+                    ?.balance.toFixed(2) || "0.00"}
                 </p>
               )}
             </div>
@@ -506,7 +519,11 @@ export default function DashboardPage() {
             </Button>
             <Button
               onClick={handleWithdraw}
-              disabled={!selectedCategoryId || !withdrawAmount || parseFloat(withdrawAmount) <= 0}
+              disabled={
+                !selectedCategoryId ||
+                !withdrawAmount ||
+                parseFloat(withdrawAmount) <= 0
+              }
             >
               Withdraw
             </Button>
