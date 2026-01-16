@@ -215,16 +215,15 @@ export default function DashboardPage() {
                 className="rounded-xl p-4 hover:shadow-lg transition-all hover:scale-105"
                 style={{
                   backgroundColor: category.color,
-                  opacity: 0.9,
                 }}
               >
                 <div className="flex items-start justify-between mb-3">
-                  <h3 className="font-semibold text-white">{category.name}</h3>
+                  <h3 className="font-semibold text-foreground">{category.name}</h3>
                 </div>
-                <div className="text-2xl font-bold text-white mb-1">
+                <div className="text-2xl font-bold text-foreground mb-1">
                   ${category.balance.toFixed(2)}
                 </div>
-                <div className="text-xs text-white/80">
+                <div className="text-xs text-muted-foreground">
                   {((category.balance / totalBalance) * 100).toFixed(1)}% of
                   total
                 </div>
