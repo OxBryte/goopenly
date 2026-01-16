@@ -1,11 +1,10 @@
 /**
  * Product Stats Hook
  * Fetches product statistics for authenticated user
+ * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface ProductStats {
   total: number;
