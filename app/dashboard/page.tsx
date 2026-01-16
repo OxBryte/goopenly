@@ -15,8 +15,6 @@ export default function DashboardPage() {
 
   const displayBalance = balanceLoading
     ? "0.00"
-    : balance?.balances && balance.balances.length > 0
-    ? "0.00"
     : "0.00";
 
   return (
