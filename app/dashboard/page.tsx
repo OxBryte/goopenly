@@ -1,8 +1,11 @@
 "use client";
 
 import { useState } from "react";
+import dynamic from "next/dynamic";
 import { ArrowUpRight, Eye, EyeOff, MoreVertical } from "lucide-react";
 import { Button } from "@/components/ui/button";
+
+const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
