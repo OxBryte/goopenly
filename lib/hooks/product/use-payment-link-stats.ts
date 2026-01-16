@@ -26,8 +26,14 @@ interface UsePaymentLinkStatsReturn {
   refetch: () => void;
 }
 
+const dummyPaymentLinkStats: PaymentLinkStats = {
+  total: 15,
+  active: 12,
+  expired: 2,
+  cancelled: 1,
+};
+
 export function usePaymentLinkStats(): UsePaymentLinkStatsReturn {
-  const { getToken } = useAuth();
   const [stats, setStats] = useState<PaymentLinkStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -36,31 +42,11 @@ export function usePaymentLinkStats(): UsePaymentLinkStatsReturn {
     setLoading(true);
     setError(null);
 
-    try {
-      const token = await getToken();
-      if (!token) {
-        throw new Error("Authentication required");
-      }
-
-      const response = await apiClient.get<PaymentLinkStatsResponse>(
-        "/protected/payment-link/stats",
-        token
-      );
-      setStats(response.data);
-    } catch (err) {
-      if (err instanceof ApiError) {
-        console.error("API Error fetching payment link stats:", err.message);
-        setError(err.message);
-      } else if (err instanceof Error) {
-        console.error("Error fetching payment link stats:", err.message);
-        setError(err.message);
-      } else {
-        console.error("Unknown error fetching payment link stats:", err);
-        setError("Failed to fetch payment link stats");
-      }
-    } finally {
+    // Simulate API delay
+    setTimeout(() => {
+      setStats(dummyPaymentLinkStats);
       setLoading(false);
-    }
+    }, 500);
   };
 
   useEffect(() => {
