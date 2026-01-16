@@ -363,6 +363,156 @@ export default function DashboardPage() {
           />
         </div>
       </div>
+
+      {/* Create Category Dialog */}
+      <Dialog open={createCategoryOpen} onOpenChange={setCreateCategoryOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Create New Category</DialogTitle>
+            <DialogDescription>
+              Create a new category to organize your funds (e.g., Spending, Feeding, Gadgets).
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="category-name">Category Name</Label>
+              <Input
+                id="category-name"
+                placeholder="e.g., Spending, Feeding, Gadgets"
+                value={newCategoryName}
+                onChange={(e) => setNewCategoryName(e.target.value)}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter") {
+                    handleCreateCategory();
+                  }
+                }}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setCreateCategoryOpen(false)}>
+              Cancel
+            </Button>
+            <Button onClick={handleCreateCategory} disabled={!newCategoryName.trim()}>
+              Create Category
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Deposit Dialog */}
+      <Dialog open={depositOpen} onOpenChange={setDepositOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Deposit to Category</DialogTitle>
+            <DialogDescription>
+              Select a category and enter the amount you want to deposit.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="deposit-category">Category</Label>
+              <select
+                id="deposit-category"
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                value={selectedCategoryId}
+                onChange={(e) => setSelectedCategoryId(e.target.value)}
+              >
+                <option value="">Select a category</option>
+                {categories.map((cat) => (
+                  <option key={cat.id} value={cat.id}>
+                    {cat.name} (${cat.balance.toFixed(2)})
+                  </option>
+                ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="deposit-amount">Amount ($)</Label>
+              <Input
+                id="deposit-amount"
+                type="number"
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                value={depositAmount}
+                onChange={(e) => setDepositAmount(e.target.value)}
+              />
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setDepositOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleDeposit}
+              disabled={!selectedCategoryId || !depositAmount || parseFloat(depositAmount) <= 0}
+            >
+              Deposit
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
+
+      {/* Withdraw Dialog */}
+      <Dialog open={withdrawOpen} onOpenChange={setWithdrawOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Withdraw from Category</DialogTitle>
+            <DialogDescription>
+              Select a category and enter the amount you want to withdraw.
+            </DialogDescription>
+          </DialogHeader>
+          <div className="space-y-4 py-4">
+            <div className="space-y-2">
+              <Label htmlFor="withdraw-category">Category</Label>
+              <select
+                id="withdraw-category"
+                className="flex h-9 w-full rounded-md border border-input bg-transparent px-3 py-1 text-sm shadow-sm transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring"
+                value={selectedCategoryId}
+                onChange={(e) => setSelectedCategoryId(e.target.value)}
+              >
+                <option value="">Select a category</option>
+                {categories
+                  .filter((cat) => cat.balance > 0)
+                  .map((cat) => (
+                    <option key={cat.id} value={cat.id}>
+                      {cat.name} (${cat.balance.toFixed(2)} available)
+                    </option>
+                  ))}
+              </select>
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="withdraw-amount">Amount ($)</Label>
+              <Input
+                id="withdraw-amount"
+                type="number"
+                step="0.01"
+                min="0.01"
+                placeholder="0.00"
+                value={withdrawAmount}
+                onChange={(e) => setWithdrawAmount(e.target.value)}
+              />
+              {selectedCategoryId && (
+                <p className="text-xs text-muted-foreground">
+                  Available: $
+                  {categories.find((c) => c.id === selectedCategoryId)?.balance.toFixed(2) || "0.00"}
+                </p>
+              )}
+            </div>
+          </div>
+          <DialogFooter>
+            <Button variant="outline" onClick={() => setWithdrawOpen(false)}>
+              Cancel
+            </Button>
+            <Button
+              onClick={handleWithdraw}
+              disabled={!selectedCategoryId || !withdrawAmount || parseFloat(withdrawAmount) <= 0}
+            >
+              Withdraw
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
