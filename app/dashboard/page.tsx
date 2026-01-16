@@ -1,20 +1,13 @@
 "use client";
 
-import dynamic from "next/dynamic";
 import MonkeyIcon from "@/components/icons/monkey";
-import {
-  useEarnings,
-  useSalesHeatmap,
-} from "@/lib/hooks/payment";
+import { useEarnings } from "@/lib/hooks/payment";
 import { useProductStats, usePaymentLinkStats } from "@/lib/hooks/product";
 import { useWalletBalance } from "@/lib/hooks/wallet/use-wallet-balance";
-
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function DashboardPage() {
   // Fetch real data from API
   const { earnings } = useEarnings();
-  const { heatmapData } = useSalesHeatmap();
   const { stats: productStats } = useProductStats();
   const { stats: paymentLinkStats } = usePaymentLinkStats();
   const { balance, loading: balanceLoading } = useWalletBalance({
