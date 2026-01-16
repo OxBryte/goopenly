@@ -14,6 +14,7 @@
 @theme inline {
   --font-display: var(--font-rebels);
   --font-mono: var(--font-roboto-mono);
+  --font-sans: "Be Vietnam Pro", sans-serif;
 
   --color-background: var(--background);
   --color-foreground: var(--foreground);
@@ -176,7 +177,8 @@
     @apply border-border outline-ring/50 overscroll-none;
   }
   body {
-    @apply bg-background text-foreground font-mono;
+    @apply bg-background text-foreground;
+    font-family: "Be Vietnam Pro", sans-serif;
   }
   
   /* Custom utility classes for brand colors */
