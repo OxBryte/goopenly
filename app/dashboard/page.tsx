@@ -39,7 +39,7 @@ export default function DashboardPage() {
           {/* Action Buttons */}
           <div className="flex items-center gap-3">
             {/* Send Button */}
-            <Button className="flex-1 bg-foreground text-background hover:bg-foreground/90 h-11 rounded-full">
+            <Button className="w-fit flex bg-foreground text-background hover:bg-foreground/90 h-11 rounded-full">
               <ArrowUpRight className="w-4 h-4 mr-2" />
               Send
             </Button>
