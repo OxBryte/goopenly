@@ -1,11 +1,10 @@
 /**
  * Payout Transactions Hook
  * Fetches wallet payout transactions for a specific chain
+ * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 // API Response structure
 interface PayoutTransactionAPI {
