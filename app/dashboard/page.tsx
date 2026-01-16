@@ -2,15 +2,101 @@
 
 import { useState } from "react";
 import dynamic from "next/dynamic";
-import { ArrowUpRight, Eye, EyeOff, MoreVertical } from "lucide-react";
+import { ArrowUpRight, Eye, EyeOff, MoreVertical, Plus, TrendingDown } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+} from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
+interface Category {
+  id: string;
+  name: string;
+  balance: number;
+  color: string;
+}
+
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true);
+  const [categories, setCategories] = useState<Category[]>([
+    { id: "1", name: "Spending", balance: 500.00, color: "#003e91" },
+    { id: "2", name: "Feeding", balance: 300.00, color: "#0052cc" },
+    { id: "3", name: "Gadgets", balance: 750.00, color: "#0066ff" },
+  ]);
 
-  const displayBalance = "0.00";
+  // Dialog states
+  const [createCategoryOpen, setCreateCategoryOpen] = useState(false);
+  const [depositOpen, setDepositOpen] = useState(false);
+  const [withdrawOpen, setWithdrawOpen] = useState(false);
+  
+  // Form states
+  const [newCategoryName, setNewCategoryName] = useState("");
+  const [selectedCategoryId, setSelectedCategoryId] = useState<string>("");
+  const [amount, setAmount] = useState("");
+  const [depositAmount, setDepositAmount] = useState("");
+  const [withdrawAmount, setWithdrawAmount] = useState("");
+
+  const totalBalance = categories.reduce((sum, cat) => sum + cat.balance, 0);
+  const displayBalance = totalBalance.toFixed(2);
+
+  const categoryColors = ["#003e91", "#0052cc", "#0066ff", "#3385ff", "#66a3ff", "#99c2ff"];
+
+  const handleCreateCategory = () => {
+    if (!newCategoryName.trim()) return;
+    
+    const newCategory: Category = {
+      id: Date.now().toString(),
+      name: newCategoryName.trim(),
+      balance: 0,
+      color: categoryColors[categories.length % categoryColors.length],
+    };
+    
+    setCategories([...categories, newCategory]);
+    setNewCategoryName("");
+    setCreateCategoryOpen(false);
+  };
+
+  const handleDeposit = () => {
+    if (!selectedCategoryId || !depositAmount || parseFloat(depositAmount) <= 0) return;
+    
+    setCategories(categories.map(cat =>
+      cat.id === selectedCategoryId
+        ? { ...cat, balance: cat.balance + parseFloat(depositAmount) }
+        : cat
+    ));
+    
+    setDepositAmount("");
+    setSelectedCategoryId("");
+    setDepositOpen(false);
+  };
+
+  const handleWithdraw = () => {
+    if (!selectedCategoryId || !withdrawAmount || parseFloat(withdrawAmount) <= 0) return;
+    
+    const category = categories.find(cat => cat.id === selectedCategoryId);
+    if (!category || category.balance < parseFloat(withdrawAmount)) {
+      alert("Insufficient balance in this category");
+      return;
+    }
+    
+    setCategories(categories.map(cat =>
+      cat.id === selectedCategoryId
+        ? { ...cat, balance: cat.balance - parseFloat(withdrawAmount) }
+        : cat
+    ));
+    
+    setWithdrawAmount("");
+    setSelectedCategoryId("");
+    setWithdrawOpen(false);
+  };
 
   return (
     <div className="w-full mx-auto">
