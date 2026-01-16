@@ -18,7 +18,7 @@ export default function DashboardPage() {
             <div className="text-xs uppercase text-muted-foreground tracking-wider mb-2">
               ACCOUNT BALANCE:
             </div>
-            <div className="flex items-center justify-center">
+            <div className="flex items-center justify-center gap-4">
               <div className="text-4xl font-bold text-foreground">
                 {isBalanceVisible ? `$${displayBalance}` : "••••••"}
               </div>
