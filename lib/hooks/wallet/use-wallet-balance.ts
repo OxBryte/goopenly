@@ -1,10 +1,10 @@
 /**
  * Wallet Balance Hook
  * Fetches wallet balance
+ * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface BalanceItem {
   convertedBalance: string;
