@@ -6,6 +6,10 @@ import localFont from "next/font/local";
 import { Providers } from "../components/providers";
 import { headers } from "next/headers";
 import React from "react";
+import "@fontsource/be-vietnam-pro/400.css";
+import "@fontsource/be-vietnam-pro/500.css";
+import "@fontsource/be-vietnam-pro/600.css";
+import "@fontsource/be-vietnam-pro/700.css";
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
@@ -50,7 +54,8 @@ export default async function RootLayout({
         />
       </head>
       <body
-        className={`${rebelGrotesk.variable} ${robotoMono.variable} antialiased`}
+        className={`${rebelGrotesk.variable} ${robotoMono.variable} antialiased font-sans`}
+        style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}
       >
         <Providers cookies={cookies}>
           <V0Provider isV0={isV0}>
