@@ -1,11 +1,10 @@
 /**
  * Payment Transactions Hook
  * Fetches payment intent transactions with pagination
+ * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface Transaction {
   id: string;
