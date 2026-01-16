@@ -24,7 +24,7 @@ export default function DashboardPage() {
               </div>
               <button
                 onClick={() => setIsBalanceVisible(!isBalanceVisible)}
-                className="p-2 hover:bg-muted rounded-full transition-colors"
+                className="p-2 hover:bg-muted rounded-full cursor-pointer transition-colors"
                 aria-label="Toggle balance visibility"
               >
                 {isBalanceVisible ? (
