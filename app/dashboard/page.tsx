@@ -61,7 +61,7 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="w-full">
           <h1 className="text-lg sm:text-xl font-bold text-foreground">
-            Welcome back, {user.firstName || user.username}!
+            Welcome back!
           </h1>
         </div>
         <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-4 gap-3 sm:gap-4 md:gap-6">
@@ -115,7 +115,7 @@ export default function DashboardPage() {
                     Cardholder
                   </div>
                   <div className="text-white text-sm font-semibold">
-                    {user?.firstName || user?.username || "User"}
+                    {session?.user?.name || "User"}
                   </div>
                 </div>
                 <div className="flex flex-col items-end">
