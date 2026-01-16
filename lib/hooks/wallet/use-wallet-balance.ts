@@ -37,6 +37,24 @@ interface UseWalletBalanceReturn {
   refetch: () => void;
 }
 
+const dummyBalance: WalletBalanceData = {
+  balances: [
+    {
+      convertedBalance: "12500.50",
+      chain: "base-sepolia",
+      asset: "USDC",
+    },
+    {
+      convertedBalance: "0.25",
+      chain: "base-sepolia",
+      asset: "ETH",
+    },
+  ],
+  chain: "base-sepolia",
+  userId: "dummy-user-id",
+  timestamp: new Date().toISOString(),
+};
+
 export function useWalletBalance(
   options: UseWalletBalanceOptions = {}
 ): UseWalletBalanceReturn {
@@ -49,25 +67,11 @@ export function useWalletBalance(
     setLoading(true);
     setError(null);
 
-    try {
-      const response = await apiClient.get<WalletBalanceResponse>(
-        `/protected/wallet/balance?chain=${chain}`
-      );
-      setBalance(response.data);
-    } catch (err) {
-      if (err instanceof ApiError) {
-        console.error("API Error fetching wallet balance:", err.message);
-        setError(err.message);
-      } else if (err instanceof Error) {
-        console.error("Error fetching wallet balance:", err.message);
-        setError(err.message);
-      } else {
-        console.error("Unknown error fetching wallet balance:", err);
-        setError("Failed to fetch wallet balance");
-      }
-    } finally {
+    // Simulate API delay
+    setTimeout(() => {
+      setBalance({ ...dummyBalance, chain });
       setLoading(false);
-    }
+    }, 500);
   };
 
   useEffect(() => {
