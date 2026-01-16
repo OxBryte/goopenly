@@ -1,11 +1,10 @@
 /**
  * Sales Heatmap Hook
  * Fetches sales activity heatmap for the last 365 days
+ * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
-import { useAuth } from "@clerk/nextjs";
-import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface DayData {
   date: string;
