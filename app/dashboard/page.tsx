@@ -1,6 +1,5 @@
 "use client";
 
-import { useSession } from "next-auth/react";
 import dynamic from "next/dynamic";
 import MonkeyIcon from "@/components/icons/monkey";
 import {
@@ -13,8 +12,6 @@ import { useWalletBalance } from "@/lib/hooks/wallet/use-wallet-balance";
 const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
 
 export default function DashboardPage() {
-  const { data: session, status } = useSession();
-
   // Fetch real data from API
   const { earnings } = useEarnings();
   const { heatmapData } = useSalesHeatmap();
@@ -30,30 +27,6 @@ export default function DashboardPage() {
     (productStats?.total ?? 0) + (paymentLinkStats?.total ?? 0);
   const activeLinks =
     (productStats?.active ?? 0) + (paymentLinkStats?.active ?? 0);
-
-  if (status === "loading") {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <div className="w-12 h-12 border-4 border-[#003e91]/40 border-t-[#003e91] rounded-full animate-spin mx-auto mb-4"></div>
-          <p className="text-foreground">Loading dashboard...</p>
-        </div>
-      </div>
-    );
-  }
-
-  if (status === "unauthenticated" || !session?.user) {
-    return (
-      <div className="min-h-screen flex items-center justify-center">
-        <div className="text-center">
-          <h1 className="text-2xl font-bold text-foreground mb-4">Access Denied</h1>
-          <p className="text-muted-foreground mb-6">
-            You need to be signed in to access the dashboard.
-          </p>
-        </div>
-      </div>
-    );
-  }
 
   return (
     <>
@@ -115,7 +88,7 @@ export default function DashboardPage() {
                     Cardholder
                   </div>
                   <div className="text-white text-sm font-semibold">
-                    {session?.user?.name || "User"}
+                    User
                   </div>
                 </div>
                 <div className="flex flex-col items-end">
