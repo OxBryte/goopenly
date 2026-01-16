@@ -67,6 +67,131 @@ export default function DashboardPage() {
           </Button>
         </div>
       </div>
+
+      {/* Analytics Charts */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 mt-6">
+        {/* Chart 1: Transaction Volume Over Time */}
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">
+            Transaction Volume (Last 7 Days)
+          </h3>
+          <Chart
+            options={{
+              chart: {
+                type: "area",
+                height: 300,
+                toolbar: { show: false },
+                fontFamily: "Be Vietnam Pro, sans-serif",
+              },
+              dataLabels: { enabled: false },
+              stroke: {
+                curve: "smooth",
+                width: 2,
+                colors: ["#003e91"],
+              },
+              fill: {
+                type: "gradient",
+                gradient: {
+                  shadeIntensity: 1,
+                  opacityFrom: 0.4,
+                  opacityTo: 0.1,
+                  stops: [0, 100],
+                },
+              },
+              colors: ["#003e91"],
+              xaxis: {
+                categories: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"],
+                labels: {
+                  style: {
+                    colors: "#6b7280",
+                    fontSize: "12px",
+                  },
+                },
+              },
+              yaxis: {
+                labels: {
+                  style: {
+                    colors: "#6b7280",
+                    fontSize: "12px",
+                  },
+                  formatter: (val: number) => `$${val.toFixed(0)}`,
+                },
+              },
+              grid: {
+                borderColor: "#e5e7eb",
+                strokeDashArray: 4,
+              },
+              tooltip: {
+                theme: "light",
+                y: {
+                  formatter: (val: number) => `$${val.toFixed(2)}`,
+                },
+              },
+            }}
+            series={[
+              {
+                name: "Volume",
+                data: [1250, 1890, 2100, 1750, 2400, 1950, 2200],
+              },
+            ]}
+            type="area"
+            height={300}
+          />
+        </div>
+
+        {/* Chart 2: Spending by Category */}
+        <div className="bg-card border border-border rounded-2xl p-6">
+          <h3 className="text-lg font-semibold text-foreground mb-4">
+            Spending by Category
+          </h3>
+          <Chart
+            options={{
+              chart: {
+                type: "donut",
+                height: 300,
+                fontFamily: "Be Vietnam Pro, sans-serif",
+              },
+              labels: ["Payments", "Fees", "Transfers", "Other"],
+              colors: ["#003e91", "#0052cc", "#0066ff", "#3385ff"],
+              legend: {
+                position: "bottom",
+                fontSize: "12px",
+                fontFamily: "Be Vietnam Pro, sans-serif",
+                labels: {
+                  colors: "#0a0a0a",
+                },
+              },
+              dataLabels: {
+                enabled: true,
+                formatter: (val: number) => `${val.toFixed(0)}%`,
+                style: {
+                  fontSize: "12px",
+                  fontWeight: 600,
+                },
+              },
+              tooltip: {
+                y: {
+                  formatter: (val: number, opts: any) => {
+                    const total = opts.w.globals.seriesTotals.reduce((a: number, b: number) => a + b, 0);
+                    const percentage = ((val / total) * 100).toFixed(1);
+                    return `$${val.toLocaleString()} (${percentage}%)`;
+                  },
+                },
+              },
+              plotOptions: {
+                pie: {
+                  donut: {
+                    size: "65%",
+                  },
+                },
+              },
+            }}
+            series={[4500, 1200, 800, 350]}
+            type="donut"
+            height={300}
+          />
+        </div>
+      </div>
     </div>
   );
 }
