@@ -6,6 +6,7 @@
 export { useWalletBalance } from "./use-wallet-balance";
 export { usePayoutTransactions } from "./use-payout-transactions";
 export { useWithdraw } from "./use-withdraw";
+export { useBulkWalletOperations } from "./use-bulk-wallet-operations";
 
 // Export types
 export type { BalanceItem, WalletBalanceData } from "./use-wallet-balance";
