@@ -60,13 +60,13 @@ export function ActionsGrid() {
                 {actions.map((action) => (
                     <GlassCard
                         key={action.label}
-                        className="flex flex-col items-center justify-center p-4 cursor-pointer hover:bg-white/40 transition-colors"
+                        className="flex flex-col items-center justify-center p-5 cursor-pointer hover:bg-primary/5 hover:border-primary/20 transition-all active:scale-95"
                         onClick={() => handleActionClick(action.action)}
                     >
-                        <div className={`p-3 rounded-full bg-white/50 mb-2 ${action.color}`}>
-                            <action.icon size={24} />
+                        <div className={`p-3 rounded-xl mb-2.5 ${action.color} bg-primary/10`}>
+                            <action.icon size={22} />
                         </div>
-                        <span className="text-xs font-semibold text-gray-700">{action.label}</span>
+                        <span className="text-xs font-semibold text-foreground">{action.label}</span>
                     </GlassCard>
                 ))}
             </div>
