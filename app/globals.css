@@ -84,7 +84,7 @@
   }
   
   .gd-text-gradient {
-    bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent;
+    @apply bg-gradient-to-r from-pink-500 to-violet-500 bg-clip-text text-transparent;
   }
 
   .gd-button-primary {
