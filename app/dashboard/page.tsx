@@ -13,6 +13,11 @@ export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true)
   const [selectedCurrency, setSelectedCurrency] = useState("USD")
 
+  // Smooth currency change animation
+  const handleCurrencyChange = (currency: string) => {
+    setSelectedCurrency(currency)
+  }
+
   return (
     <div className="min-h-screen w-full bg-[#f7f7f7]">
       {/* Mobile Status Bar */}
@@ -30,7 +35,7 @@ export default function DashboardPage() {
           </div>
           <div className="w-6 h-3 border border-gray-900 rounded-sm">
             <div className="w-4 h-2 bg-gray-900 rounded-sm m-0.5"></div>
-          </div>
+            </div>
           </div>
         </div>
 
