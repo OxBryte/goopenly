@@ -1,8 +1,7 @@
 "use client"
 
 import { useState } from "react"
-import { Send, Plus, CreditCard } from "lucide-react"
-import { GlassCard } from "@/components/ui/glass-card"
+import { Send, CheckCircle2, Loader2 } from "lucide-react"
 import {
     Dialog,
     DialogContent,
@@ -14,6 +13,7 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { useToast } from "@/hooks/use-toast"
 
 const actions = [
     { 
