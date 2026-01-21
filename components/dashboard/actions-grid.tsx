@@ -56,18 +56,20 @@ export function ActionsGrid() {
 
     return (
         <>
-            <div className="grid grid-cols-3 gap-4 mb-6">
+            <div className="grid grid-cols-3 gap-4 mb-8">
                 {actions.map((action) => (
-                    <GlassCard
+                    <div
                         key={action.label}
-                        className="flex flex-col items-center justify-center p-5 cursor-pointer hover:bg-primary/5 hover:border-primary/20 transition-all active:scale-95"
+                        className="bg-white rounded-xl border border-gray-200 p-6 cursor-pointer hover:border-gray-300 hover:shadow-sm transition-all active:scale-[0.98]"
                         onClick={() => handleActionClick(action.action)}
                     >
-                        <div className={`p-3 rounded-xl mb-2.5 ${action.color} bg-primary/10`}>
-                            <action.icon size={22} />
+                        <div className="flex flex-col items-center justify-center">
+                            <div className={`p-3 rounded-lg mb-3 ${action.color} bg-gray-50`}>
+                                <action.icon size={24} />
+                            </div>
+                            <span className="text-sm font-medium text-gray-900">{action.label}</span>
                         </div>
-                        <span className="text-xs font-semibold text-foreground">{action.label}</span>
-                    </GlassCard>
+                    </div>
                 ))}
             </div>
 
