@@ -16,9 +16,32 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 const actions = [
-    { label: "Send", icon: Send, color: "text-pink-600", action: "send" },
-    { label: "Add Money", icon: Plus, color: "text-violet-600", action: "add" },
-    { label: "Cards", icon: CreditCard, color: "text-blue-600", action: "cards" },
+    { 
+        label: "Account Details", 
+        icon: () => (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+            </svg>
+        ), 
+        color: "text-gray-700", 
+        action: "account" 
+    },
+    { 
+        label: "Send Money", 
+        icon: Send, 
+        color: "text-gray-700", 
+        action: "send" 
+    },
+    { 
+        label: "Convert", 
+        icon: () => (
+            <svg className="w-6 h-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+            </svg>
+        ), 
+        color: "text-gray-700", 
+        action: "convert" 
+    },
 ]
 
 export function ActionsGrid() {
@@ -30,10 +53,10 @@ export function ActionsGrid() {
     const handleActionClick = (action: string) => {
         if (action === "send") {
             setSendDialogOpen(true)
-        } else if (action === "add") {
-            alert("Add Money feature coming soon!")
-        } else if (action === "cards") {
-            alert("Cards feature coming soon!")
+        } else if (action === "account") {
+            alert("Account Details feature coming soon!")
+        } else if (action === "convert") {
+            alert("Currency Convert feature coming soon!")
         }
     }
 
@@ -60,14 +83,14 @@ export function ActionsGrid() {
                 {actions.map((action) => (
                     <div
                         key={action.label}
-                        className="bg-white rounded-xl border border-gray-200 p-6 cursor-pointer hover:border-gray-300 hover:shadow-sm transition-all active:scale-[0.98]"
+                        className="bg-white rounded-xl border border-gray-200 p-5 cursor-pointer hover:border-gray-300 hover:shadow-sm transition-all active:scale-[0.98]"
                         onClick={() => handleActionClick(action.action)}
                     >
-                        <div className="flex flex-col items-center justify-center">
-                            <div className={`p-3 rounded-lg mb-3 ${action.color} bg-gray-50`}>
-                                <action.icon size={24} />
+                        <div className="flex flex-col items-center justify-center text-center">
+                            <div className={`mb-3 ${action.color}`}>
+                                {typeof action.icon === 'function' ? <action.icon /> : <action.icon size={24} />}
                             </div>
-                            <span className="text-sm font-medium text-gray-900">{action.label}</span>
+                            <span className="text-xs font-medium text-gray-900 leading-tight">{action.label}</span>
                         </div>
                     </div>
                 ))}
