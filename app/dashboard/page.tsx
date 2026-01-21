@@ -4,51 +4,62 @@ import { useState } from "react"
 import { BalanceCard } from "@/components/dashboard/balance-card"
 import { ActionsGrid } from "@/components/dashboard/actions-grid"
 import { TransactionList } from "@/components/dashboard/transaction-list"
-import { ChevronDown } from "lucide-react"
+import { CurrencySelector } from "@/components/dashboard/currency-selector"
+import { UserGreeting } from "@/components/dashboard/user-greeting"
+import { DoMoreSection } from "@/components/dashboard/do-more-section"
+import { Headphones, Cloud } from "lucide-react"
 
 export default function DashboardPage() {
   const [isBalanceVisible, setIsBalanceVisible] = useState(true)
+  const [selectedCurrency, setSelectedCurrency] = useState("USD")
 
   return (
     <div className="min-h-screen w-full bg-[#f7f7f7]">
-      {/* Header */}
-      <header className="bg-white border-b border-gray-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between items-center h-16">
-            <div className="flex items-center gap-3">
-              <div className="w-8 h-8 rounded-lg bg-primary flex items-center justify-center text-white font-bold text-sm">
-                GO
-              </div>
-              <h1 className="text-lg font-semibold text-gray-900">Goopenly</h1>
-            </div>
-            <div className="flex items-center gap-4">
-              <button className="flex items-center gap-2 text-sm text-gray-700 hover:text-gray-900 px-3 py-2 rounded-lg hover:bg-gray-50">
-                <span>English (US)</span>
-                <ChevronDown className="w-4 h-4" />
-              </button>
-              <div className="w-8 h-8 rounded-full bg-gray-200 border-2 border-white overflow-hidden">
-                <img 
-                  src="https://api.dicebear.com/7.x/avataaars/svg?seed=User" 
-                  alt="User" 
-                  className="w-full h-full"
-                />
-              </div>
-            </div>
+      {/* Mobile Status Bar */}
+      <div className="bg-white border-b border-gray-200 px-6 py-2 flex justify-between items-center text-xs text-gray-900 md:hidden">
+        <span>9:41</span>
+        <div className="flex items-center gap-1">
+          <div className="w-4 h-2.5 border border-gray-900 rounded-sm">
+            <div className="w-2 h-1.5 bg-gray-900 rounded-sm m-0.5"></div>
+          </div>
+          <div className="flex gap-0.5">
+            <div className="w-1 h-2 bg-gray-900 rounded-sm"></div>
+            <div className="w-1 h-2.5 bg-gray-900 rounded-sm"></div>
+            <div className="w-1 h-3 bg-gray-900 rounded-sm"></div>
+            <div className="w-1 h-2.5 bg-gray-900 rounded-sm"></div>
+          </div>
+          <div className="w-6 h-3 border border-gray-900 rounded-sm">
+            <div className="w-4 h-2 bg-gray-900 rounded-sm m-0.5"></div>
+          </div>
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
-        <div className="max-w-4xl mx-auto">
-          <BalanceCard 
-            isBalanceVisible={isBalanceVisible}
-            onToggleVisibility={() => setIsBalanceVisible(!isBalanceVisible)}
-          />
-          <ActionsGrid />
-          <TransactionList />
-        </div>
-      </main>
+      <div className="max-w-md mx-auto px-6 py-6">
+        {/* User Greeting */}
+        <UserGreeting />
+
+        {/* Currency Selector */}
+        <CurrencySelector 
+          selectedCurrency={selectedCurrency}
+          onCurrencyChange={setSelectedCurrency}
+        />
+
+        {/* Balance Card */}
+        <BalanceCard 
+          isBalanceVisible={isBalanceVisible}
+          onToggleVisibility={() => setIsBalanceVisible(!isBalanceVisible)}
+          currency={selectedCurrency}
+        />
+
+        {/* Action Buttons */}
+        <ActionsGrid />
+
+        {/* Do More Section */}
+        <DoMoreSection />
+
+        {/* Transaction List */}
+        <TransactionList />
+      </div>
     </div>
   )
 }
