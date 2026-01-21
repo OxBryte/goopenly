@@ -24,12 +24,12 @@ const currencySymbols: Record<string, string> = {
 
 export function BalanceCard({ isBalanceVisible, onToggleVisibility, currency }: BalanceCardProps) {
     return (
-        <div className="mb-6">
+        <div className="mb-6 animate-in fade-in duration-300">
             <div className="flex items-center justify-between mb-2">
-                <p className="text-sm text-gray-500">{currency} Balance</p>
+                <p className="text-sm text-gray-500 transition-colors duration-200">{currency} Balance</p>
                 <button
                     onClick={onToggleVisibility}
-                    className="p-1 hover:bg-gray-100 rounded-lg transition-colors"
+                    className="p-1 hover:bg-gray-100 rounded-lg transition-all duration-200 active:scale-95"
                     aria-label="Toggle balance visibility"
                 >
                     {isBalanceVisible ? (
@@ -39,7 +39,7 @@ export function BalanceCard({ isBalanceVisible, onToggleVisibility, currency }: 
                     )}
                 </button>
             </div>
-            <h2 className="text-4xl font-bold text-gray-900">
+            <h2 className="text-4xl font-bold text-gray-900 transition-all duration-300 ease-in-out">
                 {isBalanceVisible 
                     ? `${currencySymbols[currency]}${balanceAmounts[currency] || "0.00"}` 
                     : "••••••"}

@@ -46,7 +46,7 @@ export default function DashboardPage() {
         {/* Currency Selector */}
         <CurrencySelector 
           selectedCurrency={selectedCurrency}
-          onCurrencyChange={setSelectedCurrency}
+          onCurrencyChange={handleCurrencyChange}
         />
 
         {/* Balance Card */}
