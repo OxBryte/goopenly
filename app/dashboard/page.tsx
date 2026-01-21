@@ -34,7 +34,7 @@ export default function DashboardPage() {
           </div>
         </div>
 
-      <div className="max-w-md mx-auto px-6 py-6">
+      <div className="max-w-2xl mx-auto px-6 py-6">
         {/* User Greeting */}
         <UserGreeting />
 
