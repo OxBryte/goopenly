@@ -1,7 +1,6 @@
 "use client"
 
-import { GlassCard } from "@/components/ui/glass-card"
-import { ArrowDownLeft, ArrowUpRight, MoreVertical } from "lucide-react"
+import { ArrowDownLeft, ArrowUpRight, ChevronRight } from "lucide-react"
 
 const transactions = [
     { id: 1, type: "incoming", title: "Received from Alice", amount: "+$500.00", date: "Today, 10:23 AM", category: "Transfer" },
@@ -13,52 +12,55 @@ const transactions = [
 
 export function TransactionList() {
     return (
-        <div className="w-full mt-6">
-            <div className="flex items-center justify-between mb-4 px-2">
-                <h3 className="text-lg font-semibold text-foreground">Recent Activity</h3>
-                <button className="text-sm text-primary hover:underline">See All</button>
+        <div className="w-full">
+            <div className="flex items-center justify-between mb-4">
+                <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
+                <button className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1">
+                    See All
+                    <ChevronRight className="w-4 h-4" />
+                </button>
             </div>
-            <div className="space-y-2">
-                {transactions.map((tx) => (
-                    <GlassCard 
-                        key={tx.id} 
-                        className="flex items-center justify-between p-4 hover:bg-card/50 transition-colors cursor-pointer border border-border/50"
-                    >
-                        <div className="flex items-center gap-3 flex-1 min-w-0">
-                            <div className={`p-2.5 rounded-xl flex-shrink-0 ${
-                                tx.type === 'incoming' 
-                                    ? 'bg-green-500/10 text-green-600' 
-                                    : 'bg-primary/10 text-primary'
-                            }`}>
-                                {tx.type === 'incoming' ? (
-                                    <ArrowDownLeft size={18} />
-                                ) : (
-                                    <ArrowUpRight size={18} />
-                                )}
-                            </div>
-                            <div className="flex-1 min-w-0">
-                                <p className="text-sm font-semibold text-foreground truncate">{tx.title}</p>
-                                <div className="flex items-center gap-2 mt-0.5">
-                                    <p className="text-xs text-muted-foreground">{tx.date}</p>
-                                    <span className="text-xs text-muted-foreground">•</span>
-                                    <p className="text-xs text-muted-foreground">{tx.category}</p>
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                <div className="divide-y divide-gray-100">
+                    {transactions.map((tx) => (
+                        <div 
+                            key={tx.id} 
+                            className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                        >
+                            <div className="flex items-center gap-4 flex-1 min-w-0">
+                                <div className={`p-2.5 rounded-lg flex-shrink-0 ${
+                                    tx.type === 'incoming' 
+                                        ? 'bg-green-50 text-green-600' 
+                                        : 'bg-gray-100 text-gray-700'
+                                }`}>
+                                    {tx.type === 'incoming' ? (
+                                        <ArrowDownLeft size={18} />
+                                    ) : (
+                                        <ArrowUpRight size={18} />
+                                    )}
+                                </div>
+                                <div className="flex-1 min-w-0">
+                                    <p className="text-sm font-medium text-gray-900 truncate">{tx.title}</p>
+                                    <div className="flex items-center gap-2 mt-0.5">
+                                        <p className="text-xs text-gray-500">{tx.date}</p>
+                                        <span className="text-xs text-gray-400">•</span>
+                                        <p className="text-xs text-gray-500">{tx.category}</p>
+                                    </div>
                                 </div>
                             </div>
+                            <div className="flex items-center gap-3 flex-shrink-0">
+                                <span className={`text-sm font-semibold whitespace-nowrap ${
+                                    tx.type === 'incoming' 
+                                        ? 'text-green-600' 
+                                        : 'text-gray-900'
+                                }`}>
+                                    {tx.amount}
+                                </span>
+                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                            </div>
                         </div>
-                        <div className="flex items-center gap-2 flex-shrink-0">
-                            <span className={`text-sm font-bold whitespace-nowrap ${
-                                tx.type === 'incoming' 
-                                    ? 'text-green-600' 
-                                    : 'text-foreground'
-                            }`}>
-                                {tx.amount}
-                            </span>
-                            <button className="p-1 hover:bg-muted rounded-lg">
-                                <MoreVertical size={16} className="text-muted-foreground" />
-                            </button>
-                        </div>
-                    </GlassCard>
-                ))}
+                    ))}
+                </div>
             </div>
         </div>
     )
