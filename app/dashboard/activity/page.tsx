@@ -2,9 +2,8 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ArrowDownLeft, ArrowUpRight, ChevronRight, Filter } from "lucide-react"
-import { transactions, type Transaction } from "@/lib/data/transactions"
-import { Button } from "@/components/ui/button"
+import { ArrowLeft, ArrowDownLeft, ArrowUpRight, ChevronRight } from "lucide-react"
+import { transactions } from "@/lib/data/transactions"
 
 export default function ActivityPage() {
   const [mounted, setMounted] = useState(false)
