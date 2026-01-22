@@ -97,24 +97,17 @@ export function ActionsGrid() {
     }
 
     const handleConvert = async () => {
-        if (!convertAmount || parseFloat(convertAmount) <= 0) {
+        const amt = parseFloat(convertAmount)
+        if (!convertAmount || amt <= 0) {
+            toast.error("Please enter a valid amount greater than 0")
             return
         }
 
         setIsLoading(true)
-        // Simulate currency conversion
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        // Mock conversion rates
-        const rates: Record<string, Record<string, number>> = {
-            USD: { EUR: 0.85, NGN: 750, GBP: 0.79 },
-            EUR: { USD: 1.18, NGN: 882, GBP: 0.93 },
-            NGN: { USD: 0.0013, EUR: 0.0011, GBP: 0.0011 },
-            GBP: { USD: 1.27, EUR: 1.07, NGN: 949 },
-        }
-        
-        const rate = rates[fromCurrency]?.[toCurrency] || 1
-        const result = (parseFloat(convertAmount) * rate).toFixed(2)
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+
+        const rate = conversionRates[fromCurrency as keyof typeof conversionRates]?.[toCurrency as keyof typeof conversionRates] ?? 1
+        const result = (amt * rate).toFixed(2)
         setConvertedAmount(result)
         setIsLoading(false)
     }
