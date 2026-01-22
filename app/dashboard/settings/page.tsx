@@ -5,7 +5,6 @@ import Link from "next/link"
 import { ArrowLeft, ChevronRight, Bell, DollarSign, Shield, Palette, Globe } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
-import { Input } from "@/components/ui/input"
 
 export default function SettingsPage() {
   const [mounted, setMounted] = useState(false)
