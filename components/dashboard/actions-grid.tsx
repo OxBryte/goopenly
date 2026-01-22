@@ -115,17 +115,23 @@ export function ActionsGrid() {
     return (
         <>
             <div className="grid grid-cols-3 gap-4 mb-8">
-                {actions.map((action) => (
+                {actions.map((action, index) => (
                     <div
                         key={action.label}
-                        className="bg-white rounded-xl border border-gray-200 p-5 cursor-pointer hover:border-primary/30 hover:shadow-md transition-all duration-200 active:scale-[0.97] transform"
+                        className="bg-white rounded-xl border border-gray-200 p-5 cursor-pointer hover:border-primary/30 hover:shadow-xl transition-all duration-300 active:scale-[0.95] transform group relative overflow-hidden"
                         onClick={() => handleActionClick(action.action)}
+                        style={{
+                            animation: `slide-down 0.6s ease-out ${index * 0.1}s both`
+                        }}
                     >
-                        <div className="flex flex-col items-center justify-center text-center">
-                            <div className={`mb-3 transition-transform duration-200 ${action.color}`}>
+                        {/* Shimmer effect on hover */}
+                        <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent translate-x-[-100%] group-hover:translate-x-[100%] transition-transform duration-1000"></div>
+                        
+                        <div className="relative flex flex-col items-center justify-center text-center">
+                            <div className={`mb-3 transition-all duration-300 group-hover:scale-110 group-hover:rotate-6 ${action.color}`}>
                                 {typeof action.icon === 'function' ? <action.icon /> : <action.icon size={24} />}
                             </div>
-                            <span className="text-xs font-medium text-gray-900 leading-tight">{action.label}</span>
+                            <span className="text-xs font-medium text-gray-900 leading-tight transition-all duration-300 group-hover:text-primary">{action.label}</span>
                         </div>
                     </div>
                 ))}
