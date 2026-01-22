@@ -41,6 +41,7 @@ export default function KycPage() {
   const handleVerifyStep = (stepId: string) => {
     setActiveStep(stepId)
     setSubmitting(true)
+    const stepTitle = defaultKyc.steps.find((s) => s.id === stepId)?.title ?? "Step"
     // Simulate verification (90% success rate)
     const simulatedSuccess = Math.random() > 0.1
     setTimeout(() => {
@@ -50,11 +51,12 @@ export default function KycPage() {
         setActiveStep(null)
         return
       }
+      let allComplete = false
       setKyc((prev) => {
         const updatedSteps = prev.steps.map((s) =>
           s.id === stepId ? { ...s, completed: true, status: "complete" as const } : s
         )
-        const allComplete = updatedSteps.every((s) => s.completed)
+        allComplete = updatedSteps.every((s) => s.completed)
         return {
           ...prev,
           steps: updatedSteps,
@@ -62,9 +64,8 @@ export default function KycPage() {
           verifiedAt: allComplete ? new Date().toISOString() : prev.verifiedAt,
         }
       })
-      const stepTitle = defaultKyc.steps.find((s) => s.id === stepId)?.title ?? "Step"
       toast.success(`${stepTitle} verified successfully`)
-      if (kyc.steps.filter((s) => s.completed).length === kyc.steps.length - 1) {
+      if (allComplete) {
         toast.success("Identity verified! Your account is fully verified.", { duration: 4000 })
       }
       setSubmitting(false)
