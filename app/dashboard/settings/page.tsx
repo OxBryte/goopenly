@@ -68,7 +68,7 @@ export default function SettingsPage() {
                 className={`relative w-11 h-6 rounded-full transition-colors ${notifications ? "bg-primary" : "bg-gray-200"}`}
               >
                 <span
-                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${notifications ? "left-6" : "left-1"}`}
+                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${notifications ? "translate-x-5" : "translate-x-0.5"}`}
                 />
               </button>
             </div>
@@ -84,7 +84,7 @@ export default function SettingsPage() {
                 className={`relative w-11 h-6 rounded-full transition-colors ${emailAlerts ? "bg-primary" : "bg-gray-200"}`}
               >
                 <span
-                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${emailAlerts ? "left-6" : "left-1"}`}
+                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${emailAlerts ? "translate-x-5" : "translate-x-0.5"}`}
                 />
               </button>
             </div>
@@ -139,7 +139,7 @@ export default function SettingsPage() {
                 className={`relative w-11 h-6 rounded-full transition-colors ${biometric ? "bg-primary" : "bg-gray-200"}`}
               >
                 <span
-                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform ${biometric ? "left-6" : "left-1"}`}
+                  className={`absolute top-1 w-4 h-4 rounded-full bg-white shadow transition-transform duration-200 ${biometric ? "translate-x-5" : "translate-x-0.5"}`}
                 />
               </button>
             </div>
@@ -161,7 +161,8 @@ export default function SettingsPage() {
         <div className={`mt-6 ${mounted ? "animate-slide-down delay-300" : "opacity-0"}`}>
           <Button
             onClick={handleSave}
-            className="w-full py-6 text-base font-medium"
+            disabled={saved}
+            className={`w-full py-6 text-base font-medium transition-all ${saved ? "bg-green-600 hover:bg-green-600" : ""}`}
           >
             {saved ? "Saved!" : "Save changes"}
           </Button>
