@@ -28,6 +28,10 @@ const moreFeatures = [
 export function DoMoreSection() {
     const [invoiceDialogOpen, setInvoiceDialogOpen] = useState(false)
     const [billsDialogOpen, setBillsDialogOpen] = useState(false)
+    const [invoiceSuccessOpen, setInvoiceSuccessOpen] = useState(false)
+    const [billSuccessOpen, setBillSuccessOpen] = useState(false)
+    const [invoiceSuccessMsg, setInvoiceSuccessMsg] = useState("")
+    const [billSuccessMsg, setBillSuccessMsg] = useState("")
     const [isLoading, setIsLoading] = useState(false)
     const [invoiceEmail, setInvoiceEmail] = useState("")
     const [invoiceAmount, setInvoiceAmount] = useState("")
@@ -40,38 +44,57 @@ export function DoMoreSection() {
         } else if (action === "bills") {
             setBillsDialogOpen(true)
         } else if (action === "shopping") {
-            // Simulate navigation
-            alert("Shopping feature coming soon! Browse products and make purchases.")
+            toast.info("Coming soon! Browse products and make purchases.")
         } else if (action === "ai") {
-            // Simulate AI assistant
-            alert("AI Assistant feature coming soon! Get help with your finances using AI.")
+            toast.info("Coming soon! Get help with your finances using AI.")
         }
     }
 
     const handleSendInvoice = async () => {
-        if (!invoiceEmail || !invoiceAmount || parseFloat(invoiceAmount) <= 0) return
+        const amt = parseFloat(invoiceAmount)
+        if (!invoiceEmail?.trim()) {
+            toast.error("Please enter a recipient email")
+            return
+        }
+        if (!invoiceAmount || amt <= 0) {
+            toast.error("Please enter a valid amount greater than 0")
+            return
+        }
 
         setIsLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        alert(`Invoice sent successfully to ${invoiceEmail} for $${parseFloat(invoiceAmount).toFixed(2)}`)
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+
+        setInvoiceSuccessMsg(`Invoice sent to ${invoiceEmail} for $${amt.toFixed(2)}`)
         setInvoiceDialogOpen(false)
         setInvoiceEmail("")
         setInvoiceAmount("")
         setIsLoading(false)
+        setInvoiceSuccessOpen(true)
+        setTimeout(() => setInvoiceSuccessOpen(false), 3000)
     }
 
     const handlePayBill = async () => {
-        if (!billProvider || !billAmount || parseFloat(billAmount) <= 0) return
+        const amt = parseFloat(billAmount)
+        if (!billProvider) {
+            toast.error("Please select a bill provider")
+            return
+        }
+        if (!billAmount || amt <= 0) {
+            toast.error("Please enter a valid amount greater than 0")
+            return
+        }
 
         setIsLoading(true)
-        await new Promise(resolve => setTimeout(resolve, 1500))
-        
-        alert(`Bill payment of $${parseFloat(billAmount).toFixed(2)} to ${billProvider} processed successfully!`)
+        await new Promise((resolve) => setTimeout(resolve, 1500))
+
+        const providerLabel = billProviders.find((p) => p.value === billProvider)?.label ?? billProvider
+        setBillSuccessMsg(`Paid $${amt.toFixed(2)} to ${providerLabel}`)
         setBillsDialogOpen(false)
         setBillProvider("")
         setBillAmount("")
         setIsLoading(false)
+        setBillSuccessOpen(true)
+        setTimeout(() => setBillSuccessOpen(false), 3000)
     }
 
     return (
