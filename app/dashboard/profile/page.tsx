@@ -51,7 +51,7 @@ export default function ProfilePage() {
               </div>
               <button
                 className="absolute bottom-0 right-0 p-2 bg-white rounded-full shadow-md border border-gray-200 hover:bg-gray-50 transition-all duration-200 active:scale-95"
-                onClick={() => alert("Change photo coming soon!")}
+                onClick={() => toast.info("Change photo coming soon!")}
                 aria-label="Change photo"
               >
                 <Camera className="w-4 h-4 text-gray-600" />
@@ -65,7 +65,7 @@ export default function ProfilePage() {
             <Link
               href="#"
               className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors group"
-              onClick={(e) => { e.preventDefault(); alert("Edit profile coming soon!"); }}
+              onClick={(e) => { e.preventDefault(); toast.info("Edit profile coming soon!"); }}
             >
               <div className="p-2.5 rounded-lg bg-blue-50 text-blue-600">
                 <Mail className="w-5 h-5" />
@@ -80,7 +80,7 @@ export default function ProfilePage() {
               <Link
                 href="#"
                 className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors group"
-                onClick={(e) => { e.preventDefault(); alert("Edit phone coming soon!"); }}
+                onClick={(e) => { e.preventDefault(); toast.info("Edit phone coming soon!"); }}
               >
                 <div className="p-2.5 rounded-lg bg-green-50 text-green-600">
                   <Phone className="w-5 h-5" />

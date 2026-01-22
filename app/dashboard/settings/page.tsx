@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { toast } from "sonner"
 import { ArrowLeft, ChevronRight, Bell, DollarSign, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
@@ -146,7 +147,7 @@ export default function SettingsPage() {
             <Link
               href="#"
               className="flex items-center gap-4 p-4 hover:bg-gray-50 transition-colors group"
-              onClick={(e) => { e.preventDefault(); alert("Change PIN coming soon!"); }}
+              onClick={(e) => { e.preventDefault(); toast.info("Change PIN coming soon!"); }}
             >
               <div className="flex-1 text-left">
                 <p className="text-sm font-medium text-gray-900">Change PIN</p>

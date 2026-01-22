@@ -1,6 +1,7 @@
 "use client"
 
 import Link from "next/link"
+import { toast } from "sonner"
 import { Cloud, Headphones } from "lucide-react"
 
 export function UserGreeting() {
@@ -30,7 +31,7 @@ export function UserGreeting() {
       </Link>
       <button
         className="p-2 hover:bg-gray-100 rounded-lg transition-all duration-300 hover:scale-110 hover:rotate-12 active:scale-95 flex-shrink-0"
-        onClick={() => alert("Support chat coming soon!")}
+        onClick={() => toast.info("Support chat coming soon!")}
         aria-label="Support"
       >
         <Headphones className="w-5 h-5 text-gray-600 transition-all duration-300 hover:text-blue-600" />
