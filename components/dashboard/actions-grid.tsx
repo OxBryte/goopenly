@@ -2,7 +2,7 @@
 
 import { useState } from "react"
 import { toast } from "sonner"
-import { Send, CheckCircle2, Loader2, ArrowRight } from "lucide-react"
+import { Send, Loader2, ArrowRight } from "lucide-react"
 import {
     Dialog,
     DialogContent,
