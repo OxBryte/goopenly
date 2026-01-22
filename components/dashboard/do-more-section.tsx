@@ -82,14 +82,20 @@ export function DoMoreSection() {
                     {moreFeatures.map((feature, index) => (
                         <div
                             key={index}
-                            className="flex-shrink-0 bg-white rounded-xl border border-gray-200 p-4 w-24 cursor-pointer hover:border-primary/30 hover:shadow-md transition-all duration-200 active:scale-[0.97] transform"
+                            className="flex-shrink-0 bg-white rounded-xl border border-gray-200 p-4 w-24 cursor-pointer hover:border-primary/30 hover:shadow-xl transition-all duration-300 active:scale-[0.95] transform group relative overflow-hidden"
                             onClick={() => handleFeatureClick(feature.action)}
+                            style={{
+                                animation: `slide-down 0.6s ease-out ${(index + 1) * 0.1}s both`
+                            }}
                         >
-                            <div className="flex flex-col items-center text-center">
-                                <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center mb-2 transition-transform duration-200 hover:scale-110`}>
-                                    <feature.icon className="w-6 h-6" />
+                            {/* Ripple effect */}
+                            <div className="absolute inset-0 rounded-xl bg-gradient-to-br from-transparent via-white/30 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 transform scale-0 group-hover:scale-150"></div>
+                            
+                            <div className="relative flex flex-col items-center text-center">
+                                <div className={`w-12 h-12 rounded-lg ${feature.color} flex items-center justify-center mb-2 transition-all duration-300 group-hover:scale-110 group-hover:rotate-12 group-hover:shadow-lg`}>
+                                    <feature.icon className="w-6 h-6 transition-transform duration-300 group-hover:scale-110" />
                                 </div>
-                                <span className="text-xs font-medium text-gray-700">{feature.label}</span>
+                                <span className="text-xs font-medium text-gray-700 transition-all duration-300 group-hover:text-primary group-hover:font-semibold">{feature.label}</span>
                             </div>
                         </div>
                     ))}
