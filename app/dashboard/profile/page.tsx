@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
+import { toast } from "sonner"
 import { ArrowLeft, ChevronRight, Mail, Phone, Calendar, Settings, Camera, ShieldCheck } from "lucide-react"
 import { defaultProfile } from "@/lib/data/profile"
 
