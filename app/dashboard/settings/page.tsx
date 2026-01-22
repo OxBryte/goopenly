@@ -6,6 +6,7 @@ import { toast } from "sonner"
 import { ArrowLeft, ChevronRight, Bell, DollarSign, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
+import { CURRENCIES, currencyLabels } from "@/lib/data/simulated"
 
 export default function SettingsPage() {
   const [mounted, setMounted] = useState(false)
