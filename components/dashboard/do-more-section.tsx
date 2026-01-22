@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Zap, ChevronRight, ShoppingBag, Brain, FileText, Receipt } from "lucide-react"
 import {
     Dialog,
@@ -14,6 +15,8 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Loader2 } from "lucide-react"
+import { SuccessModal } from "@/components/ui/success-modal"
+import { billProviders } from "@/lib/data/simulated"
 
 const moreFeatures = [
     { icon: ShoppingBag, label: "Shopping", color: "bg-pink-100 text-pink-600", action: "shopping" },
