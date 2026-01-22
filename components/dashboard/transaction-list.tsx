@@ -20,25 +20,28 @@ export function TransactionList() {
                     <ChevronRight className="w-4 h-4" />
                 </button>
             </div>
-            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+            <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden group">
                 <div className="divide-y divide-gray-100">
-                    {transactions.map((tx) => (
+                    {transactions.map((tx, index) => (
                         <div 
                             key={tx.id} 
-                            className="flex items-center justify-between p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+                            className="flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-purple-50/50 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-sm group/item"
+                            style={{
+                                animation: `slide-down 0.6s ease-out ${(index + 1) * 0.1}s both`
+                            }}
                         >
-                            <div className="flex items-center gap-4 flex-1 min-w-0">
-                                <div className={`p-2.5 rounded-lg flex-shrink-0 ${
-                                    tx.type === 'incoming' 
-                                        ? 'bg-green-50 text-green-600' 
-                                        : 'bg-gray-100 text-gray-700'
-                                }`}>
-                                    {tx.type === 'incoming' ? (
-                                        <ArrowDownLeft size={18} />
-                                    ) : (
-                                        <ArrowUpRight size={18} />
-                                    )}
-                                </div>
+                        <div className="flex items-center gap-4 flex-1 min-w-0">
+                            <div className={`p-2.5 rounded-lg flex-shrink-0 transition-all duration-300 group-hover/item:scale-110 group-hover/item:rotate-6 ${
+                                tx.type === 'incoming' 
+                                    ? 'bg-green-50 text-green-600 group-hover/item:bg-green-100' 
+                                    : 'bg-gray-100 text-gray-700 group-hover/item:bg-gray-200'
+                            }`}>
+                                {tx.type === 'incoming' ? (
+                                    <ArrowDownLeft size={18} className="transition-transform duration-300 group-hover/item:translate-x-1 group-hover/item:-translate-y-1" />
+                                ) : (
+                                    <ArrowUpRight size={18} className="transition-transform duration-300 group-hover/item:translate-x-1 group-hover/item:translate-y-1" />
+                                )}
+                            </div>
                                 <div className="flex-1 min-w-0">
                                     <p className="text-sm font-medium text-gray-900 truncate">{tx.title}</p>
                                     <div className="flex items-center gap-2 mt-0.5">
@@ -49,14 +52,14 @@ export function TransactionList() {
                                 </div>
                             </div>
                             <div className="flex items-center gap-3 flex-shrink-0">
-                                <span className={`text-sm font-semibold whitespace-nowrap ${
+                                <span className={`text-sm font-semibold whitespace-nowrap transition-all duration-300 group-hover/item:scale-110 ${
                                     tx.type === 'incoming' 
-                                        ? 'text-green-600' 
-                                        : 'text-gray-900'
+                                        ? 'text-green-600 group-hover/item:text-green-700' 
+                                        : 'text-gray-900 group-hover/item:text-primary'
                                 }`}>
                                     {tx.amount}
                                 </span>
-                                <ChevronRight className="w-4 h-4 text-gray-400" />
+                                <ChevronRight className="w-4 h-4 text-gray-400 transition-all duration-300 group-hover/item:text-primary group-hover/item:translate-x-1" />
                             </div>
                         </div>
                     ))}
