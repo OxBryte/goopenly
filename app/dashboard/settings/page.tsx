@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ChevronRight, Bell, DollarSign, Shield, Palette, Globe } from "lucide-react"
+import { ArrowLeft, ChevronRight, Bell, DollarSign, Shield } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Label } from "@/components/ui/label"
 
