@@ -1,25 +1,12 @@
 "use client"
 
 import { Eye, EyeOff } from "lucide-react"
+import { balanceByCurrency, currencySymbols } from "@/lib/data/simulated"
 
 interface BalanceCardProps {
     isBalanceVisible: boolean
     onToggleVisibility: () => void
     currency: string
-}
-
-const balanceAmounts: Record<string, string> = {
-  USD: "50,121.21",
-  EUR: "46,250.50",
-  NGN: "45,000,000.00",
-  GBP: "39,450.75",
-}
-
-const currencySymbols: Record<string, string> = {
-  USD: "$",
-  EUR: "€",
-  NGN: "₦",
-  GBP: "£",
 }
 
 export function BalanceCard({ isBalanceVisible, onToggleVisibility, currency }: BalanceCardProps) {
@@ -45,7 +32,7 @@ export function BalanceCard({ isBalanceVisible, onToggleVisibility, currency }: 
                 </div>
                 <h2 className="text-4xl font-bold text-gray-900 transition-all duration-500 ease-out group-hover:scale-105 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600">
                     {isBalanceVisible 
-                        ? `${currencySymbols[currency]}${balanceAmounts[currency] || "0.00"}` 
+                        ? `${currencySymbols[currency as keyof typeof currencySymbols] ?? currency}${balanceByCurrency[currency as keyof typeof balanceByCurrency] ?? "0.00"}` 
                         : "••••••"}
                 </h2>
             </div>
