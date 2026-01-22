@@ -137,18 +137,13 @@ export function ActionsGrid() {
                 ))}
             </div>
 
-            {/* Success Dialog */}
-            <Dialog open={successDialogOpen} onOpenChange={setSuccessDialogOpen}>
-                <DialogContent>
-                    <div className="flex flex-col items-center text-center py-4">
-                        <div className="w-16 h-16 rounded-full bg-green-100 flex items-center justify-center mb-4 animate-in zoom-in duration-300">
-                            <CheckCircle2 className="w-8 h-8 text-green-600" />
-                        </div>
-                        <DialogTitle className="text-lg mb-2">Success!</DialogTitle>
-                        <p className="text-sm text-gray-600">{successMessage}</p>
-                    </div>
-                </DialogContent>
-            </Dialog>
+            <SuccessModal
+                open={successDialogOpen}
+                onOpenChange={setSuccessDialogOpen}
+                variant="success"
+                title="Success!"
+                message={successMessage}
+            />
 
             {/* Send Money Dialog */}
             <Dialog open={sendDialogOpen} onOpenChange={setSendDialogOpen}>
