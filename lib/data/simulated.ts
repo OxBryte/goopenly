@@ -19,6 +19,13 @@ export const currencyLabels: Record<Currency, string> = {
   GBP: "British Pound",
 }
 
+export const currencyFlags: Record<Currency, string> = {
+  USD: "🇺🇸",
+  EUR: "🇪🇺",
+  NGN: "🇳🇬",
+  GBP: "🇬🇧",
+}
+
 export const balanceByCurrency: Record<Currency, string> = {
   USD: "50,121.21",
   EUR: "46,250.50",
