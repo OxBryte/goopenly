@@ -74,21 +74,25 @@ export function ActionsGrid() {
     }
 
     const handleSend = async () => {
-        if (!recipientAddress.trim() || !amount || parseFloat(amount) <= 0) {
+        const amt = parseFloat(amount)
+        if (!recipientAddress.trim()) {
+            toast.error("Please enter a recipient address")
+            return
+        }
+        if (!amount || amt <= 0) {
+            toast.error("Please enter a valid amount greater than 0")
             return
         }
 
         setIsLoading(true)
-        // Simulate API call with smooth animation
-        await new Promise(resolve => setTimeout(resolve, 2000))
-        
-        setSuccessMessage(`Successfully sent $${parseFloat(amount).toFixed(2)} to ${recipientAddress.slice(0, 6)}...${recipientAddress.slice(-4)}`)
+        await new Promise((resolve) => setTimeout(resolve, 2000))
+
+        setSuccessMessage(`Successfully sent $${amt.toFixed(2)} to ${recipientAddress.slice(0, 6)}...${recipientAddress.slice(-4)}`)
         setSendDialogOpen(false)
         setRecipientAddress("")
         setAmount("")
         setIsLoading(false)
         setSuccessDialogOpen(true)
-        
         setTimeout(() => setSuccessDialogOpen(false), 3000)
     }
 
