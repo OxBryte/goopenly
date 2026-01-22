@@ -1,6 +1,7 @@
 "use client"
 
 import { useState } from "react"
+import { toast } from "sonner"
 import { Send, CheckCircle2, Loader2, ArrowRight } from "lucide-react"
 import {
     Dialog,
@@ -13,6 +14,8 @@ import {
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { SuccessModal } from "@/components/ui/success-modal"
+import { accountDetails, conversionRates, currencySymbols } from "@/lib/data/simulated"
 
 const actions = [
     { 
