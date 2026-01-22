@@ -212,11 +212,11 @@ export function DoMoreSection() {
                                 disabled={isLoading}
                             >
                                 <option value="">Select provider</option>
-                                <option value="Electricity">Electricity Company</option>
-                                <option value="Water">Water Department</option>
-                                <option value="Internet">Internet Service</option>
-                                <option value="Phone">Phone Service</option>
-                                <option value="Other">Other</option>
+                                {billProviders.map((p) => (
+                                    <option key={p.value} value={p.value}>
+                                        {p.label}
+                                    </option>
+                                ))}
                             </select>
                         </div>
                         <div className="space-y-2">
@@ -258,6 +258,21 @@ export function DoMoreSection() {
                     </DialogFooter>
                 </DialogContent>
             </Dialog>
+
+            <SuccessModal
+                open={invoiceSuccessOpen}
+                onOpenChange={setInvoiceSuccessOpen}
+                variant="success"
+                title="Invoice sent"
+                message={invoiceSuccessMsg}
+            />
+            <SuccessModal
+                open={billSuccessOpen}
+                onOpenChange={setBillSuccessOpen}
+                variant="success"
+                title="Payment successful"
+                message={billSuccessMsg}
+            />
         </>
     )
 }
