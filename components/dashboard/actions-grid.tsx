@@ -315,10 +315,9 @@ export function ActionsGrid() {
                                 onChange={(e) => setToCurrency(e.target.value)}
                                 disabled={isLoading}
                             >
-                                <option value="USD">USD - US Dollar</option>
-                                <option value="EUR">EUR - Euro</option>
-                                <option value="NGN">NGN - Nigerian Naira</option>
-                                <option value="GBP">GBP - British Pound</option>
+                                {CURRENCIES.map((c) => (
+                                    <option key={c} value={c}>{c} - {currencyLabels[c]}</option>
+                                ))}
                             </select>
                         </div>
                         {convertedAmount && (
