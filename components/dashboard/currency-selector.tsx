@@ -15,13 +15,13 @@ export function CurrencySelector({ selectedCurrency, onCurrencyChange }: Currenc
           key={code}
           onClick={() => onCurrencyChange(code)}
           className={`flex items-center gap-2 px-4 py-2.5 rounded-lg border transition-all duration-200 whitespace-nowrap transform hover:scale-105 active:scale-95 ${
-            selectedCurrency === currency.code
+            selectedCurrency === code
               ? "bg-primary text-white border-primary shadow-md scale-105"
               : "bg-white text-gray-700 border-gray-200 hover:border-primary/30 hover:shadow-sm"
           }`}
         >
-          <span className="text-lg">{currency.flag}</span>
-          <span className="text-sm font-medium">{currency.name}</span>
+          <span className="text-lg">{currencyFlags[code]}</span>
+          <span className="text-sm font-medium">{code}</span>
         </button>
       ))}
     </div>
