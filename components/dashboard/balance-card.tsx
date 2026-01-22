@@ -32,7 +32,7 @@ export function BalanceCard({ isBalanceVisible, onToggleVisibility, currency }: 
                 </div>
                 <h2 className="text-4xl font-bold text-gray-900 transition-all duration-500 ease-out group-hover:scale-105 group-hover:text-transparent group-hover:bg-clip-text group-hover:bg-gradient-to-r group-hover:from-blue-600 group-hover:to-purple-600">
                     {isBalanceVisible 
-                        ? `${currencySymbols[currency as keyof typeof currencySymbols] ?? currency}${balanceByCurrency[currency as keyof typeof balanceByCurrency] ?? "0.00"}` 
+                        ? `${(currencySymbols as Record<string, string>)[currency] ?? ""}${(balanceByCurrency as Record<string, string>)[currency] ?? "0.00"}` 
                         : "••••••"}
                 </h2>
             </div>
