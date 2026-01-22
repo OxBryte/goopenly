@@ -111,10 +111,9 @@ export default function SettingsPage() {
               onChange={(e) => setDefaultCurrency(e.target.value)}
               className="mt-2 flex h-10 w-full rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm"
             >
-              <option value="USD">USD - US Dollar</option>
-              <option value="EUR">EUR - Euro</option>
-              <option value="NGN">NGN - Nigerian Naira</option>
-              <option value="GBP">GBP - British Pound</option>
+              {CURRENCIES.map((c) => (
+                <option key={c} value={c}>{c} - {currencyLabels[c]}</option>
+              ))}
             </select>
           </div>
         </section>
