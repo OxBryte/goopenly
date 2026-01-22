@@ -15,7 +15,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { SuccessModal } from "@/components/ui/success-modal"
-import { accountDetails, conversionRates, currencySymbols } from "@/lib/data/simulated"
+import { accountDetails, conversionRates, currencySymbols, CURRENCIES, currencyLabels } from "@/lib/data/simulated"
 
 const actions = [
     { 
