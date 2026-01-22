@@ -1,28 +1,27 @@
 "use client"
 
+import Link from "next/link"
 import { ArrowDownLeft, ArrowUpRight, ChevronRight } from "lucide-react"
-
-const transactions = [
-    { id: 1, type: "incoming", title: "Received from Alice", amount: "+$500.00", date: "Today, 10:23 AM", category: "Transfer" },
-    { id: 2, type: "outgoing", title: "Starbucks Coffee", amount: "-$5.40", date: "Yesterday, 3:12 PM", category: "Food & Drink" },
-    { id: 3, type: "outgoing", title: "Uber Ride", amount: "-$12.50", date: "Yesterday, 8:45 AM", category: "Transport" },
-    { id: 4, type: "incoming", title: "Salary Payment", amount: "+$2,500.00", date: "Jan 19, 2024", category: "Income" },
-    { id: 5, type: "outgoing", title: "Netflix Subscription", amount: "-$15.99", date: "Jan 18, 2024", category: "Entertainment" },
-]
+import { transactions, RECENT_LIMIT } from "@/lib/data/transactions"
 
 export function TransactionList() {
+    const recent = transactions.slice(0, RECENT_LIMIT)
+
     return (
         <div className="w-full">
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-lg font-semibold text-gray-900">Recent Activity</h3>
-                <button className="text-sm text-gray-600 hover:text-gray-900 flex items-center gap-1">
+                <Link
+                    href="/dashboard/activity"
+                    className="text-sm text-gray-600 hover:text-primary font-medium flex items-center gap-1 transition-colors"
+                >
                     See All
                     <ChevronRight className="w-4 h-4" />
-                </button>
+                </Link>
             </div>
             <div className="bg-white rounded-2xl border border-gray-200 shadow-sm overflow-hidden group">
                 <div className="divide-y divide-gray-100">
-                    {transactions.map((tx, index) => (
+                    {recent.map((tx, index) => (
                         <div 
                             key={tx.id} 
                             className="flex items-center justify-between p-4 hover:bg-gradient-to-r hover:from-blue-50/50 hover:to-purple-50/50 transition-all duration-300 cursor-pointer transform hover:scale-[1.02] hover:shadow-sm group/item"
