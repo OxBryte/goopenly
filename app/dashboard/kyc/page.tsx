@@ -42,17 +42,18 @@ export default function KycPage() {
     setSubmitting(true)
     // Simulate verification
     setTimeout(() => {
-      setKyc((prev) => ({
-        ...prev,
-        steps: prev.steps.map((s) =>
+      setKyc((prev) => {
+        const updatedSteps = prev.steps.map((s) =>
           s.id === stepId ? { ...s, completed: true, status: "complete" as const } : s
-        ),
-        status: prev.steps.filter((s) => s.id === stepId)[0]
-          ? prev.steps.every((s) => s.id === stepId || s.completed)
-            ? "verified"
-            : "in_progress"
-          : prev.status,
-      }))
+        )
+        const allComplete = updatedSteps.every((s) => s.completed)
+        return {
+          ...prev,
+          steps: updatedSteps,
+          status: allComplete ? "verified" : "in_progress",
+          verifiedAt: allComplete ? new Date().toISOString() : prev.verifiedAt,
+        }
+      })
       setSubmitting(false)
       setActiveStep(null)
     }, 2000)

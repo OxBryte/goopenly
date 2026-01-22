@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react"
 import Link from "next/link"
-import { ArrowLeft, ChevronRight, Mail, Phone, Calendar, Settings, Camera } from "lucide-react"
+import { ArrowLeft, ChevronRight, Mail, Phone, Calendar, Settings, Camera, ShieldCheck } from "lucide-react"
 import { defaultProfile } from "@/lib/data/profile"
 
 export default function ProfilePage() {
