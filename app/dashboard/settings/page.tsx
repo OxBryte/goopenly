@@ -21,6 +21,7 @@ export default function SettingsPage() {
 
   const handleSave = () => {
     setSaved(true)
+    toast.success("Settings saved successfully")
     setTimeout(() => setSaved(false), 2000)
   }
 
