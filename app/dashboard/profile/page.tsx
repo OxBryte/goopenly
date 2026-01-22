@@ -103,10 +103,25 @@ export default function ProfilePage() {
           </div>
         </div>
 
+        {/* KYC link */}
+        <Link
+          href="/dashboard/kyc"
+          className={`flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-200 group mb-4 ${mounted ? "animate-slide-down delay-200" : "opacity-0"}`}
+        >
+          <div className="p-2.5 rounded-lg bg-amber-50 text-amber-600 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
+            <ShieldCheck className="w-5 h-5" />
+          </div>
+          <div className="flex-1 text-left">
+            <p className="text-sm font-medium text-gray-900">KYC Verification</p>
+            <p className="text-sm text-gray-500">Verify your identity to unlock full access</p>
+          </div>
+          <ChevronRight className="w-5 h-5 text-gray-400 group-hover:text-primary transition-colors" />
+        </Link>
+
         {/* Settings link */}
         <Link
           href="/dashboard/settings"
-          className={`flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-200 group ${mounted ? "animate-slide-down delay-200" : "opacity-0"}`}
+          className={`flex items-center gap-4 p-4 bg-white rounded-2xl border border-gray-200 shadow-sm hover:border-primary/30 hover:shadow-md transition-all duration-200 group ${mounted ? "animate-slide-down delay-300" : "opacity-0"}`}
         >
           <div className="p-2.5 rounded-lg bg-gray-100 text-gray-600 group-hover:bg-primary/10 group-hover:text-primary transition-colors">
             <Settings className="w-5 h-5" />
