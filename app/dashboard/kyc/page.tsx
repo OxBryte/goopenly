@@ -14,7 +14,7 @@ import {
   Shield,
   Loader2,
 } from "lucide-react"
-import { defaultKyc, type KycStep } from "@/lib/data/kyc"
+import { defaultKyc } from "@/lib/data/kyc"
 import { Button } from "@/components/ui/button"
 
 const stepIcons: Record<string, React.ElementType> = {
