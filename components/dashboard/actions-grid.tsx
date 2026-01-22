@@ -223,19 +223,19 @@ export function ActionsGrid() {
                         <div className="space-y-3">
                             <div className="flex justify-between items-center py-2 border-b border-gray-100">
                                 <span className="text-sm text-gray-600">Account Number</span>
-                                <span className="text-sm font-mono font-medium text-gray-900">****1234</span>
+                                <span className="text-sm font-mono font-medium text-gray-900">{accountDetails.accountNumber}</span>
                             </div>
                             <div className="flex justify-between items-center py-2 border-b border-gray-100">
                                 <span className="text-sm text-gray-600">Bank Name</span>
-                                <span className="text-sm font-medium text-gray-900">Goopenly Bank</span>
+                                <span className="text-sm font-medium text-gray-900">{accountDetails.bankName}</span>
                             </div>
                             <div className="flex justify-between items-center py-2 border-b border-gray-100">
                                 <span className="text-sm text-gray-600">Account Type</span>
-                                <span className="text-sm font-medium text-gray-900">Savings</span>
+                                <span className="text-sm font-medium text-gray-900">{accountDetails.accountType}</span>
                             </div>
                             <div className="flex justify-between items-center py-2">
                                 <span className="text-sm text-gray-600">Status</span>
-                                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">Active</span>
+                                <span className="text-xs bg-green-100 text-green-700 px-2 py-1 rounded-full font-medium">{accountDetails.status}</span>
                             </div>
                         </div>
                     </div>
@@ -243,12 +243,12 @@ export function ActionsGrid() {
                         <Button variant="outline" onClick={() => setAccountDialogOpen(false)}>
                             Close
                         </Button>
-                        <Button onClick={() => {
-                            navigator.clipboard.writeText("****1234")
-                            setSuccessMessage("Account number copied to clipboard!")
-                            setSuccessDialogOpen(true)
-                            setTimeout(() => setSuccessDialogOpen(false), 2000)
-                        }}>
+                        <Button
+                            onClick={() => {
+                                navigator.clipboard.writeText(accountDetails.fullAccountNumber)
+                                toast.success("Account number copied to clipboard")
+                            }}
+                        >
                             Copy Account Number
                         </Button>
                     </DialogFooter>
@@ -326,7 +326,7 @@ export function ActionsGrid() {
                             <div className="bg-green-50 border border-green-200 rounded-lg p-4 animate-in fade-in slide-in-from-top-2 duration-300">
                                 <div className="text-sm text-green-600 mb-1">Converted Amount</div>
                                 <div className="text-2xl font-bold text-green-700">
-                                    {toCurrency === "USD" ? "$" : toCurrency === "EUR" ? "€" : toCurrency === "NGN" ? "₦" : "£"}
+                                    {(currencySymbols as Record<string, string>)[toCurrency] ?? ""}
                                     {convertedAmount}
                                 </div>
                             </div>
