@@ -4,6 +4,7 @@
  */
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
 import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface Product {
@@ -61,6 +62,7 @@ export function useProducts(
   options: UseProductsOptions = {}
 ): UseProductsReturn {
   const { page = 1, limit = 15, status, autoFetch = true } = options;
+  const { getToken } = useAuth();
   const [products, setProducts] = useState<Product[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(page);
@@ -72,6 +74,11 @@ export function useProducts(
     setError(null);
 
     try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
       // Build query params
       const params = new URLSearchParams({
         page: pageNum.toString(),
@@ -83,7 +90,8 @@ export function useProducts(
       }
 
       const response = await apiClient.get<ProductsResponse>(
-        `/protected/product?${params.toString()}`
+        `/protected/product?${params.toString()}`,
+        token
       );
       setProducts(response.data);
       setPagination(response.pagination);
@@ -157,11 +165,14 @@ interface PaymentLinksResponse {
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 async function fetchPaymentLinks(
+  token: string | null,
   { page = 1, limit = 20 }: { page?: number; limit?: number } = {}
 ): Promise<PaymentLinksResponse> {
   let url = `${API_BASE_URL}/protected/payment-link?page=${page}&limit=${limit}`;
   const res = await fetch(url, {
-    credentials: 'include', // Include cookies for NextAuth session
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
   });
   if (!res.ok) {
     let errData: any = {};
@@ -197,6 +208,7 @@ async function fetchPaymentLinks(
 }
 
 export function usePaymentLinks(opts?: { page?: number; limit?: number; autoFetch?: boolean }) {
+  const { getToken } = useAuth();
   const [paymentLinks, setPaymentLinks] = useState<PaymentLink[]>([]);
   const [pagination, setPagination] = useState<PaymentLinksResponse["pagination"]>(undefined);
   const [loading, setLoading] = useState(false);
@@ -210,7 +222,11 @@ export function usePaymentLinks(opts?: { page?: number; limit?: number; autoFetc
     setError(null);
 
     try {
-      const result = await fetchPaymentLinks({ page: pageNum, limit });
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+      const result = await fetchPaymentLinks(token, { page: pageNum, limit });
       setPaymentLinks(result.data);
       setPagination(result.pagination);
       setCurrentPage(pageNum);
