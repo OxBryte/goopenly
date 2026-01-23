@@ -1,7 +1,7 @@
 "use client"
 
 import React, { useState } from "react"
-import { useSession } from "next-auth/react"
+import { useUser } from "@clerk/nextjs"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -17,7 +17,7 @@ interface ProductFormProps {
 }
 
 export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
-  const { data: session } = useSession()
+  const { user } = useUser()
   const [isLoading, setIsLoading] = useState(false)
   const [error, setError] = useState<string | null>(null)
   const [success, setSuccess] = useState(false)
@@ -41,8 +41,8 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
-    
-    if (!session?.user?.id) {
+
+    if (!user?.id) {
       setError('You must be logged in to create a product')
       return
     }
@@ -57,7 +57,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
           'Content-Type': 'application/json',
         },
         body: JSON.stringify({
-          sellerId: session.user.id,
+          sellerId: user.id,
           name: formData.name,
           description: formData.description,
           priceUSD: parseFloat(formData.priceUSD),
@@ -119,7 +119,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
             <p className="text-muted-foreground mb-4">
               Your product is now live and ready to accept payments
             </p>
-            
+
             {createdProduct && (
               <div className="bg-muted/50 rounded-lg p-4 mb-4">
                 <h4 className="font-semibold mb-2">Payment Link:</h4>
@@ -277,7 +277,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
                 type="submit"
                 disabled={isLoading}
                 className="flex-1"
-                style={{ 
+                style={{
                   background: 'linear-gradient(to bottom, #ff6d41, #ff5420)'
                 }}
               >
@@ -293,7 +293,7 @@ export function ProductForm({ onSuccess, onCancel }: ProductFormProps) {
                   </>
                 )}
               </Button>
-              
+
               {onCancel && (
                 <Button
                   type="button"
