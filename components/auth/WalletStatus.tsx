@@ -23,7 +23,7 @@ export function WalletStatus({ showLabel = true, className = "" }: WalletStatusP
         variant="ghost"
         size="sm"
         className="h-8 px-3 opacity-60"
-        style={{ 
+        style={{
           background: 'linear-gradient(to bottom, #ff6d41, #ff5420)',
           color: 'white'
         }}
