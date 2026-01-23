@@ -46,20 +46,35 @@ export function ReconciliationDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  
+  useEffect(() => {
+    loadReconciliationData();
+    // Refresh every 30 seconds
+    const interval = setInterval(loadReconciliationData, 30000);
+    return () => clearInterval(interval);
+  }, []);
 
-  const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'success':
-        return 'bg-green-100 text-green-800 dark:bg-green-900/20 dark:text-green-400';
-      case 'pending':
-        return 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/20 dark:text-yellow-400';
-      case 'failed':
-        return 'bg-red-100 text-red-800 dark:bg-red-900/20 dark:text-red-400';
-      default:
-        return 'bg-gray-100 text-gray-800 dark:bg-gray-900/20 dark:text-gray-400';
+  const loadReconciliationData = async () => {
+    try {
+      setIsLoading(true);
+      setError(null);
+
+      const response = await fetch('/api/reconciliation/status');
+      if (!response.ok) {
+        throw new Error('Failed to load reconciliation data');
+      }
+
+      const reconciliationData = await response.json();
+      setData(reconciliationData);
+      setLastUpdated(new Date());
+    } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
+      setError(errorMessage);
+    } finally {
+      setIsLoading(false);
     }
   };
+
+ 
 
   const formatAmount = (amount: number, currency: string) => {
     return new Intl.NumberFormat('en-US', {
