@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { User as UserIcon, CheckCircle2 } from "lucide-react";
+import { User as UserIcon, CheckCircle2, Loader2 } from "lucide-react";
 import { useForm } from "react-hook-form";
 
 export function OnboardingForm() {
@@ -51,7 +51,7 @@ export function OnboardingForm() {
               className="mt-1"
             />
             {errors.username && (
-              <p className="text-destructive text-sm mt-1">{errors.username.message}</p>
+              <p className="text-destructive text-sm mt-1">{errors.username.message as string}</p>
             )}
           </div>
 
