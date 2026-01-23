@@ -21,13 +21,13 @@ interface CustomPaymentFormProps {
   description?: string;
 }
 
-const PaymentFormContent = ({ 
-  amount, 
-  currency = 'usd', 
-  onSuccess, 
-  onError, 
+const PaymentFormContent = ({
+  amount,
+  currency = 'usd',
+  onSuccess,
+  onError,
   productName,
-  description 
+  description
 }: CustomPaymentFormProps) => {
   const stripe = useStripe();
   const elements = useElements();
@@ -40,7 +40,7 @@ const PaymentFormContent = ({
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
-    
+
     if (!stripe || !elements) {
       setError('Stripe not loaded');
       return;
@@ -54,8 +54,8 @@ const PaymentFormContent = ({
       const response = await fetch('/api/payments/create-intent', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ 
-          amount, 
+        body: JSON.stringify({
+          amount,
           currency,
           metadata: {
             productName: productName || 'Payment',
@@ -132,10 +132,10 @@ const PaymentFormContent = ({
           <span>Payment Details</span>
         </CardTitle>
         <CardDescription>
-          Complete your payment securely with Stripe
+          Complete your payment securely with stripe!
         </CardDescription>
       </CardHeader>
-      
+
       <CardContent>
         <form onSubmit={handleSubmit} className="space-y-6">
           {/* Billing Information */}
@@ -151,7 +151,7 @@ const PaymentFormContent = ({
                 required
               />
             </div>
-            
+
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -208,9 +208,9 @@ const PaymentFormContent = ({
           )}
 
           {/* Submit Button */}
-          <Button 
-            type="submit" 
-            className="w-full" 
+          <Button
+            type="submit"
+            className="w-full"
             size="lg"
             disabled={!stripe || isLoading}
           >
@@ -234,7 +234,7 @@ export default function CustomPaymentForm(props: CustomPaymentFormProps) {
     return (
       <Alert variant="destructive">
         <AlertDescription>
-          Stripe is not configured. Please check your environment variables.
+          Stripe is not configured. Please check your environment variables in .env.local.
         </AlertDescription>
       </Alert>
     );
@@ -246,9 +246,3 @@ export default function CustomPaymentForm(props: CustomPaymentFormProps) {
     </Elements>
   );
 }
-
-
-
-
-
-
