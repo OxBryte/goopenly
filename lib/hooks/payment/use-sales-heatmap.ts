@@ -1,10 +1,11 @@
 /**
  * Sales Heatmap Hook
  * Fetches sales activity heatmap for the last 365 days
- * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface DayData {
   date: string;
@@ -47,58 +48,8 @@ interface UseSalesHeatmapReturn {
   refetch: () => void;
 }
 
-// Generate dummy heatmap data
-const generateDummyHeatmap = (): SalesHeatmapData => {
-  const weeks: WeekData[] = [];
-  const today = new Date();
-  
-  // Generate last 52 weeks
-  for (let i = 0; i < 52; i++) {
-    const weekStart = new Date(today);
-    weekStart.setDate(today.getDate() - (52 - i) * 7);
-    
-    const days: DayData[] = [];
-    for (let d = 0; d < 7; d++) {
-      const date = new Date(weekStart);
-      date.setDate(weekStart.getDate() + d);
-      
-      days.push({
-        date: date.toISOString().split('T')[0],
-        dayOfWeek: d,
-        dayName: date.toLocaleDateString('en-US', { weekday: 'short' }),
-        amount: (Math.random() * 1000).toFixed(2),
-        count: Math.floor(Math.random() * 10),
-      });
-    }
-    
-    weeks.push({
-      weekStartDate: weekStart.toISOString().split('T')[0],
-      days,
-    });
-  }
-
-  const allDays = weeks.flatMap(w => w.days);
-  const bestDay = allDays.reduce((max, day) => 
-    parseInt(day.count) > parseInt(max.count) ? day : max
-  );
-
-  return {
-    weeks,
-    summary: {
-      totalSales: "14500.00",
-      avgDailySales: "39.73",
-      bestDay,
-    },
-    metadata: {
-      startDate: weeks[0].weekStartDate,
-      endDate: weeks[weeks.length - 1].weekStartDate,
-      totalDays: 365,
-      totalWeeks: 52,
-    },
-  };
-};
-
 export function useSalesHeatmap(): UseSalesHeatmapReturn {
+  const { getToken } = useAuth();
   const [heatmapData, setHeatmapData] = useState<SalesHeatmapData | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -107,11 +58,35 @@ export function useSalesHeatmap(): UseSalesHeatmapReturn {
     setLoading(true);
     setError(null);
 
-    // Simulate API delay
-    setTimeout(() => {
-      setHeatmapData(generateDummyHeatmap());
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      const response = await apiClient.get<SalesHeatmapResponse>(
+        "/protected/payment/sales-heatmap",
+        token
+      );
+      // Log first week as sample
+      if (response.data.weeks && response.data.weeks.length > 0) {
+      }
+
+      setHeatmapData(response.data);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        console.error("API Error fetching heatmap:", err.message);
+        setError(err.message);
+      } else if (err instanceof Error) {
+        console.error("Error fetching heatmap:", err.message);
+        setError(err.message);
+      } else {
+        console.error("Unknown error fetching heatmap:", err);
+        setError("Failed to fetch heatmap data");
+      }
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   useEffect(() => {
