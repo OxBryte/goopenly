@@ -1,23 +1,9 @@
 /**
  * Base API Client
  * Handles authentication and common request logic
- * Uses local Next.js API routes by default, or external API if configured
  */
 
-// Use external API if configured, otherwise use local API routes
-const getApiBaseUrl = () => {
-  if (process.env.NEXT_PUBLIC_API_URL) {
-    return process.env.NEXT_PUBLIC_API_URL;
-  }
-  
-  // Use local API routes
-  if (typeof window !== 'undefined') {
-    return window.location.origin;
-  }
-  
-  // Server-side: use localhost or environment variable
-  return process.env.NEXT_PUBLIC_BASE_URL || 'http://localhost:3000';
-};
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 interface RequestOptions extends RequestInit {
   token?: string;
@@ -52,8 +38,7 @@ async function request<T>(
     console.warn("⚠️ No token provided for API request");
   }
 
-  const baseUrl = getApiBaseUrl();
-  const url = `${baseUrl}${endpoint}`;
+  const url = `${API_BASE_URL}${endpoint}`;
   console.log("🌐 API Request:", fetchOptions.method || "GET", url);
 
   try {
@@ -73,7 +58,7 @@ async function request<T>(
         errorData
       );
     }
-    
+
     console.log("✅ API Response:", response.status, response.statusText);
 
     // Handle 204 No Content
@@ -84,7 +69,7 @@ async function request<T>(
     // Check content type before parsing
     const contentType = response.headers.get("content-type");
     console.log("📄 Content-Type:", contentType);
-    
+
     if (!contentType || !contentType.includes("application/json")) {
       const responseText = await response.text();
       console.error("❌ Non-JSON response received:");
