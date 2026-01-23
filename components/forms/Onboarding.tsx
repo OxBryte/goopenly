@@ -7,15 +7,12 @@ import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
 import { User as UserIcon, CheckCircle2 } from "lucide-react";
+import { useForm } from "react-hook-form";
 
 export function OnboardingForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    console.log("Form submitted");
-  };
+  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
 
   const onSubmit = (data: any) => {
     console.log("Form data submitted:", data);
