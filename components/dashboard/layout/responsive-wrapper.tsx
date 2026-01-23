@@ -2,8 +2,8 @@
 
 import React from "react";
 import { SidebarProvider, SidebarInset } from "@/components/ui/sidebar";
-import { DashboardSidebar } from "@/components/dashboard/sidebar";
-import { MobileHeader } from "@/components/dashboard/mobile-header";
+import { DashboardSidebar } from "@/components/dashboard/layout/sidebar";
+import { MobileHeader } from "@/components/dashboard/layout/mobile-header";
 import { UniqueNameModal } from "@/components/auth/unique-name-modal";
 
 interface ResponsiveLayoutWrapperProps {
