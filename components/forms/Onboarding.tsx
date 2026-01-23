@@ -12,6 +12,15 @@ export function OnboardingForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log("Form submitted");
+  };
+
+  const onSubmit = (data: any) => {
+    console.log("Form data submitted:", data);
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 20 }}
