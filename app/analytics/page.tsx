@@ -1,175 +1,41 @@
 "use client";
 
+import { useState } from "react";
 import DashboardPageLayout from "@/components/dashboard/layout";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { motion } from "framer-motion";
 import {
-  useEarnings,
-  useSalesHeatmap,
-  useTransactions,
-} from "@/lib/hooks/payment";
-import { useProductStats, usePaymentLinkStats } from "@/lib/hooks/product";
-import dynamic from "next/dynamic";
-import { BarChart3, DollarSign, TrendingUp, CreditCard } from "lucide-react";
+  BarChart3,
+  DollarSign,
+  Package,
+  CreditCard,
+  TrendingUp,
+  Calendar,
+  RefreshCw,
+} from "lucide-react";
 
-const Chart = dynamic(() => import("react-apexcharts"), { ssr: false });
+interface Analytics {
+  totalEarnings: {
+    usdc: string
+    usd: string
+  }
+  totalProducts: number
+  activeProducts: number
+  totalPayments: number
+  averageOrderValue: string
+  recentPayments: Array<{
+    id: string
+    amountUSDC: string
+    amountUSD: string
+    status: string
+    completedAt: string
+    buyerEmail?: string
+    buyerName?: string
+  }>
+}
 
 export default function AnalyticsPage() {
-  const { earnings } = useEarnings();
-  const { heatmapData } = useSalesHeatmap();
-  const { transactions } = useTransactions({ limit: 10 });
-  const { stats: productStats } = useProductStats();
-  const { stats: paymentLinkStats } = usePaymentLinkStats();
-
-  // Calculate metrics
-  const totalRevenue = parseFloat(earnings?.succeeded?.amount || "0");
-  const totalSales = transactions?.length || 0;
-  const totalProducts = (productStats?.total ?? 0) + (paymentLinkStats?.total ?? 0);
-  const activeProducts = (productStats?.active ?? 0) + (paymentLinkStats?.active ?? 0);
-  const avgOrderValue = totalSales > 0 ? totalRevenue / totalSales : 0;
-
-  // Prepare chart data
-  const prepareChartData = () => {
-    if (!heatmapData || !heatmapData.weeks || heatmapData.weeks.length === 0) {
-      const months = [];
-      const today = new Date();
-      for (let i = 5; i >= 0; i--) {
-        const date = new Date(today);
-        date.setMonth(date.getMonth() - i);
-        const monthStart = new Date(date.getFullYear(), date.getMonth(), 1);
-        const sales = Math.floor(Math.random() * 50) + 10;
-        months.push({
-          month: monthStart.toLocaleDateString("en-US", { month: "short" }),
-          sales: sales,
-        });
-      }
-      return months;
-    }
-
-    const monthlyData: { [key: string]: number } = {};
-    heatmapData.weeks.forEach((week) => {
-      week.days.forEach((day) => {
-        const date = new Date(day.date);
-        const monthKey = `${date.getFullYear()}-${date.getMonth()}`;
-        monthlyData[monthKey] = (monthlyData[monthKey] || 0) + day.count;
-      });
-    });
-
-    return Object.entries(monthlyData)
-      .sort(([a], [b]) => a.localeCompare(b))
-      .map(([key, sales]) => {
-        const [year, month] = key.split("-");
-        const date = new Date(parseInt(year), parseInt(month), 1);
-        return {
-          month: date.toLocaleDateString("en-US", { month: "short" }),
-          sales: sales,
-        };
-      });
-  };
-
-  const chartData = prepareChartData();
-
-  const chartOptions = {
-    chart: {
-      type: "area" as const,
-      height: 280,
-      toolbar: { show: false },
-      zoom: { enabled: false },
-      fontFamily: "var(--font-mono)",
-    },
-    dataLabels: { enabled: false },
-    stroke: {
-      curve: "smooth" as const,
-      width: 2,
-      colors: ["#003e91"],
-    },
-    fill: {
-      type: "gradient",
-      gradient: {
-        shadeIntensity: 1,
-        opacityFrom: 0.4,
-        opacityTo: 0.1,
-        stops: [0, 100],
-        colorStops: [
-          { offset: 0, color: "#003e91", opacity: 0.4 },
-          { offset: 100, color: "#003e91", opacity: 0.1 },
-        ],
-      },
-    },
-    colors: ["#003e91"],
-    xaxis: {
-      categories: chartData.map((d) => d.month),
-      labels: {
-        style: {
-          colors: "var(--muted-foreground)",
-          fontSize: "11px",
-          fontFamily: "var(--font-mono)",
-        },
-      },
-      axisBorder: { show: false },
-      axisTicks: { show: false },
-    },
-    yaxis: {
-      labels: {
-        style: {
-          colors: "var(--muted-foreground)",
-          fontSize: "11px",
-          fontFamily: "var(--font-mono)",
-        },
-        formatter: (val: number) => Math.floor(val).toString(),
-      },
-    },
-    grid: {
-      borderColor: "var(--border)",
-      strokeDashArray: 3,
-      xaxis: { lines: { show: false } },
-      yaxis: { lines: { show: true } },
-      padding: { top: 0, right: 0, bottom: 0, left: 0 },
-    },
-    tooltip: {
-      theme: "light",
-      style: { fontFamily: "var(--font-mono)" },
-      y: { formatter: (val: number) => `${val} sales` },
-    },
-  };
-
-  const chartSeries = [
-    {
-      name: "Sales",
-      data: chartData.map((d) => d.sales),
-    },
-  ];
-
-  const metrics = [
-    {
-      label: "Total Revenue",
-      value: `$${totalRevenue.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`,
-      icon: DollarSign,
-      change: null,
-    },
-    {
-      label: "Total Sales",
-      value: totalSales.toString(),
-      icon: CreditCard,
-      change: null,
-    },
-    {
-      label: "Active Products",
-      value: activeProducts.toString(),
-      icon: BarChart3,
-      subtitle: `of ${totalProducts} total`,
-    },
-    {
-      label: "Avg Order Value",
-      value: `$${avgOrderValue.toLocaleString(undefined, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2,
-      })}`,
-      icon: TrendingUp,
-      change: null,
-    },
-  ];
+  const [analytics] = useState<Analytics | null>(null);
 
   return (
     <DashboardPageLayout
@@ -179,122 +45,248 @@ export default function AnalyticsPage() {
         icon: BarChart3,
       }}
     >
-      <div className="space-y-8">
-        {/* Key Metrics - Minimalistic Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {metrics.map((metric, index) => (
-            <div
-              key={index}
-              className="bg-card border border-border rounded-lg p-6 hover:border-primary/20 transition-colors"
-            >
-              <div className="flex items-start justify-between mb-4">
-                <div className="p-2 rounded-md bg-muted/50">
-                  <metric.icon className="h-4 w-4 text-muted-foreground" />
-                </div>
-              </div>
-              <div className="space-y-1">
-                <p className="text-sm text-muted-foreground font-medium">
-                  {metric.label}
-                </p>
-                <p className="text-2xl font-semibold text-foreground">
-                  {metric.value}
-                </p>
-                {metric.subtitle && (
-                  <p className="text-xs text-muted-foreground mt-1">
-                    {metric.subtitle}
-                  </p>
-                )}
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Sales Chart */}
-        <div className="bg-card border border-border rounded-lg p-6">
-          <div className="mb-6">
-            <h3 className="text-lg font-semibold text-foreground mb-1">
-              Sales Overview
-            </h3>
-            <p className="text-sm text-muted-foreground">
-              Last 6 months performance
+      <div className="space-y-6">
+        {/* Header with Refresh Button */}
+        <div className="flex items-center justify-between">
+          <div>
+            <h2 className="text-2xl font-bold">Sales Analytics</h2>
+            <p className="text-muted-foreground">
+              Track your payment performance and earnings
             </p>
           </div>
-          <div className="w-full">
-            <Chart
-              options={chartOptions}
-              series={chartSeries}
-              type="area"
-              height={280}
-            />
-          </div>
+          <motion.div
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+          >
+            <button
+              // onClick={fetchAnalytics}
+              className="p-2 rounded-lg bg-primary/10 hover:bg-primary/20 transition-colors"
+            >
+              <RefreshCw className="w-5 h-5" />
+            </button>
+          </motion.div>
         </div>
 
-        {/* Recent Transactions - Minimalistic Table */}
-        {transactions && transactions.length > 0 && (
-          <div className="bg-card border border-border rounded-lg overflow-hidden">
-            <div className="p-6 border-b border-border">
-              <h3 className="text-lg font-semibold text-foreground">
-                Recent Transactions
-              </h3>
-            </div>
-            <div className="divide-y divide-border">
-              {transactions.slice(0, 5).map((transaction, index) => (
-                <div
-                  key={transaction.id || index}
-                  className="p-4 hover:bg-muted/30 transition-colors"
-                >
-                  <div className="flex items-center justify-between">
-                    <div className="flex-1 min-w-0">
-                      <p className="text-sm font-medium text-foreground truncate">
-                        {transaction.customerName ||
-                          transaction.customerEmail ||
-                          "Anonymous"}
-                      </p>
-                      <p className="text-xs text-muted-foreground mt-0.5">
-                        {transaction.createdAt
-                          ? new Date(transaction.createdAt).toLocaleDateString(
-                              "en-US",
-                              {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                              }
-                            )
-                          : "N/A"}
-                      </p>
+        {/* Key Metrics */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.1 }}
+          >
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-green-100 dark:bg-green-900/20">
+                    <DollarSign className="w-5 h-5 text-green-600 dark:text-green-400" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">
+                      ${analytics?.totalEarnings.usd || '0.00'}
                     </div>
-                    <div className="text-right ml-4">
-                      <p className="text-sm font-semibold text-foreground">
-                        $
-                        {transaction.amount
-                          ? parseFloat(transaction.amount).toLocaleString(
-                              undefined,
-                              {
-                                minimumFractionDigits: 2,
-                                maximumFractionDigits: 2,
-                              }
-                            )
-                          : "0.00"}
-                      </p>
-                      <p
-                        className={`text-xs mt-0.5 ${
-                          transaction.status === "SUCCEEDED"
-                            ? "text-green-600"
-                            : transaction.status === "PROCESSING"
-                            ? "text-yellow-600"
-                            : "text-red-600"
-                        }`}
-                      >
-                        {transaction.status || "Unknown"}
-                      </p>
-                    </div>
+                    <div className="text-sm text-muted-foreground">Total Revenue</div>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        )}
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {analytics?.totalEarnings.usdc || '0'} USDC
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.2 }}
+          >
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-blue-100 dark:bg-blue-900/20">
+                    <CreditCard className="w-5 h-5 text-blue-600 dark:text-blue-400" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">
+                      {analytics?.totalPayments || 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Total Sales</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.3 }}
+          >
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-purple-100 dark:bg-purple-900/20">
+                    <Package className="w-5 h-5 text-purple-600 dark:text-purple-400" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">
+                      {analytics?.totalProducts || 0}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Total Products</div>
+                  </div>
+                </div>
+                <div className="mt-2 text-xs text-muted-foreground">
+                  {analytics?.activeProducts || 0} active
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.4 }}
+          >
+            <Card>
+              <CardContent className="p-6">
+                <div className="flex items-center gap-3">
+                  <div className="p-2 rounded-lg bg-orange-100 dark:bg-orange-900/20">
+                    <TrendingUp className="w-5 h-5 text-orange-600 dark:text-orange-400" />
+                  </div>
+                  <div>
+                    <div className="text-2xl font-bold">
+                      ${analytics?.averageOrderValue || '0.00'}
+                    </div>
+                    <div className="text-sm text-muted-foreground">Avg Order Value</div>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* Detailed Analytics */}
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+          {/* Revenue Breakdown */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.5 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <DollarSign className="w-5 h-5" />
+                  Revenue Breakdown
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Total Revenue (USD)</span>
+                    <span className="font-semibold">${analytics?.totalEarnings.usd || '0.00'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Total Revenue (USDC)</span>
+                    <span className="font-semibold">{analytics?.totalEarnings.usdc || '0'}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Average Order Value</span>
+                    <span className="font-semibold">${analytics?.averageOrderValue || '0.00'}</span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+
+          {/* Product Performance */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+          >
+            <Card>
+              <CardHeader>
+                <CardTitle className="flex items-center gap-2">
+                  <Package className="w-5 h-5" />
+                  Product Performance
+                </CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <div className="space-y-3">
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Total Products</span>
+                    <span className="font-semibold">{analytics?.totalProducts || 0}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Active Products</span>
+                    <span className="font-semibold">{analytics?.activeProducts || 0}</span>
+                  </div>
+                  <div className="flex justify-between items-center">
+                    <span className="text-sm text-muted-foreground">Conversion Rate</span>
+                    <span className="font-semibold">
+                      {analytics?.totalProducts 
+                        ? ((analytics.totalPayments / analytics.totalProducts) * 100).toFixed(1) + '%'
+                        : '0%'
+                      }
+                    </span>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </motion.div>
+        </div>
+
+        {/* Recent Payments */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ delay: 0.7 }}
+        >
+          <Card>
+            <CardHeader>
+              <CardTitle className="flex items-center gap-2">
+                <Calendar className="w-5 h-5" />
+                Recent Payments
+              </CardTitle>
+            </CardHeader>
+            <CardContent>
+              {analytics?.recentPayments.length ? (
+                <div className="space-y-3">
+                  {analytics.recentPayments.map((payment, index) => (
+                    <motion.div
+                      key={payment.id}
+                      initial={{ opacity: 0, x: -20 }}
+                      animate={{ opacity: 1, x: 0 }}
+                      transition={{ delay: 0.8 + index * 0.1 }}
+                      className="flex items-center justify-between p-3 rounded-lg bg-muted"
+                    >
+                      <div className="flex items-center gap-3">
+                        <div className="w-2 h-2 rounded-full bg-green-500"></div>
+                        <div>
+                          <div className="font-medium">${payment.amountUSD}</div>
+                          <div className="text-sm text-muted-foreground">
+                            {payment.buyerName || payment.buyerEmail || 'Anonymous'}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <Badge variant="outline">Completed</Badge>
+                        <div className="text-xs text-muted-foreground">
+                          {new Date(payment.completedAt).toLocaleDateString()}
+                        </div>
+                      </div>
+                    </motion.div>
+                  ))}
+                </div>
+              ) : (
+                <div className="text-center py-8 text-muted-foreground">
+                  No recent payments
+                </div>
+              )}
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
     </DashboardPageLayout>
-  );
+  )
 }
