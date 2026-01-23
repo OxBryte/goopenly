@@ -1,10 +1,11 @@
 /**
  * Payment Transactions Hook
  * Fetches payment intent transactions with pagination
- * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface Transaction {
   id: string;
@@ -52,32 +53,11 @@ interface UseTransactionsReturn {
   fetchPage: (page: number) => void;
 }
 
-// Generate dummy transactions
-const generateDummyTransactions = (limit: number): Transaction[] => {
-  const statuses: Transaction["status"][] = ["SUCCEEDED", "PROCESSING", "FAILED"];
-  const names = ["John Doe", "Jane Smith", "Bob Johnson", "Alice Williams", "Charlie Brown"];
-  const emails = ["john@example.com", "jane@example.com", "bob@example.com", "alice@example.com", "charlie@example.com"];
-  
-  return Array.from({ length: limit }, (_, i) => ({
-    id: `tx_${Date.now()}_${i}`,
-    paymentIntentId: `pi_${Date.now()}_${i}`,
-    productId: `prod_${i + 1}`,
-    slug: `product-${i + 1}`,
-    amount: (Math.random() * 1000 + 10).toFixed(2),
-    currency: "USD",
-    status: statuses[Math.floor(Math.random() * statuses.length)],
-    customerName: names[i % names.length],
-    customerEmail: emails[i % emails.length],
-    paymentMethodTypes: ["card"],
-    createdAt: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString(),
-    updatedAt: new Date(Date.now() - i * 24 * 60 * 60 * 1000).toISOString(),
-  }));
-};
-
 export function useTransactions(
   options: UseTransactionsOptions = {}
 ): UseTransactionsReturn {
   const { page = 1, limit = 10, autoFetch = true } = options;
+  const { getToken } = useAuth();
   const [transactions, setTransactions] = useState<Transaction[]>([]);
   const [pagination, setPagination] = useState<Pagination | null>(null);
   const [currentPage, setCurrentPage] = useState(page);
@@ -88,19 +68,37 @@ export function useTransactions(
     setLoading(true);
     setError(null);
 
-    // Simulate API delay
-    setTimeout(() => {
-      const dummyTransactions = generateDummyTransactions(limit);
-      setTransactions(dummyTransactions);
-      setPagination({
-        page: pageNum,
-        limit,
-        total: 50,
-        totalPages: Math.ceil(50 / limit),
-      });
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      const response = await apiClient.get<TransactionsResponse>(
+        `/protected/payment/transactions?page=${pageNum}&limit=${limit}`,
+        token
+      );
+
+      console.log("📊 Transactions API Response:", response);
+      console.log("📊 Transactions data:", response.data.transactions);
+
+      setTransactions(response.data.transactions || []);
+      setPagination(response.data.pagination);
       setCurrentPage(pageNum);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        console.error("API Error fetching transactions:", err.message);
+        setError(err.message);
+      } else if (err instanceof Error) {
+        console.error("Error fetching transactions:", err.message);
+        setError(err.message);
+      } else {
+        console.error("Unknown error fetching transactions:", err);
+        setError("Failed to fetch transactions");
+      }
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   useEffect(() => {
