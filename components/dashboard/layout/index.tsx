@@ -15,34 +15,27 @@ export default function DashboardPageLayout({
   header,
 }: DashboardPageLayoutProps) {
   return (
-    <div className="flex flex-col relative w-full gap-6">
-      {/* Page Header */}
-      <div className="flex items-center gap-3">
-        <div className="rounded-lg bg-primary/10 p-2 flex items-center justify-center">
-          <header.icon className="size-5 text-primary" />
+    <div className="flex flex-col relative w-full gap-1 min-h-screen">
+      <div className="flex items-center lg:items-baseline gap-2.5 md:gap-4 px-4 md:px-6 py-3 md:pb-4 lg:pt-7 ring-2 ring-pop sticky top-header-mobile lg:top-0 bg-background z-10">
+        <div className="max-lg:contents rounded bg-primary size-7 md:size-9 flex items-center justify-center my-auto">
+          <header.icon className="ml-1 lg:ml-0 opacity-50 md:opacity-100 size-5" />
         </div>
-        <div className="flex-1">
-          <h1 className="text-2xl lg:text-3xl font-display font-semibold text-foreground">
-            {header.title}
-          </h1>
-          {header.description && (
-            <p className="text-sm text-muted-foreground mt-1">
-              {header.description}
-            </p>
-          )}
-        </div>
+        <h1 className="text-xl lg:text-4xl font-display leading-[1] mb-1">
+          {header.title}
+        </h1>
+        {header.description && (
+          <span className="ml-auto text-xs md:text-sm text-muted-foreground block">
+            {header.description}
+          </span>
+        )}
       </div>
-
-      {/* Page Content */}
-      <div className="flex-1 flex flex-col gap-6">
+      <div className="min-h-full flex-1 flex flex-col gap-8 md:gap-14 px-3 lg:px-6 py-6 md:py-10 ring-2 ring-pop bg-background">
         {children}
       </div>
     </div>
   );
 }
 
-// Export the new layout components
+// Export the new responsive components
 export { ResponsiveLayoutWrapper } from "./responsive-wrapper";
-export { MainLayout } from "./main-layout";
-export { Navbar } from "../navbar";
-export { TabsNav } from "../tabs-nav";
+export { MobileHeader } from "../mobile-header";
