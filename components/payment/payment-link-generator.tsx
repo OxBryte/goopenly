@@ -36,7 +36,7 @@ interface PaymentLinkFormProps {
 function PaymentLinkForm({ onSuccess, onCancel }: PaymentLinkFormProps) {
   const [isGenerating, setIsGenerating] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  
+
   // Form states
   const [linkType, setLinkType] = useState<'product' | 'general'>('product');
   const [formData, setFormData] = useState({
@@ -205,7 +205,7 @@ function PaymentLinkForm({ onSuccess, onCancel }: PaymentLinkFormProps) {
       )}
 
       <div className="flex gap-3">
-        <Button 
+        <Button
           onClick={generatePaymentLink}
           disabled={!formData.name || (linkType === 'product' && !formData.amount) || isGenerating}
           className="flex-1"
@@ -213,7 +213,7 @@ function PaymentLinkForm({ onSuccess, onCancel }: PaymentLinkFormProps) {
         >
           {isGenerating ? 'Generating...' : 'Generate Payment Link'}
         </Button>
-        
+
         {onCancel && (
           <Button
             type="button"
@@ -232,7 +232,7 @@ function PaymentLinkForm({ onSuccess, onCancel }: PaymentLinkFormProps) {
 export default function PaymentLinkGenerator() {
   const [activeTab, setActiveTab] = useState<'create' | 'links'>('create');
   const [paymentLinks, setPaymentLinks] = useState<PaymentLink[]>([]);
-  
+
   // Modal states
   const [isPaymentLinkModalOpen, setIsPaymentLinkModalOpen] = useState(false);
   const [isProductModalOpen, setIsProductModalOpen] = useState(false);
@@ -271,8 +271,8 @@ export default function PaymentLinkGenerator() {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <Button 
-                className="w-full" 
+              <Button
+                className="w-full"
                 size="lg"
                 onClick={() => setIsProductLinkModalOpen(true)}
               >
@@ -310,7 +310,7 @@ export default function PaymentLinkGenerator() {
                       Add a new product to your catalog
                     </DialogDescription>
                   </DialogHeader>
-                  <ProductForm 
+                  <ProductForm
                     onSuccess={() => {
                       setIsProductModalOpen(false);
                     }}
@@ -369,22 +369,22 @@ export default function PaymentLinkGenerator() {
                             {link.type === 'product' ? 'Product' : 'General'}
                           </Badge>
                         </div>
-                        
+
                         {link.description && (
                           <p className="text-sm text-muted-foreground">{link.description}</p>
                         )}
-                        
+
                         {link.amount && (
                           <p className="text-sm font-medium">
                             ${link.amount.toFixed(2)} {link.currency.toUpperCase()}
                           </p>
                         )}
-                        
+
                         <div className="flex items-center space-x-2 text-sm text-muted-foreground">
                           <span>Created: {link.createdAt.toLocaleDateString()}</span>
                         </div>
                       </div>
-                      
+
                       <div className="flex items-center space-x-2">
                         <Button
                           variant="outline"
