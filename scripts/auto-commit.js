@@ -38,4 +38,4 @@ doCommit();
 setInterval(() => {
   console.log("[auto-commit] Checking for changes...");
   doCommit();
-}, 20 * 1000);
+}, 10 * 1000);
