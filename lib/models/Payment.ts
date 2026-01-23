@@ -164,7 +164,7 @@ const PaymentSchema = new Schema<IPayment>({
 });
 
 // Static methods
-PaymentSchema.statics.create = async function(paymentData: {
+PaymentSchema.statics.create = async function (paymentData: {
   productId: string;
   sellerId: string;
   buyerId: string;
@@ -177,53 +177,53 @@ PaymentSchema.statics.create = async function(paymentData: {
   return await payment.save();
 };
 
-PaymentSchema.statics.findByTransactionHash = async function(transactionHash: string) {
+PaymentSchema.statics.findByTransactionHash = async function (transactionHash: string) {
   return await this.findOne({ transactionHash });
 };
 
-PaymentSchema.statics.findBySeller = async function(sellerId: string) {
-  return await this.find({ 
-    sellerId: sellerId.toLowerCase() 
+PaymentSchema.statics.findBySeller = async function (sellerId: string) {
+  return await this.find({
+    sellerId: sellerId.toLowerCase()
   }).sort({ createdAt: -1 });
 };
 
-PaymentSchema.statics.findByBuyer = async function(buyerId: string) {
-  return await this.find({ 
-    buyerId: buyerId.toLowerCase() 
+PaymentSchema.statics.findByBuyer = async function (buyerId: string) {
+  return await this.find({
+    buyerId: buyerId.toLowerCase()
   }).sort({ createdAt: -1 });
 };
 
-PaymentSchema.statics.findByProduct = async function(productId: string) {
+PaymentSchema.statics.findByProduct = async function (productId: string) {
   return await this.find({ productId }).sort({ createdAt: -1 });
 };
 
-PaymentSchema.statics.findByPaymentLink = async function(paymentLink: string) {
-  return await this.find({ 
-    paymentLink: paymentLink.toLowerCase() 
+PaymentSchema.statics.findByPaymentLink = async function (paymentLink: string) {
+  return await this.find({
+    paymentLink: paymentLink.toLowerCase()
   }).sort({ createdAt: -1 });
 };
 
-PaymentSchema.statics.updateStatus = async function(paymentId: string, status: string, transactionHash?: string) {
-  const updateData: any = { 
-    status, 
-    updatedAt: new Date() 
+PaymentSchema.statics.updateStatus = async function (paymentId: string, status: string, transactionHash?: string) {
+  const updateData: any = {
+    status,
+    updatedAt: new Date()
   };
-  
+
   if (transactionHash) {
     updateData.transactionHash = transactionHash;
   }
-  
+
   if (status === 'completed') {
     updateData.completedAt = new Date();
   }
-  
+
   return await this.findByIdAndUpdate(paymentId, updateData, { new: true });
 };
 
-PaymentSchema.statics.markCompleted = async function(transactionHash: string) {
+PaymentSchema.statics.markCompleted = async function (transactionHash: string) {
   return await this.findOneAndUpdate(
     { transactionHash },
-    { 
+    {
       status: 'completed',
       completedAt: new Date(),
       updatedAt: new Date()
@@ -232,16 +232,16 @@ PaymentSchema.statics.markCompleted = async function(transactionHash: string) {
   );
 };
 
-PaymentSchema.statics.getSellerEarnings = async function(sellerId: string) {
+PaymentSchema.statics.getSellerEarnings = async function (sellerId: string) {
   const payments = await this.find({
     sellerId: sellerId.toLowerCase(),
     status: 'completed'
   });
-  
+
   const totalEarnings = payments.reduce((sum: number, payment: any) => {
     return sum + parseInt(payment.amountUSDC);
   }, 0);
-  
+
   return {
     totalPayments: payments.length,
     totalEarningsUSDC: totalEarnings.toString(),
@@ -249,14 +249,14 @@ PaymentSchema.statics.getSellerEarnings = async function(sellerId: string) {
   };
 };
 
-PaymentSchema.statics.getRecentPayments = async function(sellerId: string, limit: number = 10) {
+PaymentSchema.statics.getRecentPayments = async function (sellerId: string, limit: number = 10) {
   return await this.find({
     sellerId: sellerId.toLowerCase(),
     status: 'completed'
   })
-  .sort({ completedAt: -1 })
-  .limit(limit)
-  .populate('productId', 'name priceUSD');
+    .sort({ completedAt: -1 })
+    .limit(limit)
+    .populate('productId', 'name priceUSD');
 };
 
 const Payment = mongoose.models.Payment || mongoose.model<IPayment>('Payment', PaymentSchema);
