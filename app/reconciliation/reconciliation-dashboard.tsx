@@ -46,33 +46,7 @@ export function ReconciliationDashboard() {
   const [error, setError] = useState<string | null>(null);
   const [lastUpdated, setLastUpdated] = useState<Date | null>(null);
 
-  useEffect(() => {
-    loadReconciliationData();
-    // Refresh every 30 seconds
-    const interval = setInterval(loadReconciliationData, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
-  const loadReconciliationData = async () => {
-    try {
-      setIsLoading(true);
-      setError(null);
-
-      const response = await fetch('/api/reconciliation/status');
-      if (!response.ok) {
-        throw new Error('Failed to load reconciliation data');
-      }
-
-      const reconciliationData = await response.json();
-      setData(reconciliationData);
-      setLastUpdated(new Date());
-    } catch (err) {
-      const errorMessage = err instanceof Error ? err.message : 'Failed to load data';
-      setError(errorMessage);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  
 
   const getStatusColor = (status: string) => {
     switch (status) {

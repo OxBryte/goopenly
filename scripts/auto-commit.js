@@ -34,8 +34,8 @@ function doCommit() {
 console.log("[auto-commit] Checking for changes on startup...");
 doCommit();
 
-// Commit every 3 minutes
+// Commit every 20 seconds
 setInterval(() => {
   console.log("[auto-commit] Checking for changes...");
   doCommit();
-}, 3 * 60 * 1000);
+}, 20 * 1000);
