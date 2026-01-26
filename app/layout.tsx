@@ -1,24 +1,23 @@
-import { Roboto_Mono } from "next/font/google";
+import { Inter, Roboto_Mono } from "next/font/google";
 import "./globals.css";
 import { Metadata } from "next";
 import { V0Provider } from "../lib/v0-context";
-import localFont from "next/font/local";
+import { SidebarProvider } from "../components/ui/sidebar";
+import { DashboardSidebar } from "../components/dashboard/sidebar";
 import { Providers } from "../components/providers";
 import { headers } from "next/headers";
 import React from "react";
-import "@fontsource/be-vietnam-pro/400.css";
-import "@fontsource/be-vietnam-pro/500.css";
-import "@fontsource/be-vietnam-pro/600.css";
-import "@fontsource/be-vietnam-pro/700.css";
+import { ClerkProvider } from "@clerk/nextjs";
+
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+});
 
 const robotoMono = Roboto_Mono({
   variable: "--font-roboto-mono",
   subsets: ["latin"],
-});
-
-const rebelGrotesk = localFont({
-  src: "../public/fonts/Rebels-Fett.woff2",
-  variable: "--font-rebels",
   display: "swap",
 });
 
@@ -26,12 +25,13 @@ const isV0 = process.env["VERCEL_URL"]?.includes("vusercontent.net") ?? false;
 
 export const metadata: Metadata = {
   title: {
-    template: "%s – Openly",
-    default: "Openly - Web3 Payments",
+    template: "Openly",
+    default: "Openly - Card Payments, Stablecoins",
   },
-  description:
-    "The ultimate rebel payment platform for Web3. Accept USDC payments with style.",
-  generator: "v0.app",
+  description: "Accept card payments, receive stablecoins. Simple. Fast. Secure.",
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default async function RootLayout({
@@ -43,26 +43,20 @@ export default async function RootLayout({
   const cookies = headersObj.get("cookie");
 
   return (
-    <html lang="en" className="dark">
-      <head>
-        <link
-          rel="preload"
-          href="/fonts/Rebels-Fett.woff2"
-          as="font"
-          type="font/woff2"
-          crossOrigin="anonymous"
-        />
-      </head>
-      <body
-        className={`${rebelGrotesk.variable} ${robotoMono.variable} antialiased font-sans`}
-        style={{ fontFamily: '"Be Vietnam Pro", sans-serif' }}
-      >
-        <Providers cookies={cookies}>
-          <V0Provider isV0={isV0}>
-            {children}
-          </V0Provider>
-        </Providers>
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body
+          className={`${inter.variable} ${robotoMono.variable} antialiased font-sans`}
+        >
+          <Providers cookies={cookies}>
+            <V0Provider isV0={isV0}>
+              <SidebarProvider>
+                <main className="min-h-screen">{children}</main>
+              </SidebarProvider>
+            </V0Provider>
+          </Providers>
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }

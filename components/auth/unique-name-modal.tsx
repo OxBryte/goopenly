@@ -128,10 +128,7 @@ export function UniqueNameModal() {
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogContent
         className="sm:max-w-md bg-white border border-gray-200 shadow-xl text-foreground"
-        style={{
-          background: "linear-gradient(to bottom, #ff6d41, #ff5420)",
-          color: "white",
-        }}
+        overlayClassName="bg-black/40 backdrop-blur-0"
         onInteractOutside={(e) => e.preventDefault()}
       >
         <DialogHeader>

@@ -170,7 +170,7 @@ export async function createRefund(refundInfo: {
 }) {
   try {
     const stripeServer = getStripeServer();
-
+    
     const refund = await stripeServer.refunds.create({
       payment_intent: refundInfo.paymentIntentId,
       amount: refundInfo.amount,

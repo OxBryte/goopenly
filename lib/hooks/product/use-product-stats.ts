@@ -1,10 +1,11 @@
 /**
  * Product Stats Hook
  * Fetches product statistics for authenticated user
- * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface ProductStats {
   total: number;
@@ -26,14 +27,8 @@ interface UseProductStatsReturn {
   refetch: () => void;
 }
 
-const dummyProductStats: ProductStats = {
-  total: 24,
-  active: 18,
-  expired: 4,
-  cancelled: 2,
-};
-
 export function useProductStats(): UseProductStatsReturn {
+  const { getToken } = useAuth();
   const [stats, setStats] = useState<ProductStats | null>(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -42,11 +37,31 @@ export function useProductStats(): UseProductStatsReturn {
     setLoading(true);
     setError(null);
 
-    // Simulate API delay
-    setTimeout(() => {
-      setStats(dummyProductStats);
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      const response = await apiClient.get<ProductStatsResponse>(
+        "/protected/product/stats",
+        token
+      );
+      setStats(response.data);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        console.error("API Error fetching product stats:", err.message);
+        setError(err.message);
+      } else if (err instanceof Error) {
+        console.error("Error fetching product stats:", err.message);
+        setError(err.message);
+      } else {
+        console.error("Unknown error fetching product stats:", err);
+        setError("Failed to fetch product stats");
+      }
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   useEffect(() => {

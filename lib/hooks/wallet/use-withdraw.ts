@@ -1,10 +1,11 @@
 /**
  * Wallet Withdraw Hook
  * Handles single and batch asset withdrawals
- * Dummy implementation - returns mock data
  */
 
 import { useState } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { apiClient, ApiError } from "@/lib/api/client";
 
 export interface SingleWithdrawData {
   chain: "base" | "base-sepolia";
@@ -72,6 +73,7 @@ interface UseWithdrawReturn {
 }
 
 export function useWithdraw(): UseWithdrawReturn {
+  const { getToken } = useAuth();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [result, setResult] = useState<WithdrawResultData | null>(null);
@@ -83,23 +85,34 @@ export function useWithdraw(): UseWithdrawReturn {
     setError(null);
     setResult(null);
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
 
-    // Generate dummy transaction result
-    const dummyResult: WithdrawResultData = {
-      transactionId: `tx_${Date.now()}`,
-      hash: `0x${Math.random().toString(16).substring(2, 66)}`,
-      status: "PENDING",
-      amount: data.amount,
-      recipientAddress: data.address,
-      asset: data.asset,
-      chain: data.chain,
-    };
-
-    setResult(dummyResult);
-    setLoading(false);
-    return dummyResult;
+      const response = await apiClient.post<SingleWithdrawResponse>(
+        "/protected/wallet/withdraw/single",
+        data,
+        token
+      );
+      setResult(response.data);
+      return response.data;
+    } catch (err) {
+      if (err instanceof ApiError) {
+        console.error("API Error withdrawing:", err.message);
+        setError(err.message);
+      } else if (err instanceof Error) {
+        console.error("Error withdrawing:", err.message);
+        setError(err.message);
+      } else {
+        console.error("Unknown error withdrawing:", err);
+        setError("Failed to execute withdrawal");
+      }
+      return null;
+    } finally {
+      setLoading(false);
+    }
   };
 
   const withdrawBatch = async (
@@ -108,21 +121,31 @@ export function useWithdraw(): UseWithdrawReturn {
     setLoading(true);
     setError(null);
 
-    // Simulate API delay
-    await new Promise((resolve) => setTimeout(resolve, 1500));
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
 
-    // Generate dummy batch result
-    const dummyResult = {
-      transactionId: `batch_tx_${Date.now()}`,
-      hash: `0x${Math.random().toString(16).substring(2, 66)}`,
-      status: "PENDING",
-      totalAmount: data.assets.reduce((sum, asset) => sum + parseFloat(asset.amount), 0).toString(),
-      assetCount: data.assets.length,
-      chains: [...new Set(data.assets.map(a => a.chain))],
-    };
+      const result = await apiClient.post<any>(
+        "/protected/wallet/withdraw/batch",
+        data,
+        token
+      );
 
-    setLoading(false);
-    return dummyResult;
+      return result;
+    } catch (err) {
+      if (err instanceof ApiError) {
+        setError(err.message);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Failed to execute batch withdrawal");
+      }
+      return null;
+    } finally {
+      setLoading(false);
+    }
   };
 
   return {

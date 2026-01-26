@@ -99,7 +99,7 @@ const UserSchema: Schema<IUser> = new Schema(
 );
 
 // Pre-save hook to handle legacy address field
-UserSchema.pre('save', function (next) {
+UserSchema.pre('save', function(next) {
   if (this.isModified('walletAddress') && !this.address) {
     this.address = this.walletAddress;
   }

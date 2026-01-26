@@ -11,7 +11,7 @@ const { exec } = require("child_process");
 // Configuration
 const CONFIG = {
   // Interval in minutes
-  intervalMinutes: 0.1,
+  intervalMinutes: 5,
 
   // Commit message prefix
   messagePrefix: "🤖 Auto-commit (interval):",

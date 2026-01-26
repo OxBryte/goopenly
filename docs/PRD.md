@@ -1132,7 +1132,7 @@ User Action → Hook → API Client → Backend API
 
 **Channels:**
 
-- Email: support@Openly.xyz
+- Email: support@openly.xyz
 - Live chat (planned)
 - Help center (planned)
 - Community forum (planned)

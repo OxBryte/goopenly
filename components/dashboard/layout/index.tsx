@@ -38,4 +38,4 @@ export default function DashboardPageLayout({
 
 // Export the new responsive components
 export { ResponsiveLayoutWrapper } from "./responsive-wrapper";
-export { MobileHeader } from "./mobile-header";
+export { MobileHeader } from "../mobile-header";

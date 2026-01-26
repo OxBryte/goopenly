@@ -14,7 +14,7 @@ Get up and running with Openly in 5 minutes.
 
 ```bash
 git clone <your-repo-url>
-cd Openly
+cd openly
 npm install
 ```
 

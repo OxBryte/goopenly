@@ -58,7 +58,7 @@ async function request<T>(
         errorData
       );
     }
-
+    
     console.log("✅ API Response:", response.status, response.statusText);
 
     // Handle 204 No Content
@@ -69,7 +69,7 @@ async function request<T>(
     // Check content type before parsing
     const contentType = response.headers.get("content-type");
     console.log("📄 Content-Type:", contentType);
-
+    
     if (!contentType || !contentType.includes("application/json")) {
       const responseText = await response.text();
       console.error("❌ Non-JSON response received:");

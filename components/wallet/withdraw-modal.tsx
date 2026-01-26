@@ -85,16 +85,16 @@ export function WithdrawModal({
         initial={{ opacity: 0, scale: 0.95 }}
         animate={{ opacity: 1, scale: 1 }}
         exit={{ opacity: 0, scale: 0.95 }}
-        className="bg-background rounded-lg shadow-xl max-w-md w-full border border-border"
+        className="bg-slate-900 rounded-lg shadow-xl max-w-md w-full border border-white/10"
       >
         {/* Header */}
-        <div className="p-6 border-b border-border flex items-center justify-between">
-          <h2 className="text-xl font-bold text-foreground">Withdraw Funds</h2>
+        <div className="p-6 border-b border-white/10 flex items-center justify-between">
+          <h2 className="text-xl font-bold text-white">Withdraw Funds</h2>
           <Button
             variant="ghost"
             size="sm"
             onClick={handleClose}
-            className="text-muted-foreground hover:text-foreground"
+            className="text-gray-400 hover:text-white"
           >
             <X className="w-4 h-4" />
           </Button>
@@ -108,38 +108,38 @@ export function WithdrawModal({
               <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
                 <CheckCircle2 className="w-8 h-8 text-green-400" />
               </div>
-              <h3 className="text-xl font-semibold text-foreground">
+              <h3 className="text-xl font-semibold text-white">
                 Withdrawal Initiated!
               </h3>
-              <p className="text-muted-foreground text-sm">
+              <p className="text-gray-400 text-sm">
                 Your withdrawal has been submitted successfully
               </p>
 
-              <div className="bg-muted/50 border border-border rounded-lg p-4 space-y-3 text-sm">
+              <div className="bg-white/5 border border-white/10 rounded-lg p-4 space-y-3 text-sm">
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Amount</span>
-                  <span className="text-foreground font-medium">
+                  <span className="text-gray-400">Amount</span>
+                  <span className="text-white font-medium">
                     {result.amount} {result.asset}
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Status</span>
-                  <Badge className="bg-yellow-500/10 text-yellow-600 border-yellow-500/20">
+                  <span className="text-gray-400">Status</span>
+                  <Badge className="bg-yellow-500/10 text-yellow-400 border-yellow-500/20">
                     {result.status}
                   </Badge>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Transaction ID</span>
-                  <span className="text-foreground font-mono text-xs">
+                  <span className="text-gray-400">Transaction ID</span>
+                  <span className="text-white font-mono text-xs">
                     {result.transactionId.slice(0, 8)}...
                   </span>
                 </div>
                 {result.hash && (
-                  <div className="pt-2 border-t border-border">
+                  <div className="pt-2 border-t border-white/10">
                     <Button
                       size="sm"
                       variant="outline"
-                      className="w-full border-border hover:bg-muted"
+                      className="w-full border-white/10 hover:bg-white/5"
                       onClick={() =>
                         window.open(
                           `https://basescan.org/tx/${result.hash}`,
@@ -156,7 +156,7 @@ export function WithdrawModal({
 
               <Button
                 onClick={handleClose}
-                className="w-full bg-primary hover:bg-primary/90 text-primary-foreground"
+                className="w-full bg-blue-600 hover:bg-blue-700"
               >
                 Done
               </Button>
@@ -183,15 +183,15 @@ export function WithdrawModal({
                       onClick={() => setAsset(assetType)}
                       className={`flex-1 p-3 rounded-lg border text-sm font-medium transition-all ${
                         asset === assetType
-                          ? "bg-primary border-primary text-primary-foreground"
-                          : "bg-muted/50 border-border text-muted-foreground hover:bg-muted"
+                          ? "bg-blue-600 border-blue-500 text-white"
+                          : "bg-white/5 border-white/10 text-gray-400 hover:bg-white/10"
                       }`}
                     >
                       {assetType}
                     </button>
                   ))}
                 </div>
-                <p className="text-xs text-muted-foreground">
+                <p className="text-xs text-gray-400">
                   Available: {maxBalance} {asset}
                 </p>
               </div>
@@ -209,14 +209,14 @@ export function WithdrawModal({
                     value={amount}
                     onChange={(e) => setAmount(e.target.value)}
                     placeholder="0.0"
-                    className="bg-background border-border text-foreground"
+                    className="bg-white/5 border-white/10 text-white"
                     required
                   />
                   <Button
                     type="button"
                     variant="outline"
                     onClick={() => setAmount(maxBalance)}
-                    className="border-border hover:bg-muted"
+                    className="border-white/10 hover:bg-white/5"
                   >
                     Max
                   </Button>
@@ -231,7 +231,7 @@ export function WithdrawModal({
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
                   placeholder="0x..."
-                  className="bg-background border-border text-foreground font-mono text-sm"
+                  className="bg-white/5 border-white/10 text-white font-mono text-sm"
                   required
                 />
               </div>
@@ -244,7 +244,7 @@ export function WithdrawModal({
                   value={reference}
                   onChange={(e) => setReference(e.target.value)}
                   placeholder="e.g., Withdrawal for..."
-                  className="bg-background border-border text-foreground"
+                  className="bg-white/5 border-white/10 text-white"
                 />
               </div>
 
@@ -263,7 +263,7 @@ export function WithdrawModal({
                   variant="outline"
                   onClick={handleClose}
                   disabled={loading}
-                  className="flex-1 border-border hover:bg-muted"
+                  className="flex-1 border-white/10 hover:bg-white/5"
                 >
                   Cancel
                 </Button>

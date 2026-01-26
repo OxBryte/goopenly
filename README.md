@@ -4,6 +4,11 @@
 
 A professional payment platform that bridges traditional finance and cryptocurrency. Generate payment links, accept card payments via Stripe, and automatically receive stablecoins through Blockradar's wallet infrastructure.
 
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0-blue.svg)](https://www.typescriptlang.org/)
+[![Next.js](https://img.shields.io/badge/Next.js-15.2.4-black.svg)](https://nextjs.org/)
+[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4.1.9-38B2AC.svg)](https://tailwindcss.com/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](./LICENSE)
+
 ## 🚀 Features
 
 ### 💳 **Payment Processing**
@@ -24,26 +29,22 @@ A professional payment platform that bridges traditional finance and cryptocurre
 
 - **Blockradar Integration**: Secure stablecoin wallet infrastructure
 - **Automatic Conversion**: Card payments automatically converted to stablecoins
-- **Multi-token Support**: USDC, USDT, and other major stablecoins - Base blockchain
+- **Multi-token Support**: USDC, USDT, and other major stablecoins
 - **Real-time Balances**: Track your stablecoin holdings
 
 ### 📊 **Analytics & Monitoring**
 
 - **Payment Tracking**: Monitor all incoming payments and transactions
 - **Revenue Analytics**: Track earnings, conversion rates, and performance
-- **Sales Trend Charts**: Beautiful area charts showing sales trends over time
-- **Interactive Visualizations**: ApexCharts with smooth gradients and tooltips
 - **Reconciliation**: Automatic matching of card payments to stablecoin receipts
 - **Real-time Dashboard**: Live updates on payment status and balances
 
 ### 🎨 **User Experience**
 
 - **Professional Design**: Clean, minimal interface with brand identity
-- **Light & Dark Theme**: Light main content with dark sidebar for optimal contrast
-- **Fully Responsive**: Mobile-first, works perfectly on all devices (375px+)
+- **Fully Responsive**: Mobile-first, works on all devices (375px+)
 - **Smooth Animations**: Optimized 60fps Framer Motion interactions
-- **Beautiful Charts**: Interactive ApexCharts visualizations for sales analytics
-- **Touch-Optimized**: 44px+ touch targets for mobile accessibility
+- **Perfect Dark Mode**: Custom theme with #111111 background
 - **Accessible**: WCAG 2.1 AA/AAA compliant
 - **Modern Components**: Tailwind CSS + Radix UI + shadcn/ui
 
@@ -56,8 +57,6 @@ A professional payment platform that bridges traditional finance and cryptocurre
 - **TypeScript** - Type-safe development
 - **Tailwind CSS 4.1.9** - Utility-first styling
 - **Framer Motion** - Smooth animations
-- **ApexCharts** - Interactive chart visualizations
-- **Recharts** - Additional chart components
 - **Radix UI** - Accessible component primitives
 
 ### **Payment Processing**
@@ -84,7 +83,7 @@ A professional payment platform that bridges traditional finance and cryptocurre
 ## 📁 Project Structure
 
 ```
-Openly/
+openly/
 ├── app/                          # Next.js App Router
 │   ├── (routes)/                 # Application routes
 │   │   ├── page.tsx              # Login/Signup
@@ -164,7 +163,7 @@ Openly/
 
    ```bash
    git clone <repository-url>
-   cd Openly
+   cd openly
    ```
 
 2. **Install dependencies**
@@ -204,6 +203,10 @@ Openly/
 6. **Open your browser**
    Navigate to [http://localhost:3000](http://localhost:3000)
 
+## 🤖 Auto-Commit (Optional)
+
+Enable automatic git commits during development:
+
 ### Quick Start
 
 ```bash
@@ -221,6 +224,21 @@ npm run auto-commit:interval
 - ✅ Smart file exclusions (node_modules, .next, etc.)
 - ✅ Optional auto-push to remote
 - ✅ Graceful shutdown handling
+
+### Configuration
+
+Edit `.autocommitrc.json` to customize:
+
+```json
+{
+  "debounceTime": 5000,
+  "intervalMinutes": 5,
+  "autoPush": false,
+  "branch": "main"
+}
+```
+
+For detailed instructions, see the auto-commit scripts in `/scripts/`.
 
 ## 🔌 API Integration
 
@@ -266,6 +284,19 @@ function Dashboard() {
   return <div>Revenue: ${earnings?.total}</div>;
 }
 ```
+
+### Documentation
+
+**Complete guides available:**
+
+- [📋 Product Requirements](./docs/PRD.md) - Comprehensive PRD
+- [🔌 API Integration](./docs/API_INTEGRATION.md) - API usage guide
+- [⚡ Quick Start](./docs/QUICK_START.md) - Get started in 5 minutes
+- [💳 Payment Flow](./docs/PAYMENT_FLOW_EXAMPLE.md) - Implementation examples
+- [🎨 Color Scheme](./docs/COLOR_SCHEME.md) - Brand colors and design tokens
+- [📱 Responsive Design](./docs/RESPONSIVE_DESIGN.md) - Mobile-first patterns
+- [🚀 Optimization Report](./docs/OPTIMIZATION_REPORT.md) - Code audit results
+- [📁 Folder Structure](./docs/FOLDER_STRUCTURE.md) - Architecture overview
 
 ## 🔧 Configuration
 
@@ -374,21 +405,18 @@ The platform features a professional brand identity with:
 
 ### **Brand Colors**
 
-- **Primary Blue**: `#003e91` - Deep professional blue for trust and reliability
+- **Primary Blue**: `#0062FF` - Deep professional blue for trust and reliability
 - **Primary Dark**: `#111111` - Rich dark background for modern aesthetic
 - **Status Colors**: Success (#10b981), Warning (#f59e0b), Error (#ef4444)
 - **Chart Palette**: Progressive blue gradient (5 shades)
 
 ### **Design Features**
 
-- **Light & Dark Theme**: Light main content (#ffffff) with dark sidebar (#111111)
 - **Clean Minimal Sidebar**: 280px width with left indicator bars for active pages
 - **Card-Based UI**: Consistent Card components across all pages
 - **Modern Typography**: System fonts with proper hierarchy
-- **Accessible Contrast**: WCAG AAA compliant with optimal readability
+- **Accessible Contrast**: WCAG AAA compliant (16.7:1 in light, 14.8:1 in dark)
 - **Responsive Grids**: 1→2→3→4 column layouts adapting to screen size
-- **Mobile-First**: Hamburger menu, touch-optimized buttons, responsive tables
-- **Beautiful Charts**: Area charts with gradients for sales analytics
 
 ### **Customization**
 
@@ -396,7 +424,7 @@ All design tokens are in `app/globals.css`:
 
 ```css
 :root {
-  --primary: #003e91; /* Your brand blue */
+  --primary: #0062ff; /* Your brand blue */
   --background: #ffffff; /* Light mode */
 }
 
@@ -405,6 +433,33 @@ All design tokens are in `app/globals.css`:
   --primary: #0052cc; /* Brighter blue for dark mode */
 }
 ```
+
+### **Documentation**
+
+- [Color Scheme Guide](./docs/COLOR_SCHEME.md) - Complete color system
+- [Responsive Design](./docs/RESPONSIVE_DESIGN.md) - Mobile-first implementation
+- [UI Components](./docs/PRODUCTS_REDESIGN.md) - Component patterns
+
+## 🚀 Deployment
+
+### Vercel (Recommended)
+
+1. **Connect your repository** to Vercel
+2. **Set environment variables** in Vercel dashboard
+3. **Deploy** automatically on push
+
+### Manual Deployment
+
+1. **Build the application**
+
+   ```bash
+   npm run build
+   ```
+
+2. **Start production server**
+   ```bash
+   npm start
+   ```
 
 ## 🔒 Security
 
@@ -426,31 +481,24 @@ All design tokens are in `app/globals.css`:
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
 
-## ✨ What's New (v2.1)
+## ✨ What's New (v2.0)
 
-### **UI & Design Improvements**
+### **Complete Redesign**
 
-- ✅ **Light & Dark Theme**: Light main content with dark sidebar for optimal contrast
-- ✅ **Beautiful Charts**: Replaced heatmap with interactive ApexCharts area chart
-- ✅ **Professional Brand Colors**: #003e91 blue with #111111 dark sidebar
-- ✅ **Modern Modals**: All modals updated with light theme and proper responsiveness
-- ✅ **Enhanced Typography**: Improved text colors and contrast throughout
+- ✅ Professional brand colors (#0062FF blue, #111111 dark)
+- ✅ Fully responsive mobile-first design
+- ✅ Clean minimal sidebar with edge-to-edge layout
+- ✅ Modern card-based UI across all pages
+- ✅ Optimized code (20+ unused imports removed)
+- ✅ 6-month sales heatmap with brand colors
 
-### **Responsive Design**
+### **Mobile Experience**
 
-- ✅ **Fully Responsive**: Mobile-first design works on all devices (375px+)
-- ✅ **Touch-Optimized**: All buttons meet 44px minimum for mobile accessibility
-- ✅ **Responsive Tables**: Tables hide less critical columns on mobile, proper scrolling
-- ✅ **Mobile Navigation**: Hamburger menu with smooth animations
-- ✅ **Responsive Grids**: 1→2→3→4 column layouts adapting to screen size
-- ✅ **No Horizontal Scroll**: Proper overflow handling across all pages
-
-### **Charts & Analytics**
-
-- ✅ **Sales Trend Chart**: Beautiful area chart showing 6-month sales trends
-- ✅ **Interactive Visualizations**: Smooth gradients, tooltips, and hover effects
-- ✅ **Monthly Aggregation**: Clean data presentation with summary statistics
-- ✅ **ApexCharts Integration**: Professional chart library for analytics
+- ✅ Hamburger menu with smooth animations
+- ✅ Touch-optimized interface (44px+ targets)
+- ✅ Responsive grids (1→2→3→4 columns)
+- ✅ Works perfectly on phones and tablets
+- ✅ No horizontal scroll, clean layouts
 
 ### **Code Quality**
 
@@ -459,7 +507,6 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - ✅ Consistent design system
 - ✅ Reusable components
 - ✅ 12+ documentation pages
-- ✅ Optimized responsive patterns
 
 ---
 
@@ -470,6 +517,15 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - **Responsive**: Works on 375px to 2560px screens
 - **Code Quality**: 100/100 optimization score
 - **Documentation**: 12+ comprehensive guides
+
+---
+
+## 🆘 Support
+
+- **Documentation**: 12+ guides in `/docs` directory
+- **Quick Start**: [docs/QUICK_START.md](./docs/QUICK_START.md)
+- **Issues**: Create an issue on GitHub
+- **Discussions**: Use GitHub Discussions for questions
 
 ---
 
@@ -486,8 +542,35 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 
 ---
 
+## 📚 Documentation Index
+
+**Getting Started:**
+
+- [Quick Start Guide](./docs/QUICK_START.md)
+- [Payment Flow Example](./docs/PAYMENT_FLOW_EXAMPLE.md)
+
+**Design & UX:**
+
+- [Color Scheme](./docs/COLOR_SCHEME.md)
+- [Responsive Design](./docs/RESPONSIVE_DESIGN.md)
+- [Sidebar Design](./docs/SIDEBAR_REDESIGN.md)
+- [Products Page](./docs/PRODUCTS_REDESIGN.md)
+
+**Technical:**
+
+- [API Integration](./docs/API_INTEGRATION.md)
+- [Folder Structure](./docs/FOLDER_STRUCTURE.md)
+- [Optimization Report](./docs/OPTIMIZATION_REPORT.md)
+
+**Product:**
+
+- [Product Requirements](./docs/PRD.md)
+- [All Improvements](./docs/ALL_IMPROVEMENTS.md)
+
+---
+
 **Built with ❤️ for the payment community**
 
 _Openly - Where traditional payments meet crypto_
 
-**Version 2.1** - Light Theme, Beautiful Charts, Fully Responsive
+**Version 2.0** - Optimized, Responsive, Production-Ready

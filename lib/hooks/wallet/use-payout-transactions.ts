@@ -1,10 +1,11 @@
 /**
  * Payout Transactions Hook
  * Fetches wallet payout transactions for a specific chain
- * Dummy implementation - returns mock data
  */
 
 import { useState, useEffect } from "react";
+import { useAuth } from "@clerk/nextjs";
+import { apiClient, ApiError } from "@/lib/api/client";
 
 // API Response structure
 interface PayoutTransactionAPI {
@@ -65,50 +66,10 @@ interface UsePayoutTransactionsReturn {
   refetch: () => void;
 }
 
-// Generate dummy transactions
-const generateDummyTransactions = (chain: string): PayoutTransaction[] => {
-  const statuses = ["completed", "pending", "failed"];
-  const tokens = ["USDC", "ETH"];
-  
-  return [
-    {
-      id: "1",
-      amount: "150.00",
-      token: "USDC",
-      status: "completed",
-      txHash: "0x1234567890abcdef1234567890abcdef12345678",
-      timestamp: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: "2",
-      amount: "75.50",
-      token: "USDC",
-      status: "pending",
-      txHash: "0xabcdef1234567890abcdef1234567890abcdef12",
-      timestamp: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: "3",
-      amount: "0.05",
-      token: "ETH",
-      status: "completed",
-      txHash: "0x9876543210fedcba9876543210fedcba98765432",
-      timestamp: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-    {
-      id: "4",
-      amount: "200.00",
-      token: "USDC",
-      status: "completed",
-      txHash: "0xfedcba0987654321fedcba0987654321fedcba09",
-      timestamp: new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString(),
-    },
-  ];
-};
-
 export function usePayoutTransactions(
   chain: string
 ): UsePayoutTransactionsReturn {
+  const { getToken } = useAuth();
   const [transactions, setTransactions] = useState<PayoutTransaction[]>([]);
   const [count, setCount] = useState(0);
   const [chainState, setChainState] = useState<string | null>(null);
@@ -123,14 +84,47 @@ export function usePayoutTransactions(
     setLoading(true);
     setError(null);
 
-    // Simulate API delay
-    setTimeout(() => {
-      const dummyTransactions = generateDummyTransactions(chain);
-      setTransactions(dummyTransactions);
-      setCount(dummyTransactions.length);
-      setChainState(chain);
+    try {
+      const token = await getToken();
+      if (!token) {
+        throw new Error("Authentication required");
+      }
+
+      const response = await apiClient.get<PayoutTransactionsResponse>(
+        `/protected/wallet/payouttransactions/${chain}`,
+        token
+      );
+      
+      console.log("📊 Payout Transactions Response:", response);
+      console.log("📊 Transactions data (raw):", response.data.transactions);
+      
+      // Map API response to component structure
+      const mappedTransactions = (response.data.transactions || []).map(
+        mapTransactionAPIToComponent
+      );
+      
+      console.log("📊 Transactions data (mapped):", mappedTransactions);
+      
+      setTransactions(mappedTransactions);
+      setCount(response.data.count || 0);
+      setChainState(response.data.chain);
+    } catch (err) {
+      if (err instanceof ApiError) {
+        console.error(
+          "❌ API Error fetching payout transactions:",
+          err.message
+        );
+        setError(err.message);
+      } else if (err instanceof Error) {
+        console.error("Error fetching payout transactions:", err.message);
+        setError(err.message);
+      } else {
+        console.error("Unknown error fetching payout transactions:", err);
+        setError("Failed to fetch payout transactions");
+      }
+    } finally {
       setLoading(false);
-    }, 500);
+    }
   };
 
   useEffect(() => {

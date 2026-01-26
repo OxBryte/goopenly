@@ -6,17 +6,11 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Label } from "@/components/ui/label";
 import { useRouter } from "next/navigation";
-import { User as UserIcon, CheckCircle2, Loader2 } from "lucide-react";
-import { useForm } from "react-hook-form";
+import { User as UserIcon, CheckCircle2 } from "lucide-react";
 
 export function OnboardingForm() {
   const router = useRouter();
   const [step, setStep] = useState(1);
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm();
-
-  const onSubmit = (data: any) => {
-    console.log("Form data submitted:", data);
-  };
 
   return (
     <motion.div
@@ -26,7 +20,7 @@ export function OnboardingForm() {
       className="space-y-8 p-6 bg-card rounded-lg shadow-lg ring-2 ring-pop"
       style={{ pointerEvents: "auto" }}
     >
-      {step === 1 && (
+      {/* {step === 1 && (
         <motion.form
           key="step1"
           initial={{ opacity: 0, x: 50 }}
@@ -51,7 +45,7 @@ export function OnboardingForm() {
               className="mt-1"
             />
             {errors.username && (
-              <p className="text-destructive text-sm mt-1">{errors.username.message as string}</p>
+              <p className="text-destructive text-sm mt-1">{errors.username.message}</p>
             )}
           </div>
 
@@ -73,7 +67,7 @@ export function OnboardingForm() {
             )}
           </Button>
         </motion.form>
-      )}
+      )} */}
 
       {step === 2 && (
         <motion.div
